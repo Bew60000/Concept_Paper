@@ -36,7 +36,7 @@ app.get('/test', async (req, res) => {
     }
 });
 
-app.put('/test/update', async (req, res) => {
+app.put('/test/update/:id', async (req, res) => {
 
     const id = req.id;
     const name = req.name;
