@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
+const port = 8080;
 
 //เชื่อม server 
 const { Client } = require('pg');
@@ -53,6 +53,6 @@ app.put('/test/update', async (req, res) => {
 })
 
 
-app.listen(3000, () =>
+app.listen(8080, () =>
     console.log(`Example app Listening on port ${port}`)
 );
