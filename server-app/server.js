@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+const multer = require('multer');
+const path = require('path');
 const port = 8080;
 
 //เชื่อม server 
@@ -37,8 +40,8 @@ app.get('/test', async (req, res) => {
 });
 
 app.put('/test/update/:id', async (req, res) => {
-
-    const id = req.id;
+    const id = req.params.id;
+    // const id = req.id;
     const name = req.name;
 
     try {
