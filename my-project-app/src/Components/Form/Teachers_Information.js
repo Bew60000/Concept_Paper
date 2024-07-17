@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     FormTextArea,
     FormSelect,
@@ -6,8 +6,7 @@ import {
     FormGroup,
     FormButton,
     Form,
-} from 'semantic-ui-react'
-import Teachers_Information from './Teachers_Information';
+} from 'semantic-ui-react';
 
 const options = [
     { key: 'm', text: 'อาจารย์', value: 'male' },
@@ -15,7 +14,7 @@ const options = [
     { key: 'o', text: 'ศ.ดร', value: 'other' },
 ]
 
-class Management_Information extends Component {
+class Teachers_Information extends Component {
     state = {
         forms: [{
             id: 1,
@@ -66,32 +65,12 @@ class Management_Information extends Component {
     render() {
         const { forms } = this.state
         return (
-            <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-                <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
-                    <h1>ส่วนที่ 4 : รูปแบบการจัดการเรียนการสอนและการบริหารจัดการ</h1>
-                    <hr />
-                    <br />
+            <div className="">
+                <div className='bg-white col-span-8 col-start-3'>
                     <Form>
-
-                        <FormTextArea
-                            fluid
-                            label='รูปแบบของการจัดการเรียนการสอนที่มีการเรียนรู้จากประสบการณ์จริง'
-                            placeholder='โปรดอธิบายรายละเอียด'
-                        />
-                        <FormTextArea
-                            fluid
-                            label='หลักสูตรฯ มีการควบคุมต้นทุนของการศึกษาอย่างไร'
-                            placeholder='โปรดอธิบายรายละเอียด'
-                        />
-                        <FormTextArea
-                            fluid
-                            label='ความพร้อมในการจัดการเรียนการสอน'
-                            placeholder='โปรดอธิบายรายละเอียด'
-                        />
-
                         <br />
                         <hr />
-                        <h2>ผู้รับผิดชอบหลักสูตร</h2>
+                        <h2>อาจารย์ประจำหลักสูตร</h2>
                         <br />
 
                         {forms.map((form, index) => (
@@ -151,6 +130,10 @@ class Management_Information extends Component {
                                     onChange={(e) => this.handleChange(form.id, 'academicWork', e.target.value)}
                                 />
 
+                                {/* <FormButton className='grid gap-4 place-items-end'
+                                    type='button'
+                                    onClick={() => this.removeForm(form.id)}>ลบข้อมูล</FormButton> */}
+
                                 <div className='flex justify-end gap-4'>
                                     {index === forms.length - 1 && (
                                         <FormButton type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
@@ -164,16 +147,9 @@ class Management_Information extends Component {
                             </div>
                         ))}
 
-                        {/* <FormButton className='grid gap-4 place-items-end'
-                            type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
-                        <FormButton className='grid gap-4 place-items-end'
-                            type='submit'>ยืนยัน</FormButton> */}
-
-                        <Teachers_Information />
-
-                        <div className='flex justify-end gap-4'>
+                        {/* <div className='flex justify-end gap-4'>
                             <FormButton type='submit'>ยืนยัน</FormButton>
-                        </div>
+                        </div> */}
                     </Form>
                 </div>
             </div>
@@ -181,4 +157,4 @@ class Management_Information extends Component {
     }
 }
 
-export default Management_Information;
+export default Teachers_Information;

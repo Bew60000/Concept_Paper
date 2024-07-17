@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
   FormTextArea,
-    FormSelect,
-    FormRadio,
-    FormInput,
-    FormGroup,
-    FormCheckbox,
-    FormButton,
-    FormField,
-    Form,
+  FormSelect,
+  FormRadio,
+  FormInput,
+  FormGroup,
+  FormCheckbox,
+  FormButton,
+  FormField,
+  Form,
 } from 'semantic-ui-react';
 
 const options = [
@@ -31,7 +31,10 @@ class Basic_Information extends Component {
     const { value, additionalInfo } = this.state;
     return (
       <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-        <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
+        <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>          
+          <h1>ส่วนที่ 1 : ข้อมูลเบื้องต้นหลักสูตร</h1>
+          <hr />
+          <br />
           <Form>
             <FormGroup widths='equal'>
               <FormInput fluid label='คณะ' placeholder='โปรดระบุคณะ' />
@@ -82,7 +85,7 @@ class Basic_Information extends Component {
                 <FormGroup widths='equal'>
                   <FormTextArea
                     fluid
-                    label='รายละเอียดเพิ่มเติม'
+                    label='รายละเอียดเพิ่มเติม (*ลักษณะของหลักสูตร)'
                     placeholder='โปรดกรอกรายละเอียดเพิ่มเติม'
                     value={additionalInfo}
                     onChange={this.handleAdditionalInfoChange}
