@@ -1,29 +1,34 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   FormTextArea,
-  FormSelect,
-  FormRadio,
-  FormInput,
-  FormGroup,
-  FormCheckbox,
-  FormButton,
-  FormField,
-  Form,
-} from 'semantic-ui-react'
+    FormSelect,
+    FormRadio,
+    FormInput,
+    FormGroup,
+    FormCheckbox,
+    FormButton,
+    FormField,
+    Form,
+} from 'semantic-ui-react';
 
 const options = [
   { key: 'm', text: 'Male', value: 'male' },
   { key: 'f', text: 'Female', value: 'female' },
   { key: 'o', text: 'Other', value: 'other' },
-]
+];
 
 class Basic_Information extends Component {
-  state = {}
+  state = {
+    value: '',
+    additionalInfo: '',
+  };
 
-  handleChange = (e, { value }) => this.setState({ value })
+  handleChange = (e, { value }) => this.setState({ value });
+
+  handleAdditionalInfoChange = (e) => this.setState({ additionalInfo: e.target.value });
 
   render() {
-    const { value } = this.state
+    const { value, additionalInfo } = this.state;
     return (
       <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
         <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
@@ -52,7 +57,7 @@ class Basic_Information extends Component {
               <FormInput fluid label='ปีที่เริ่มดำเนินการเปิดสอน' placeholder='โปรดระบุปีที่เริ่มดำเนินการเปิดสอน' />
             </FormGroup>
 
-            <FormGroup inline>
+            <FormGroup grouped inline>
               <label>ลักษณะของหลักสูตร</label>
               <FormRadio
                 label='เฉพาะสาขาเดียว'
@@ -73,17 +78,29 @@ class Basic_Information extends Component {
                 onChange={this.handleChange}
               />
 
+              {(value === 'md' || value === 'lg') && (
+                <FormGroup widths='equal'>
+                  <FormTextArea
+                    fluid
+                    label='รายละเอียดเพิ่มเติม'
+                    placeholder='โปรดกรอกรายละเอียดเพิ่มเติม'
+                    value={additionalInfo}
+                    onChange={this.handleAdditionalInfoChange}
+                  />
+                </FormGroup>
+              )}
+
             </FormGroup>
+
+
+
             <FormTextArea label='ผลลัพธ์การเรียนรู้ระดับหลักสูตร' placeholder='โปรดอธิบายรายละเอียด' />
-            {/* <FormCheckbox label='I agree to the Terms and Conditions' /> */}
             <FormButton className='grid gap-4 place-items-end'>ต่อไป</FormButton>
           </Form>
         </div>
       </div>
-
-
-    )
+    );
   }
 }
 
-export default Basic_Information
+export default Basic_Information;
