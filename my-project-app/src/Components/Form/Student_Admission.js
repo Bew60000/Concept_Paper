@@ -95,24 +95,28 @@ class Student_Admission extends Component {
                                         value={form.count_students}
                                         onChange={(e) => this.handleChange(form.id, 'count_students', e.target.value)}
                                     />
+
+                                    <FormButton
+                                        className='grid gap-4 content-end'
+                                        type='button'
+                                        onClick={() => this.removeForm(form.id)}>
+                                        ลบข้อมูล
+                                    </FormButton>
                                     <FormField />
+
                                 </FormGroup>
 
-                                <div className='flex justify-between gap-4'>
-                                    {index === forms.length - 1 && (
-                                        <FormButton type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
-                                    )}
-                                    <FormButton type='button' onClick={() => this.removeForm(form.id)}>ลบข้อมูล</FormButton>
-                                </div>
 
 
                             </div>
                         ))}
 
+                        <br />
                         <hr />
                         <br />
 
-                        <div className='flex justify-end gap-4'>
+                        <div className='flex justify-between gap-4'>
+                            <FormButton type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
                             <FormButton type='submit'>ยืนยัน</FormButton>
                         </div>
                     </Form>

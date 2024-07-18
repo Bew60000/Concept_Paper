@@ -65,12 +65,11 @@ class Teachers_Information extends Component {
     render() {
         const { forms } = this.state
         return (
-            <div className="">
-                <div className='bg-white col-span-8 col-start-3'>
+            <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
+                <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
                     <Form>
-                        <br />
+                        <h1>ส่วนที่ 5 :อาจารย์ประจำหลักสูตร</h1>
                         <hr />
-                        <h2>อาจารย์ประจำหลักสูตร</h2>
                         <br />
 
                         {forms.map((form, index) => (
@@ -135,9 +134,9 @@ class Teachers_Information extends Component {
                                     onClick={() => this.removeForm(form.id)}>ลบข้อมูล</FormButton> */}
 
                                 <div className='flex justify-end gap-4'>
-                                    {index === forms.length - 1 && (
-                                        <FormButton type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
-                                    )}
+                                    {/* {index === forms.length - 1 && (
+                                        <FormButton type='button' onClick={this.addForm}>เพิ่มอาจารย์</FormButton>
+                                    )} */}
                                     <FormButton type='button' onClick={() => this.removeForm(form.id)}>ลบข้อมูล</FormButton>
                                 </div>
 
@@ -150,6 +149,15 @@ class Teachers_Information extends Component {
                         {/* <div className='flex justify-end gap-4'>
                             <FormButton type='submit'>ยืนยัน</FormButton>
                         </div> */}
+
+
+
+
+                        <div className='flex justify-between gap-4'>
+                            <FormButton type='button' onClick={this.addForm}>เพิ่มอาจารย์</FormButton>
+                            <FormButton type='submit'>ยืนยัน</FormButton>
+                        </div>
+
                     </Form>
                 </div>
             </div>

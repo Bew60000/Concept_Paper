@@ -6,6 +6,7 @@ import Basic_Information from './Components/Form/Basic_Information';
 import Course_Analysis_Information from './Components/Form/Course_Analysis_Information';
 import Management_Information from './Components/Form/Management_Information';
 import Student_Admission from './Components/Form/Student_Admission';
+import Teachers_Information from './Components/Form/Teachers_Information';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Course_Analysis_Information />
       <Student_Admission />
       <Management_Information />
+      <Teachers_Information />
 
 
     </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     FormTextArea,
     FormSelect,
@@ -6,8 +6,7 @@ import {
     FormGroup,
     FormButton,
     Form,
-} from 'semantic-ui-react'
-import Teachers_Information from './Teachers_Information';
+} from 'semantic-ui-react';
 
 const options = [
     { key: 'm', text: 'อาจารย์', value: 'male' },
@@ -90,11 +89,12 @@ class Management_Information extends Component {
                         />
 
                         <br />
+                        
+                        <h2>ส่วนที่ 4.1 : ผู้รับผิดชอบหลักสูตร</h2>
                         <hr />
-                        <h2>ผู้รับผิดชอบหลักสูตร</h2>
                         <br />
 
-                        {forms.map((form, index) => (
+                        {forms.map((form) => (
                             <div key={form.id}>
 
 
@@ -151,29 +151,20 @@ class Management_Information extends Component {
                                     onChange={(e) => this.handleChange(form.id, 'academicWork', e.target.value)}
                                 />
 
-                                <div className='flex justify-end gap-4'>
-                                    {index === forms.length - 1 && (
-                                        <FormButton type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
-                                    )}
-                                    <FormButton type='button' onClick={() => this.removeForm(form.id)}>ลบข้อมูล</FormButton>
-                                </div>
-
+                                <FormButton className='flex justify-end gap-4'
+                                    type='button'
+                                    onClick={() => this.removeForm(form.id)}>
+                                    ลบข้อมูล
+                                </FormButton>
                                 <br />
                                 <hr />
                                 <br />
                             </div>
                         ))}
-
-                        {/* <FormButton className='grid gap-4 place-items-end'
-                            type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
-                        <FormButton className='grid gap-4 place-items-end'
-                            type='submit'>ยืนยัน</FormButton> */}
-
-                        <Teachers_Information />
-
-                        <div className='flex justify-end gap-4'>
+                        <div className='flex justify-between gap-4'>
+                            <FormButton type='button' onClick={this.addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
                             <FormButton type='submit'>ยืนยัน</FormButton>
-                        </div>
+                        </div>                        
                     </Form>
                 </div>
             </div>
