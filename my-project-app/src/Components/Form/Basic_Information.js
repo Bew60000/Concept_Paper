@@ -11,12 +11,6 @@ import {
   Form,
 } from 'semantic-ui-react';
 
-const options = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-  { key: 'o', text: 'Other', value: 'other' },
-];
-
 class Basic_Information extends Component {
   state = {
     value: '',
@@ -98,7 +92,7 @@ class Basic_Information extends Component {
 
 
             <FormTextArea label='ผลลัพธ์การเรียนรู้ระดับหลักสูตร' placeholder='โปรดอธิบายรายละเอียด' />
-            <FormButton className='grid gap-4 place-items-end'>ต่อไป</FormButton>
+            <FormButton className='grid gap-4 place-items-end' type='submit'>ต่อไป</FormButton>
           </Form>
         </div>
       </div>

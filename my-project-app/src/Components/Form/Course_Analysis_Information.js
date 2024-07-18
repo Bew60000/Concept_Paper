@@ -102,7 +102,7 @@ class Course_Analysis_Information extends Component {
                             placeholder='โปรดอธิบายรายละเอียด'
                         />
 
-                        <FormButton className='grid gap-4 place-items-end'>ต่อไป</FormButton>
+                        <FormButton className='grid gap-4 place-items-end' type='submit' >ต่อไป</FormButton>
                     </Form>
                 </div>
             </div>
