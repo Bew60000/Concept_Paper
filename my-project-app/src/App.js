@@ -8,6 +8,8 @@ import Management_Information from './Components/Form/Management_Information';
 import Student_Admission from './Components/Form/Student_Admission';
 import Teachers_Information from './Components/Form/Teachers_Information';
 
+import Form_Add_Member from './Components/Add_Member/Form_Add_Member';
+
 function App() {
 
   const BackgroundImage = {
@@ -19,6 +21,8 @@ function App() {
   return (
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
       <Navbar />
+
+      <Form_Add_Member />
 
       <Basic_Information />
       <Course_Analysis_Information />
