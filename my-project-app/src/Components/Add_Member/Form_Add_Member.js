@@ -73,6 +73,14 @@ export default function Form_Add_Member() {
         setPosition(user.Position);
     }
 
+    const deleteUser = (id) => {
+        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(err => console.error(err));
+    }
+
     useEffect(() => {
         axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(res => setDataUser(res.data))
@@ -183,6 +191,7 @@ export default function Form_Add_Member() {
                                 </Table.Cell>
                                 <Table.Cell>
                                     <Button onClick={() => editUser(val)}>แก้ไข</Button>
+                                    <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
                                 </Table.Cell>
                             </Table.Row>
                         )}
