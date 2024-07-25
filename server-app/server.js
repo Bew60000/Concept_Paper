@@ -70,6 +70,70 @@ app.post('/test/add_profile', async (req, res) => {
     }
 });
 
+app.post('/test/add_curr', async (req, res) => {
+    // const input = req.body;
+
+    const { id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes } = req.body;
+
+
+    try {
+        await pool.query(`insert into profile (id,name) VALUES ($1,$2) `,
+            [
+                id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes
+            ]);
+        res.status(201).send('Add successfull');
+
+        const { principle_reasons, required_eq_id, cooperation, high_lights } = req.body;
+        const { } = req.body;
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+app.post('/test/teaching', async (req, res) => {
+    // const input = req.body;
+
+    const { id, teaching, cost_control, readiness, teacher_id } = req.body;
+
+    try {
+        await pool.query(`insert into profile (id,name) VALUES ($1,$2) `,
+            [
+                id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes
+            ]);
+        res.status(201).send('Add successfull');
+
+
+        const { teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, perfomance_id } = req.body;
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+const { } = req.body;
+
+
+
+app.post('/test/teaching', async (req, res) => {
+    // const input = req.body;
+
+    const { } = req.body;
+
+    try {
+        await pool.query(`insert into profile (id,name) VALUES ($1,$2) `,
+            [
+            ]);
+        res.status(201).send('Add successfull');
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+// update //
 
 app.put('/test/update', async (req, res) => {
 
