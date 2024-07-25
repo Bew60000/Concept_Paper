@@ -1,11 +1,11 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     FormInput,
     FormGroup,
     FormButton,
     Form,
     Table,
+    Button,
 } from 'semantic-ui-react';
 import axios from 'axios';
 import Loading from '../Loading';
@@ -21,21 +21,35 @@ export default function Form_Add_Member() {
     const [Password, setPassword] = useState('');
 
     const [DataUser, setDataUser] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [currentID, setCurrentID] = useState(null);
 
     const UserMember = {
         Name, LastName, ID, Password, Email, Phone, Affiliation, Position,
     }
 
-    const SubmitHander = (e) => {
+    const SubmitHandler = (e) => {
         e.preventDefault();
-        console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position);
-
-        axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
-            .then(res => {
-                console.log(res);
-                alert('กรอกข้อมูลเสร็จสิ้น');
-                window.location.reload();
-            })
+        if (isEditing) {
+            axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${currentID}`)
+                .then(() => {
+                    axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
+                        .then(res => {
+                            console.log(res);
+                            // alert('แก้ไขข้อมูลเสร็จสิ้น');
+                            setIsEditing(false);
+                            setCurrentID(null);
+                            window.location.reload();
+                        });
+                });
+        } else {
+            axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
+                .then(res => {
+                    console.log(res);
+                    alert('กรอกข้อมูลเสร็จสิ้น');
+                    window.location.reload();
+                });
+        }
         setName('');
         setLastName('');
         setID('');
@@ -46,10 +60,31 @@ export default function Form_Add_Member() {
         setPosition('');
     }
 
+    const editUser = (user) => {
+        setIsEditing(true);
+        setCurrentID(user.ID);
+        setName(user.Name);
+        setLastName(user.LastName);
+        setID(user.ID);
+        setPassword(user.Password);
+        setEmail(user.Email);
+        setPhone(user.Phone);
+        setAffiliation(user.Affiliation);
+        setPosition(user.Position);
+    }
+
+    const deleteUser = (id) => {
+        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(err => console.error(err));
+    }
+
     useEffect(() => {
         axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
-            .then(res => setDataUser(res))
-        console.log(DataUser);
+            .then(res => setDataUser(res.data))
+            .catch(err => console.error(err));
     }, []);
 
     if (!DataUser) {
@@ -59,10 +94,10 @@ export default function Form_Add_Member() {
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
             <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
-                <h1>เพิ่มสมาชิก</h1>
                 <hr />
+                <h1>{isEditing ? 'แก้ไขสมาชิก' : 'เพิ่มสมาชิก'}</h1>
                 <br />
-                <Form onSubmit={SubmitHander}>
+                <Form onSubmit={SubmitHandler}>
                     <FormGroup widths='equal'>
                         <FormInput fluid label='ID'
                             type='text'
@@ -117,29 +152,32 @@ export default function Form_Add_Member() {
                         onChange={(e) => setAffiliation(e.target.value)}
                         placeholder='โปรดระบุ' />
 
-                    <FormButton color='blue' type='submit' >Submit</FormButton>
+                    <FormButton color='blue' type='submit' >{isEditing ? 'แก้ไข' : 'เพิ่ม'}</FormButton>
 
                 </Form>
 
                 <br />
-                <h1>สมาชิก</h1>
                 <hr />
+                <h1>สมาชิก</h1>
                 <br />
 
                 <Table striped basic='very'>
                     <Table.Header>
-                        <Table.HeaderCell>Position</Table.HeaderCell>
-                        <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>LastName</Table.HeaderCell>
-                        <Table.HeaderCell>ID</Table.HeaderCell>
-                        <Table.HeaderCell>Password</Table.HeaderCell>
-                        <Table.HeaderCell>Affiliation</Table.HeaderCell>
-                        <Table.HeaderCell>Email</Table.HeaderCell>
-                        <Table.HeaderCell>Phone</Table.HeaderCell>
+                        <Table.Row >
+                            <Table.HeaderCell>Position</Table.HeaderCell>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>LastName</Table.HeaderCell>
+                            <Table.HeaderCell>ID</Table.HeaderCell>
+                            <Table.HeaderCell>Password</Table.HeaderCell>
+                            <Table.HeaderCell>Affiliation</Table.HeaderCell>
+                            <Table.HeaderCell>Email</Table.HeaderCell>
+                            <Table.HeaderCell>Phone</Table.HeaderCell>
+                            <Table.HeaderCell>Actions</Table.HeaderCell>
+                        </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
-                        {DataUser.data.map((val, index) =>
+                        {DataUser.map((val, index) =>
                             <Table.Row key={index}>
                                 <Table.Cell>{val.Position}</Table.Cell>
                                 <Table.Cell>{val.Name}</Table.Cell>
@@ -149,15 +187,17 @@ export default function Form_Add_Member() {
                                 <Table.Cell>{val.Affiliation}</Table.Cell>
                                 <Table.Cell>{val.Email}</Table.Cell>
                                 <Table.Cell>
-                                    {/* {val.Phone} */}
-                                    {val.Phone !== undefined && val.Phone !== null ? val.Phone : 'ไม่พบข้อมูล'} </Table.Cell>
+                                    {val.Phone !== undefined && val.Phone !== null ? val.Phone : 'ไม่พบข้อมูล'}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <Button onClick={() => editUser(val)}>แก้ไข</Button>
+                                    <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
+                                </Table.Cell>
                             </Table.Row>
                         )}
                     </Table.Body>
                 </Table>
-
             </div>
         </div>
     );
-
 }
