@@ -31,7 +31,8 @@ export default function Form_Add_Member() {
     const SubmitHandler = (e) => {
         e.preventDefault();
         if (isEditing) {
-            axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/${currentID}`, UserMember)
+            // axios.post(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/${currentID}`, UserMember)
+            axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
                 .then(res => {
                     console.log(res);
                     alert('แก้ไขข้อมูลเสร็จสิ้น');
