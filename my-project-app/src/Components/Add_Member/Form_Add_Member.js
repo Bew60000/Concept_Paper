@@ -31,20 +31,23 @@ export default function Form_Add_Member() {
     const SubmitHandler = (e) => {
         e.preventDefault();
         if (isEditing) {
-            // axios.post(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/${currentID}`, UserMember)
             axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
                 .then(res => {
                     console.log(res);
                     alert('แก้ไขข้อมูลเสร็จสิ้น');
                     setIsEditing(false);
                     setCurrentID(null);
+                    window.location.reload();
                 });
+                console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position);
         } else {
             axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
                 .then(res => {
                     console.log(res);
                     alert('กรอกข้อมูลเสร็จสิ้น');
+                    window.location.reload();
                 });
+                console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position);
         }
         setName('');
         setLastName('');
@@ -54,7 +57,7 @@ export default function Form_Add_Member() {
         setPhone('');
         setAffiliation('');
         setPosition('');
-        window.location.reload();
+        
     }
 
     const editUser = (user) => {
