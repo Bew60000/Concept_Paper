@@ -20,15 +20,15 @@ function App() {
 
   return (
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Form_Add_Member />
 
-      <Basic_Information />
+      {/* <Basic_Information />
       <Course_Analysis_Information />
       <Student_Admission />
       <Management_Information />
-      <Teachers_Information />
+      <Teachers_Information /> */}
 
 
     </div>
