@@ -93,7 +93,7 @@ export default function Form_Add_Member() {
 
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-            <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
+            <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
                 <hr />
                 <h1>{isEditing ? 'แก้ไขสมาชิก' : 'เพิ่มสมาชิก'}</h1>
                 <br />
@@ -163,7 +163,7 @@ export default function Form_Add_Member() {
 
                 <Table striped basic='very'>
                     <Table.Header>
-                        <Table.Row >
+                        <Table.Row>
                             <Table.HeaderCell>Position</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>LastName</Table.HeaderCell>

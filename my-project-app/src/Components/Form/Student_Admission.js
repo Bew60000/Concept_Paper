@@ -68,7 +68,7 @@ class Student_Admission extends Component {
         const { forms } = this.state
         return (
             <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-                <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
+                <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
                     <h1>ส่วนที่ 3 : แผนการรับนักศึกษา</h1>
                     <hr />
                     <br />
