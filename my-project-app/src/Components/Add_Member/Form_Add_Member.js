@@ -31,15 +31,17 @@ export default function Form_Add_Member() {
     const SubmitHandler = (e) => {
         e.preventDefault();
         if (isEditing) {
-            axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
-                .then(res => {
-                    console.log(res);
-                    alert('แก้ไขข้อมูลเสร็จสิ้น');
-                    setIsEditing(false);
-                    setCurrentID(null);
-                    window.location.reload();
+            axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${currentID}`)
+                .then(() => {
+                    axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
+                        .then(res => {
+                            console.log(res);
+                            // alert('แก้ไขข้อมูลเสร็จสิ้น');
+                            setIsEditing(false);
+                            setCurrentID(null);
+                            window.location.reload();
+                        });
                 });
-                console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position);
         } else {
             axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
                 .then(res => {
@@ -47,7 +49,6 @@ export default function Form_Add_Member() {
                     alert('กรอกข้อมูลเสร็จสิ้น');
                     window.location.reload();
                 });
-                console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position);
         }
         setName('');
         setLastName('');
@@ -57,7 +58,6 @@ export default function Form_Add_Member() {
         setPhone('');
         setAffiliation('');
         setPosition('');
-        
     }
 
     const editUser = (user) => {
@@ -86,8 +86,8 @@ export default function Form_Add_Member() {
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
             <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
-                <h1>{isEditing ? 'แก้ไขสมาชิก' : 'เพิ่มสมาชิก'}</h1>
                 <hr />
+                <h1>{isEditing ? 'แก้ไขสมาชิก' : 'เพิ่มสมาชิก'}</h1>
                 <br />
                 <Form onSubmit={SubmitHandler}>
                     <FormGroup widths='equal'>
@@ -149,13 +149,13 @@ export default function Form_Add_Member() {
                 </Form>
 
                 <br />
-                <h1>สมาชิก</h1>
                 <hr />
+                <h1>สมาชิก</h1>
                 <br />
 
                 <Table striped basic='very'>
                     <Table.Header>
-                        <Table.Row>
+                        <Table.Row >
                             <Table.HeaderCell>Position</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>LastName</Table.HeaderCell>
