@@ -11,8 +11,8 @@ function Login() {
     }
 
     return (
-        //  bg-gradient-to-r from-purple-500 to-pink-500
-        <div className="flex min-w-screen min-h-screen items-center justify-center " style={BackgroundImage}     >
+        //  bg-gradient-to-r from-purple-500 to-pink-500 style={BackgroundImage}
+        <div className="flex min-w-screen min-h-screen items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 "      >
 
             <div className='bg-white  rounded-3xl border shadow-lg p-12 w-1/4 '>
                 <Form>
@@ -25,7 +25,7 @@ function Login() {
 
                     <FormInput
                         label='Password'
-                        type='text'
+                        type='password'
                         className=''
                         placeholder='Enter your Password' />
 

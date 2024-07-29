@@ -25,7 +25,7 @@ class Basic_Information extends Component {
     const { value, additionalInfo } = this.state;
     return (
       <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-        <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>          
+        <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
           <h1>ส่วนที่ 1 : ข้อมูลเบื้องต้นหลักสูตร</h1>
           <hr />
           <br />
@@ -39,8 +39,9 @@ class Basic_Information extends Component {
                 options={options}
                 placeholder='Gender'
               /> */}
-              <FormField />
-              <FormField />
+
+              <FormInput fluid label='File docx' type="file" />
+
             </FormGroup>
 
             <FormGroup widths='equal'>

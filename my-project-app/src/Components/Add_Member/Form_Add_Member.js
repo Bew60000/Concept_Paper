@@ -100,13 +100,13 @@ export default function Form_Add_Member() {
 
                     <FormGroup widths='equal'>
                         <FormInput fluid label='Email'
-                            type='text'
+                            type='email'
                             value={Email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='โปรดระบุ' />
 
                         <FormInput fluid label='Phone'
-                            type='text'
+                            type='tel'
                             value={Phone}
                             onChange={(e) => setPhone(e.target.value)}
                             placeholder='โปรดระบุ' />
