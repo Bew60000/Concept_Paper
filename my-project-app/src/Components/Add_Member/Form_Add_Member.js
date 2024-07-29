@@ -17,6 +17,7 @@ export default function Form_Add_Member() {
     const [Phone, setPhone] = useState('');
     const [Affiliation, setAffiliation] = useState('');
     const [Position, setPosition] = useState('');
+    const [Campus, setCampus] = useState('');
     const [ID, setID] = useState('');
     const [Password, setPassword] = useState('');
 
@@ -24,12 +25,12 @@ export default function Form_Add_Member() {
 
 
     const UserMember = {
-        Name, LastName, ID, Password, Email, Phone, Affiliation, Position,
+        Name, LastName, ID, Password, Email, Phone, Affiliation, Position, Campus,
     }
 
     const SubmitHandler = (e) => {
         e.preventDefault();
-        console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position);
+        console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position, Campus);
         axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
             .then(res => {
                 console.log(res);
@@ -44,6 +45,7 @@ export default function Form_Add_Member() {
         setPhone('');
         setAffiliation('');
         setPosition('');
+        setCampus('');
     }
 
     useEffect(() => {
@@ -58,8 +60,7 @@ export default function Form_Add_Member() {
 
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-            <div className='bg-white col-span-8 col-start-3 p-20 border-2 rounded-2xl shadow-10'>
-                <hr />
+            <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
                 <h1>เพิ่มสมาชิก</h1>
                 <br />
                 <Form onSubmit={SubmitHandler}>
@@ -111,14 +112,21 @@ export default function Form_Add_Member() {
                             placeholder='โปรดระบุ' />
                     </FormGroup>
 
-                    <FormInput fluid label='Affiliation'
-                        type='text'
-                        value={Affiliation}
-                        onChange={(e) => setAffiliation(e.target.value)}
-                        placeholder='โปรดระบุ' />
+                    <FormGroup widths='equal'>
+                        <FormInput fluid label='Affiliation'
+                            type='text'
+                            value={Affiliation}
+                            onChange={(e) => setAffiliation(e.target.value)}
+                            placeholder='โปรดระบุ' />
+
+                        <FormInput fluid label='Campus'
+                            type='text'
+                            value={Campus}
+                            onChange={(e) => setCampus(e.target.value)}
+                            placeholder='โปรดระบุ' />
+                    </FormGroup>
 
                     <FormButton color='blue' type='submit' >เพิ่มสมาชิก</FormButton>
-
                 </Form>
 
                 <br />
@@ -152,7 +160,7 @@ export default function Form_Add_Member() {
                                 <Table.Cell>{val.Email}</Table.Cell>
                                 <Table.Cell>
                                     {val.Phone !== undefined && val.Phone !== null ? val.Phone : 'ไม่พบข้อมูล'}
-                                </Table.Cell>                                
+                                </Table.Cell>
                             </Table.Row>
                         )}
                     </Table.Body>
