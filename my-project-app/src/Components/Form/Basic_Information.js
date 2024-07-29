@@ -40,7 +40,8 @@ class Basic_Information extends Component {
                 placeholder='Gender'
               /> */}
 
-              <FormInput fluid label='File docx' type="file" />
+              {/* <FormInput fluid label='File docx' type="file" /> */}
+              <FormField />
 
             </FormGroup>
 
