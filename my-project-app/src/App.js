@@ -2,11 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import Background from './img/Background.svg';
 import Navbar from './Components/Navbar';
-import Basic_Information from './Components/Form/Basic_Information';
-import Course_Analysis_Information from './Components/Form/Course_Analysis_Information';
-import Management_Information from './Components/Form/Management_Information';
-import Student_Admission from './Components/Form/Student_Admission';
-import Teachers_Information from './Components/Form/Teachers_Information';
+import Basic_Information from './Components/Add_Form/Basic_Information';
+import Course_Analysis_Information from './Components/Add_Form/Course_Analysis_Information';
+import Management_Information from './Components/Add_Form/Management_Information';
+import Student_Admission from './Components/Add_Form/Student_Admission';
+import Teachers_Information from './Components/Add_Form/Teachers_Information';
 
 import Form_Add_Member from './Components/Add_Member/Form_Add_Member';
 
