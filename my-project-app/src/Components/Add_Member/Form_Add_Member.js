@@ -48,6 +48,14 @@ export default function Form_Add_Member() {
         setCampus('');
     }
 
+    const deleteUser = (id) => {
+        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(err => console.error(err));
+    }
+
     useEffect(() => {
         axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(res => setDataUser(res.data))
@@ -145,6 +153,7 @@ export default function Form_Add_Member() {
                             <Table.HeaderCell>Affiliation</Table.HeaderCell>
                             <Table.HeaderCell>Email</Table.HeaderCell>
                             <Table.HeaderCell>Phone</Table.HeaderCell>
+                            <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
@@ -160,6 +169,9 @@ export default function Form_Add_Member() {
                                 <Table.Cell>{val.Email}</Table.Cell>
                                 <Table.Cell>
                                     {val.Phone !== undefined && val.Phone !== null ? val.Phone : 'ไม่พบข้อมูล'}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
                                 </Table.Cell>
                             </Table.Row>
                         )}
