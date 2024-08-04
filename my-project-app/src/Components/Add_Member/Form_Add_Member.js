@@ -11,42 +11,50 @@ import axios from 'axios';
 import Loading from '../Loading';
 
 export default function Form_Add_Member() {
-    const [Name, setName] = useState('');
-    const [LastName, setLastName] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Phone, setPhone] = useState('');
-    const [Affiliation, setAffiliation] = useState('');
-    const [Position, setPosition] = useState('');
-    const [Campus, setCampus] = useState('');
-    const [ID, setID] = useState('');
-    const [Password, setPassword] = useState('');
+    const [userMember, setUserMember] = useState({
+        Name: '',
+        LastName: '',
+        ID: '',
+        Password: '',
+        Email: '',
+        Phone: '',
+        Affiliation: '',
+        Position: '',
+        Campus: '',
+    });
 
-    const [DataUser, setDataUser] = useState(null);
+    const [dataUser, setDataUser] = useState(null);
 
+    const HandleChange = (e) => {
+        const { name, value } = e.target;
+        setUserMember(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
-    const UserMember = {
-        Name, LastName, ID, Password, Email, Phone, Affiliation, Position, Campus,
-    }
-
-    const SubmitHandler = (e) => {
+    const HandleSubmit = (e) => {
         e.preventDefault();
-        console.log(ID, Password, Name, LastName, Email, Phone, Affiliation, Position, Campus);
-        axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', UserMember)
+        axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
             .then(res => {
                 console.log(res);
                 alert('กรอกข้อมูลเสร็จสิ้น');
                 window.location.reload();
             })
-        setName('');
-        setLastName('');
-        setID('');
-        setPassword('');
-        setEmail('');
-        setPhone('');
-        setAffiliation('');
-        setPosition('');
-        setCampus('');
-    }
+            .catch(err => console.error(err));
+
+        setUserMember({
+            Name: '',
+            LastName: '',
+            ID: '',
+            Password: '',
+            Email: '',
+            Phone: '',
+            Affiliation: '',
+            Position: '',
+            Campus: '',
+        });
+    };
 
     const deleteUser = (id) => {
         axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
@@ -54,7 +62,7 @@ export default function Form_Add_Member() {
                 window.location.reload();
             })
             .catch(err => console.error(err));
-    }
+    };
 
     useEffect(() => {
         axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
@@ -62,8 +70,8 @@ export default function Form_Add_Member() {
             .catch(err => console.error(err));
     }, []);
 
-    if (!DataUser) {
-        return <Loading />
+    if (!dataUser) {
+        return <Loading />;
     }
 
     return (
@@ -71,80 +79,96 @@ export default function Form_Add_Member() {
             <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
                 <h1>เพิ่มสมาชิก</h1>
                 <br />
-                <Form onSubmit={SubmitHandler}>
+                <Form onSubmit={HandleSubmit}>
                     <FormGroup widths='equal'>
-                        <FormInput fluid label='ID'
+                        <FormInput
+                            fluid label='ID'
                             type='text'
-                            value={ID}
-                            onChange={(e) => setID(e.target.value)}
-                            placeholder='โปรดระบุ' />
-
-                        <FormInput fluid label='Password'
+                            name='ID'
+                            value={userMember.ID}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormInput
+                            fluid label='Password'
                             type='text'
-                            value={Password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder='โปรดระบุ' />
+                            name='Password'
+                            value={userMember.Password}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
                     </FormGroup>
-
                     <FormGroup widths='equal'>
-                        <FormInput fluid label='Position'
+                        <FormInput
+                            fluid label='Position'
                             type='text'
-                            value={Position}
-                            onChange={(e) => setPosition(e.target.value)}
-                            placeholder='โปรดระบุ' />
-
-                        <FormInput fluid label='Name'
+                            name='Position'
+                            value={userMember.Position}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormInput
+                            fluid label='Name'
                             type='text'
-                            value={Name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder='โปรดระบุ' />
-
-                        <FormInput fluid label='Lastname'
+                            name='Name'
+                            value={userMember.Name}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormInput
+                            fluid label='LastName'
                             type='text'
-                            value={LastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            placeholder='โปรดระบุ' />
+                            name='LastName'
+                            value={userMember.LastName}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
                     </FormGroup>
-
                     <FormGroup widths='equal'>
-                        <FormInput fluid label='Email'
+                        <FormInput
+                            fluid label='Email'
                             type='email'
-                            value={Email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder='โปรดระบุ' />
-
-                        <FormInput fluid label='Phone'
+                            name='Email'
+                            value={userMember.Email}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormInput
+                            fluid label='Phone'
                             type='tel'
-                            value={Phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            placeholder='โปรดระบุ' />
+                            name='Phone'
+                            value={userMember.Phone}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
                     </FormGroup>
-
                     <FormGroup widths='equal'>
-                        <FormInput fluid label='Affiliation'
+                        <FormInput
+                            fluid label='Affiliation'
                             type='text'
-                            value={Affiliation}
-                            onChange={(e) => setAffiliation(e.target.value)}
-                            placeholder='โปรดระบุ' />
-
-                        <FormInput fluid label='Campus'
+                            name='Affiliation'
+                            value={userMember.Affiliation}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormInput
+                            fluid label='Campus'
                             type='text'
-                            value={Campus}
-                            onChange={(e) => setCampus(e.target.value)}
-                            placeholder='โปรดระบุ' />
+                            name='Campus'
+                            value={userMember.Campus}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
                     </FormGroup>
-
-                    <FormButton color='blue' type='submit' >เพิ่มสมาชิก</FormButton>
+                    <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
                 </Form>
-
                 <br />
                 <hr />
                 <h1>สมาชิก</h1>
                 <br />
-
                 <Table striped basic='very'>
                     <Table.Header>
-                        <Table.Row >
+                        <Table.Row>
                             <Table.HeaderCell>Position</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>LastName</Table.HeaderCell>
@@ -156,9 +180,8 @@ export default function Form_Add_Member() {
                             <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-
                     <Table.Body>
-                        {DataUser.map((val, index) =>
+                        {dataUser.map((val, index) => (
                             <Table.Row key={index}>
                                 <Table.Cell>{val.Position}</Table.Cell>
                                 <Table.Cell>{val.Name}</Table.Cell>
@@ -167,14 +190,12 @@ export default function Form_Add_Member() {
                                 <Table.Cell>{val.Password}</Table.Cell>
                                 <Table.Cell>{val.Affiliation}</Table.Cell>
                                 <Table.Cell>{val.Email}</Table.Cell>
-                                <Table.Cell>
-                                    {val.Phone !== undefined && val.Phone !== null ? val.Phone : 'ไม่พบข้อมูล'}
-                                </Table.Cell>
+                                <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
                                 <Table.Cell>
                                     <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
                                 </Table.Cell>
                             </Table.Row>
-                        )}
+                        ))}
                     </Table.Body>
                 </Table>
             </div>
