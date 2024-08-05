@@ -8,9 +8,10 @@ import {
     Button,
 } from 'semantic-ui-react';
 import axios from 'axios';
-import Loading from '../Loading';
+// import Loading from '../Loading';
+import ShowUserData from './ShowUserData';
 
-export default function Form_Add_Member() {
+export default function AddUser_Form() {
     const [userMember, setUserMember] = useState({
         Name: '',
         LastName: '',
@@ -23,7 +24,7 @@ export default function Form_Add_Member() {
         Campus: '',
     });
 
-    const [dataUser, setDataUser] = useState(null);
+    // const [dataUser, setDataUser] = useState(null);
 
     const HandleChange = (e) => {
         const { name, value } = e.target;
@@ -44,35 +45,10 @@ export default function Form_Add_Member() {
             .catch(err => console.error(err));
 
         setUserMember({
-            Name: '',
-            LastName: '',
-            ID: '',
-            Password: '',
-            Email: '',
-            Phone: '',
-            Affiliation: '',
-            Position: '',
-            Campus: '',
+            Name: '', LastName: '', ID: '', Password: '', Email: '',
+            Phone: '', Affiliation: '', Position: '', Campus: '',
         });
     };
-
-    const deleteUser = (id) => {
-        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(err => console.error(err));
-    };
-
-    useEffect(() => {
-        axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
-            .then(res => setDataUser(res.data))
-            .catch(err => console.error(err));
-    }, []);
-
-    if (!dataUser) {
-        return <Loading />;
-    }
 
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
@@ -162,13 +138,16 @@ export default function Form_Add_Member() {
                     </FormGroup>
                     <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
                 </Form>
+
                 <br />
                 <hr />
                 <h1>สมาชิก</h1>
                 <br />
+
                 <Table striped basic='very'>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell>Count</Table.HeaderCell>
                             <Table.HeaderCell>Position</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>LastName</Table.HeaderCell>
@@ -180,24 +159,10 @@ export default function Form_Add_Member() {
                             <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
-                        {dataUser.map((val, index) => (
-                            <Table.Row key={index}>
-                                <Table.Cell>{val.Position}</Table.Cell>
-                                <Table.Cell>{val.Name}</Table.Cell>
-                                <Table.Cell>{val.LastName}</Table.Cell>
-                                <Table.Cell>{val.ID}</Table.Cell>
-                                <Table.Cell>{val.Password}</Table.Cell>
-                                <Table.Cell>{val.Affiliation}</Table.Cell>
-                                <Table.Cell>{val.Email}</Table.Cell>
-                                <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
-                                <Table.Cell>
-                                    <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
-                    </Table.Body>
                 </Table>
+
+                <ShowUserData />
+
             </div>
         </div>
     );
