@@ -3,7 +3,7 @@ import './App.css';
 import Background from './img/Background.svg';
 
 
-import Navbar from './Components/Navbar';
+import Navbar from './Components/Navbar/Navbar';
 import Basic_Information from './Components/RequestForm/Basic_Information';
 import Course_Analysis_Information from './Components/RequestForm/Course_Analysis_Information';
 import Management_Information from './Components/RequestForm/Management_Information';
