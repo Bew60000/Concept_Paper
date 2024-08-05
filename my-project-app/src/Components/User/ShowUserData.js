@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function ShowUserData() {
     const [dataUser, setDataUser] = useState(null);
-    const[currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const deleteUser = (id) => {
@@ -41,7 +41,7 @@ function ShowUserData() {
         <div>
             <Table striped basic='very'>
                 <Table.Body>
-                    {dataUser.map((val, index) => (
+                    {currentItems.map((val, index) => (
                         <Table.Row key={index}>
                             <Table.Cell>{indexOfFirstItem + index + 1}</Table.Cell>
                             <Table.Cell>{val.Position}</Table.Cell>

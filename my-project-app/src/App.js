@@ -4,11 +4,11 @@ import Background from './img/Background.svg';
 
 
 import Navbar from './Components/Navbar';
-import Basic_Information from './Components/Add_Form/Basic_Information';
-import Course_Analysis_Information from './Components/Add_Form/Course_Analysis_Information';
-import Management_Information from './Components/Add_Form/Management_Information';
-import Student_Admission from './Components/Add_Form/Student_Admission';
-import Teachers_Information from './Components/Add_Form/Teachers_Information';
+import Basic_Information from './Components/RequestForm/Basic_Information';
+import Course_Analysis_Information from './Components/RequestForm/Course_Analysis_Information';
+import Management_Information from './Components/RequestForm/Management_Information';
+import Student_Admission from './Components/RequestForm/Student_Admission';
+import Teachers_Information from './Components/RequestForm/Teachers_Information';
 
 import AddUser_Form from './Components/User/AddUser_Form';
 
