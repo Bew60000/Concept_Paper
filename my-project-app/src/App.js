@@ -24,13 +24,13 @@ function App() {
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
       {/* <Navbar /> */}
 
-      <AddUser_Form />
+      {/* <AddUser_Form /> */}
 
-      {/* <Basic_Information />
+      <Basic_Information />
       <Course_Analysis_Information />
       <Student_Admission />
       <Management_Information />
-      <Teachers_Information /> */}
+      <Teachers_Information />
 
 
     </div>
