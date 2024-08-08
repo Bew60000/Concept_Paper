@@ -39,20 +39,38 @@ function ShowUserData() {
 
     return (
         <div>
-            <Table striped basic='very'>
+            <Table selectable responsive basic='very'>
+
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>Count</Table.HeaderCell>
+                        <Table.HeaderCell>Position</Table.HeaderCell>
+                        <Table.HeaderCell><p className='text-center'> Name</p> </Table.HeaderCell>
+                        <Table.HeaderCell>Username</Table.HeaderCell>
+                        <Table.HeaderCell>Password</Table.HeaderCell>
+                        <Table.HeaderCell>Affiliation</Table.HeaderCell>
+                        <Table.HeaderCell><p className='text-center'> Email</p> </Table.HeaderCell>
+                        <Table.HeaderCell>Phone</Table.HeaderCell>
+                        <Table.HeaderCell>Campus</Table.HeaderCell>
+                        <Table.HeaderCell><p className='text-center'> Action</p> </Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
                 <Table.Body>
                     {currentItems.map((val, index) => (
                         <Table.Row key={index}>
-                            <Table.Cell>{indexOfFirstItem + index + 1}</Table.Cell>
-                            <Table.Cell>{val.Position}</Table.Cell>
-                            <Table.Cell>{val.Name}</Table.Cell>
-                            <Table.Cell>{val.LastName}</Table.Cell>
-                            <Table.Cell>{val.ID}</Table.Cell>
-                            <Table.Cell>{val.Password}</Table.Cell>
-                            <Table.Cell>{val.Affiliation}</Table.Cell>
+                            <Table.Cell><p className='text-center'> {indexOfFirstItem + index + 1} </p></Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.Position} </p></Table.Cell>
+                            <Table.Cell>{val.Name}&nbsp;&nbsp;&nbsp;{val.LastName} </Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.Username} </p></Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.Password} </p></Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.Affiliation} </p></Table.Cell>
+
                             <Table.Cell>{val.Email}</Table.Cell>
                             <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
+                            <Table.Cell>{val.Campus}</Table.Cell>
                             <Table.Cell>
+                                <Button>แก้ไข</Button>
                                 <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
                             </Table.Cell>
                         </Table.Row>
@@ -66,7 +84,9 @@ function ShowUserData() {
                 >
                     หน้าก่อนหน้า
                 </Button>
+
                 <span> หน้าที่ {currentPage} จาก {totalPages} </span>
+                
                 <Button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(prev => prev + 1)}
@@ -74,8 +94,9 @@ function ShowUserData() {
                     หน้าถัดไป
                 </Button>
             </div>
+
         </div>
-    )
+    );
 }
 
 export default ShowUserData;

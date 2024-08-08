@@ -4,7 +4,7 @@ import {
     FormGroup,
     FormButton,
     Form,
-    Table,
+    FormField,
 } from 'semantic-ui-react';
 import axios from 'axios';
 import ShowUserData from './ShowUserData';
@@ -13,7 +13,7 @@ export default function AddUser_Form() {
     const [userMember, setUserMember] = useState({
         Name: '',
         LastName: '',
-        ID: '',
+        Username: '',
         Password: '',
         Email: '',
         Phone: '',
@@ -32,8 +32,8 @@ export default function AddUser_Form() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/test/add_info_User', userMember)
-            // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
+        // axios.post('http://localhost:8080/test/add_info_User', userMember)
+        axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
             .then(res => {
                 console.log(res);
                 alert('กรอกข้อมูลเสร็จสิ้น');
@@ -46,7 +46,7 @@ export default function AddUser_Form() {
 
 
         setUserMember({
-            Name: '', LastName: '', ID: '', Password: '', Email: '',
+            Name: '', LastName: '', Username: '', Password: '', Email: '',
             Phone: '', Affiliation: '', Position: '', Campus: '',
         });
     };
@@ -56,13 +56,13 @@ export default function AddUser_Form() {
             <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
                 <h1>เพิ่มสมาชิก</h1>
                 <br />
-                <Form onSubmit={HandleSubmit}>
+                <Form onSubmit={HandleSubmit} className=''>
                     <FormGroup widths='equal'>
                         <FormInput
-                            fluid label='ID'
+                            fluid label='Username'
                             type='text'
-                            name='ID'
-                            value={userMember.ID}
+                            name='Username'
+                            value={userMember.Username}
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
@@ -74,7 +74,10 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
+                        
+                        <FormField />
                     </FormGroup>
+
                     <FormGroup widths='equal'>
                         <FormInput
                             fluid label='Position'
@@ -84,6 +87,28 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
+                        <FormInput
+                            fluid label='Campus'
+                            type='text'
+                            name='Campus'
+                            value={userMember.Campus}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormInput
+                            fluid label='Affiliation'
+                            type='text'
+                            name='Affiliation'
+                            value={userMember.Affiliation}
+                            onChange={HandleChange}
+                            placeholder='โปรดระบุ'
+                        />
+                        <FormField />
+                        <FormField />
+                        <FormField />
+                    </FormGroup>
+
+                    <FormGroup widths='equal'>
                         <FormInput
                             fluid label='Name'
                             type='text'
@@ -100,7 +125,9 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
+                        <FormField />
                     </FormGroup>
+
                     <FormGroup widths='equal'>
                         <FormInput
                             fluid label='Email'
@@ -110,6 +137,10 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
+                        <FormField />
+                    </FormGroup>
+
+                    <FormGroup widths='equal'>
                         <FormInput
                             fluid label='Phone'
                             type='tel'
@@ -118,50 +149,16 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
+                        <FormField />
                     </FormGroup>
-                    <FormGroup widths='equal'>
-                        <FormInput
-                            fluid label='Affiliation'
-                            type='text'
-                            name='Affiliation'
-                            value={userMember.Affiliation}
-                            onChange={HandleChange}
-                            placeholder='โปรดระบุ'
-                        />
-                        <FormInput
-                            fluid label='Campus'
-                            type='text'
-                            name='Campus'
-                            value={userMember.Campus}
-                            onChange={HandleChange}
-                            placeholder='โปรดระบุ'
-                        />
-                    </FormGroup>
-                    <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
+
                 </Form>
+                <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
 
                 <br />
                 <hr />
                 <h1>สมาชิก</h1>
                 <br />
-
-                <Table striped basic='very'>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>Count</Table.HeaderCell>
-                            <Table.HeaderCell>Position</Table.HeaderCell>
-                            <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>LastName</Table.HeaderCell>
-                            <Table.HeaderCell>ID</Table.HeaderCell>
-                            <Table.HeaderCell>Password</Table.HeaderCell>
-                            <Table.HeaderCell>Affiliation</Table.HeaderCell>
-                            <Table.HeaderCell>Email</Table.HeaderCell>
-                            <Table.HeaderCell>Phone</Table.HeaderCell>
-                            <Table.HeaderCell>Action</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                </Table>
-
                 <ShowUserData />
 
             </div>

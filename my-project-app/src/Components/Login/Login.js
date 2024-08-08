@@ -11,12 +11,12 @@ function Login() {
             setIsInvalid(true);
         } else {
             setIsInvalid(false);
-            // ส่งข้อมูลฟอร์มหรือทำสิ่งที่คุณต้องการ
+
         }
     };
 
     return (
-        <div className="flex min-w-screen min-h-screen items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 "      >
+        <div className="flex min-w-screen min-h-screen items-center justify-center bg-gradient-to-r from-blue-950 to-indigo-600 "      >
 
             <div className='bg-white  rounded-3xl border shadow-lg p-12 w-1/4 '>
                 <Form>
