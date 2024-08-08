@@ -32,13 +32,18 @@ export default function AddUser_Form() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
+        axios.post('http://localhost:8080/test/add_info_User', userMember)
+            // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
             .then(res => {
                 console.log(res);
                 alert('กรอกข้อมูลเสร็จสิ้น');
                 window.location.reload();
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                alert('ไม่สามารถเพิ่มข้อมูลได้');
+            })
+
 
         setUserMember({
             Name: '', LastName: '', ID: '', Password: '', Email: '',

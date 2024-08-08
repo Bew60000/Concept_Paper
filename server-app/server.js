@@ -23,7 +23,7 @@ const { Pool } = require('pg');
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'test1',
+    database: 'test-system-subject',
     password: '6410210573',
     port: 5432
 });
@@ -51,17 +51,19 @@ app.get('/test', async (req, res) => {
     }
 });
 
-
-app.post('/test/add_profile', async (req, res) => {
+// เพิ่มข้อมูลส่วนที่ 1
+app.post('/test/add_basic_info', async (req, res) => {
     // const input = req.body;
 
-    const { id, name } = req.body;
+    const { curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes } = req.body;
 
 
     try {
-        await pool.query(`insert into profile (id,name) VALUES ($1,$2) `,
+        await pool.query(`INSERT INTO basic_infos(
+	curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes)
+	VALUES (1, $2, $3, $4, $5, $6, $7);`,
             [
-                id, name
+                curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {
@@ -123,6 +125,100 @@ app.delete('/test/test/deletebyid/:id', async (req, res) => {
         res.status(500).send('Error adding authors');
     }
 });
+
+
+//  add user เพิ่มข้อมูลผู้ใช้ใหม่
+app.post('/test/add_info_User', async (req, res) => {
+    // const input = req.body;
+
+    const {
+        Position,
+        Name,
+        LastName,
+        Affiliation,
+        ID,
+        Password,
+        Email,
+        Phone } = req.body;
+
+
+    try {
+        await pool.query(`insert into user_info (Position,Name,LastName,Affiliation,ID,Password,Email,Phone) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) `,
+            [
+                Position,
+                Name,
+                LastName,
+                Affiliation,
+                ID,
+                Password,
+                Email,
+                Phone
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+// delete user
+
+app.delete('/test/delete_user', async (req, res) => {
+    const { id } = req.params;
+    // const {id} = req.params.id;
+    // const {  } = req.body;
+
+    try {
+        await pool.query(`delete from user_info where id = $1`,
+            [
+                id
+            ]);
+        res.status(201).send('Delete successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+// update user
+
+app.put('/test/update/:id', async (req, res) => {
+    const { id } = req.params;
+    // const id = req.id;
+    const { Position,
+        Name,
+        LastName,
+        Affiliation,
+        Password,
+        Email,
+        Phone } = req.body;
+
+    try {
+        await pool.query(`update profile set Name = $1,
+            LastName = $2,
+            Affiliation = $3,
+            Password = $4,
+            Email = $5,
+            Phone = $6 where id = $7`, [Position,
+            Name,
+            LastName,
+            Affiliation,
+            Password,
+            Email,
+            Phone, id]);
+        // res.json(result.rows);
+        console.log();
+        res.status(201).send('update successfull');
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
 
 app.listen(8080, () =>
     console.log(`Example app Listening on port ${port}`)
