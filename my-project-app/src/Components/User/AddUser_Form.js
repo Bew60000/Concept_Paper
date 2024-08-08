@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     FormInput,
     FormGroup,
     FormButton,
     Form,
     Table,
-    Button,
 } from 'semantic-ui-react';
 import axios from 'axios';
-// import Loading from '../Loading';
 import ShowUserData from './ShowUserData';
 
 export default function AddUser_Form() {
@@ -23,8 +21,6 @@ export default function AddUser_Form() {
         Position: '',
         Campus: '',
     });
-
-    // const [dataUser, setDataUser] = useState(null);
 
     const HandleChange = (e) => {
         const { name, value } = e.target;
