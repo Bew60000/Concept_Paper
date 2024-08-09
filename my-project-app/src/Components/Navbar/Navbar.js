@@ -1,38 +1,36 @@
 import React from 'react';
 
-
 const Navbar = () => {
-    return (
-        // <div className='bg-white grid grid-cols-4 h-14 text-center place-items-center mb-10'>
-            
-        //         <p>5555</p>
-        //         <p>5555</p>
-        //         <p>5555</p>
-        //         <p>5555</p>
+  return (
+    <nav className="fixed top-0 left-0 right-0 bg-gray-800 z-50">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-16">          
 
-            
-        // </div>
+          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex-shrink-0">
+              <img className="h-8 w-8" src="your-logo-url" alt="Your Logo" />
+            </div>
 
-        <header className="bg-white shadow">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-24">
-                        <div className="flex">
-                            <div className="flex-shrink-0">
-                                <img className="h-16 w-25 mt-4" src="logo192.png" alt="Logo" />
-                            </div>
-                            <nav className="ml-10 flex items-center space-x-4">
-                                <a href="#" className="text-gray-900">Current</a>
-                                <a href="#" className="text-gray-900">Archives</a>
-                                <a href="#" className="text-gray-900">Announcements</a>
-                                <a href="#" className="text-gray-900">Author Guidelines</a>
-                                <a href="#" className="text-gray-900">About</a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <div className="hidden sm:block sm:ml-6">
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services</a>
+                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+              </div>
+            </div>
+          </div>
 
-    );
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <button className="bg-gray-500 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-red-600">
+              Logout
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

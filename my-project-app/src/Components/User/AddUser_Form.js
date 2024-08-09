@@ -42,8 +42,7 @@ export default function AddUser_Form() {
             .catch(err => {
                 console.error(err);
                 alert('ไม่สามารถเพิ่มข้อมูลได้');
-            })
-
+            });
 
         setUserMember({
             Name: '', LastName: '', Username: '', Password: '', Email: '',
@@ -52,11 +51,13 @@ export default function AddUser_Form() {
     };
 
     return (
-        <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-            <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
-                <h1>เพิ่มสมาชิก</h1>
+        <div className="flex items-center justify-center grid grid-cols-12 auto-rows-auto p-5">
+            <div className="bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl w-Screen">
                 <br />
-                <Form onSubmit={HandleSubmit} className=''>
+                <hr />
+                <h1>เพิ่มสมาชิก</h1>
+
+                <Form onSubmit={HandleSubmit}>
                     <FormGroup widths='equal'>
                         <FormInput
                             fluid label='Username'
@@ -74,7 +75,6 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
-                        
                         <FormField />
                     </FormGroup>
 
@@ -103,9 +103,6 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
-                        <FormField />
-                        <FormField />
-                        <FormField />
                     </FormGroup>
 
                     <FormGroup widths='equal'>
@@ -125,7 +122,6 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
-                        <FormField />
                     </FormGroup>
 
                     <FormGroup widths='equal'>
@@ -137,7 +133,6 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
-                        <FormField />
                     </FormGroup>
 
                     <FormGroup widths='equal'>
@@ -149,18 +144,17 @@ export default function AddUser_Form() {
                             onChange={HandleChange}
                             placeholder='โปรดระบุ'
                         />
-                        <FormField />
                     </FormGroup>
+                    
+                    <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
 
                 </Form>
-                <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
 
                 <br />
                 <hr />
                 <h1>สมาชิก</h1>
                 <br />
                 <ShowUserData />
-
             </div>
         </div>
     );

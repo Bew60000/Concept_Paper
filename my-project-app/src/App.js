@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
-      {/* <Navbar /> */}
+      <Navbar />
 
       <AddUser_Form />
 
