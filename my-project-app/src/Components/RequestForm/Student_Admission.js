@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     FormTextArea,
     FormSelect,
@@ -14,116 +14,93 @@ const options = [
     { key: '2', text: 'ชั้นปีที่ 2', value: '2' },
     { key: '3', text: 'ชั้นปีที่ 3', value: '3' },
     { key: '4', text: 'ชั้นปีที่ 4', value: '4' },
-]
+];
 
-class Student_Admission extends Component {
-    state = {
-        forms: [{
-            id: 1,
-            title: '',
-            firstName: '',
-            lastName: '',
-            qualification: '',
-            academicPosition: '',
-            academicWork: ''
-        }],
-        formCount: 1
-    }
+const StudentAdmission = () => {
+    const [forms, setForms] = useState([{
+        id: 1,
+        year: '',
+        count_students: ''
+    }]);
 
-    handleChange = (id, field, value) => {
-        const updatedForms = this.state.forms.map(form => {
-            if (form.id === id) {
-                return { ...form, [field]: value }
+    const [formCount, setFormCount] = useState(1);
+
+    const handleChange = useCallback((id, field, value) => {
+        setForms(prevForms => 
+            prevForms.map(form =>
+                form.id === id ? { ...form, [field]: value } : form
+            )
+        );
+    }, []);
+
+    const addForm = useCallback(() => {
+        setForms(prevForms => [
+            ...prevForms,
+            {
+                id: formCount + 1,
+                year: '',
+                count_students: ''
             }
-            return form
-        })
-        this.setState({ forms: updatedForms })
-    }
+        ]);
+        setFormCount(prevCount => prevCount + 1);
+    }, [formCount]);
 
-    addForm = () => {
-        this.setState(prevState => ({
-            forms: [
-                ...prevState.forms,
-                {
-                    id: prevState.formCount + 1,
-                    year: '',
-                    count_students: '',
-                    lastName: '',
-                    qualification: '',
-                    academicPosition: '',
-                    academicWork: ''
-                }
-            ],
-            formCount: prevState.formCount + 1
-        }))
-    }
+    const removeForm = useCallback((id) => {
+        setForms(prevForms => prevForms.filter(form => form.id !== id));
+    }, []);
 
-    removeForm = (id) => {
-        this.setState(prevState => ({
-            forms: prevState.forms.filter(form => form.id !== id)
-        }))
-    }
+    return (
+        <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
+            <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
+                <h1>ส่วนที่ 3 : แผนการรับนักศึกษา</h1>
+                <hr />
+                <br />
+                <Form>
+                    {forms.map((form) => (
+                        <div key={form.id}>
+                            <FormGroup widths='equal'>
+                                <hr />
+                                <br />
+                                <FormSelect
+                                    fluid
+                                    label='ชั้นปีที่ที่เปิดสอน'
+                                    options={options}
+                                    placeholder='ชั้นปี**'
+                                    value={form.year}
+                                    onChange={(e, { value }) => handleChange(form.id, 'year', value)}
+                                />
+                                <FormInput
+                                    fluid
+                                    label='จำนวนศึกษาที่เปิดรับ'
+                                    placeholder='โปรดระบุจำนวน'
+                                    value={form.count_students}
+                                    onChange={(e) => handleChange(form.id, 'count_students', e.target.value)}
+                                />
 
-    render() {
-        const { forms } = this.state
-        return (
-            <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-                <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
-                    <h1>ส่วนที่ 3 : แผนการรับนักศึกษา</h1>
+                                <FormButton
+                                    className='grid gap-4 content-end'
+                                    type='button'
+                                    onClick={() => removeForm(form.id)}
+                                >
+                                    ลบข้อมูล
+                                </FormButton>
+                                <FormField />
+                            </FormGroup>
+                        </div>
+                    ))}
+
+                    <br />
                     <hr />
                     <br />
-                    <Form>
-                        {forms.map((form, index) => (
-                            <div key={form.id}>
 
-
-                                <FormGroup widths='equal'>
-                                    <hr />
-                                    <br />
-                                    <FormSelect
-                                        fluid
-                                        label='ชั้นปีที่ที่เปิดสอน'
-                                        options={options}
-                                        placeholder='ชั้นปี**'
-                                        value={form.year}
-                                        onChange={(e, { value }) => this.handleChange(form.id, 'year', value)}
-                                    />
-                                    <FormInput
-                                        fluid
-                                        label='จำนวนศึกษาที่เปิดรับ'
-                                        placeholder='โปรดระบุจำนวน'
-                                        value={form.count_students}
-                                        onChange={(e) => this.handleChange(form.id, 'count_students', e.target.value)}
-                                    />
-
-                                    <FormButton
-                                        className='grid gap-4 content-end'
-                                        type='button'
-                                        onClick={() => this.removeForm(form.id)}>
-                                        ลบข้อมูล
-                                    </FormButton>
-                                    <FormField />
-
-                                </FormGroup>
-
-
-
-                            </div>
-                        ))}
-
-                        <br />
-                        <hr />
-                        <br />
-
-                        <div className='flex justify-between gap-4'>
-                            <FormButton type='button' onClick={this.addForm}>เพิ่มแผนการศึกษา</FormButton>
-                            <FormButton type='submit'>ยืนยัน</FormButton>
-                        </div>
-                    </Form>
-                </div>
+                    <div className='flex justify-between gap-4'>
+                        <FormButton type='button' onClick={addForm}>เพิ่มแผนการศึกษา</FormButton>
+                        <FormButton type='submit'>ยืนยัน</FormButton>
+                    </div>
+                </Form>
             </div>
-        )
-    }
-}
+        </div>
+    );
+};
 
-export default Student_Admission;
+export default StudentAdmission;
