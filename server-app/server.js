@@ -136,20 +136,20 @@ app.post('/test/add_info_User', async (req, res) => {
         Name,
         LastName,
         Affiliation,
-        ID,
+        Username,
         Password,
         Email,
         Phone } = req.body;
 
 
     try {
-        await pool.query(`insert into user_info (Position,Name,LastName,Affiliation,ID,Password,Email,Phone) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) `,
+        await pool.query(`insert into user_info (Position,Name,LastName,Username,Password,Email,Phone,Affiliation) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) `,
             [
                 Position,
                 Name,
                 LastName,
                 Affiliation,
-                ID,
+                Username,
                 Password,
                 Email,
                 Phone

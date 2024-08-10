@@ -19,6 +19,18 @@ function ShowUserData() {
             .catch(err => console.error(err));
     };
 
+    const EditUser = (id) => {
+        axios.put('')
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(err => {
+                console.error(err);
+                alert('ไม่สามารถแก้ไขข้อมูลได้');
+            }
+            );
+    }
+
     useEffect(() => {
         axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(res => setDataUser(res.data))
@@ -70,7 +82,7 @@ function ShowUserData() {
                             <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
                             <Table.Cell>{val.Campus}</Table.Cell>
                             <Table.Cell>
-                                <Button>แก้ไข</Button>
+                                <Button onClick={() => EditUser(val.id)} >แก้ไข</Button>
                                 <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
                             </Table.Cell>
                         </Table.Row>
@@ -86,7 +98,7 @@ function ShowUserData() {
                 </Button>
 
                 <span> หน้าที่ {currentPage} จาก {totalPages} </span>
-                
+
                 <Button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(prev => prev + 1)}
