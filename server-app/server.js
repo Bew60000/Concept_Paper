@@ -135,24 +135,26 @@ app.post('/test/add_info_User', async (req, res) => {
         Position,
         Name,
         LastName,
-        Affiliation,
         Username,
         Password,
         Email,
-        Phone } = req.body;
+        Phone,
+        Affiliation,
+        Campus } = req.body;
 
 
     try {
-        await pool.query(`insert into user_info (Position,Name,LastName,Username,Password,Email,Phone,Affiliation) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) `,
+        await pool.query(`insert into user_info (Position,Name,LastName,Username,Password,Email,Phone,Affiliation,Campus) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) `,
             [
                 Position,
                 Name,
                 LastName,
-                Affiliation,
                 Username,
                 Password,
                 Email,
-                Phone
+                Phone,
+                Affiliation,
+                Campus
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {
@@ -181,6 +183,18 @@ app.delete('/test/delete_user', async (req, res) => {
         res.status(500).send('Error adding authors');
     }
 });
+
+app.get('/getinfo_user/all', async (req, res) => {
+    try {
+        const result = await pool.query(`select * from user_info`);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+
 
 
 // update user

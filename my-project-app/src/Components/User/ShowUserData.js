@@ -32,7 +32,9 @@ function ShowUserData() {
     }
 
     useEffect(() => {
-        axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
+        // axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
+        axios.get('http://localhost:8080/getinfo_user/all')
+
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);
