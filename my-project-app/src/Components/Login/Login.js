@@ -1,61 +1,95 @@
 import React, { useState } from 'react';
-import { Form, FormInput } from 'semantic-ui-react';
+import { Form, FormInput, Message, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
     const [username, setUsername] = useState('');
-    const [isInvalid, setIsInvalid] = useState(false);
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (!username) {
-            setIsInvalid(true);
-        } else {
-            setIsInvalid(false);
+        setLoading(true);
+        setError('');
+
+        try {
+
+            const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
+            const data = response.data;
+
+
+            const user = data.find(user => user.Username === username && user.Password === password);
+
+            if (user) {
+                if (user.Position === 'User') {
+                    navigate('homeuser');
+                } else if (user.Position === 'Director') {
+                    navigate('homedirector');
+                } else if (user.Position === 'Admin') {
+                    navigate('homeadmin');
+                } else {
+                    setError('Invalid position');
+                }
+            } else {
+                setError('Invalid username or password');
+            }
+        } catch (err) {
+            setError('Something went wrong. Please try again later.');
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleLoginClick = () => {
-        navigate('home');
-    };
-
     return (
-        <div className="flex min-w-screen min-h-screen items-center justify-center bg-gradient-to-r from-blue-950 to-indigo-600 "      >
-
-            <div className='bg-white  rounded-3xl border shadow-lg p-12 w-1/4 '>
-                <Form onSubmit={handleSubmit}>
+        <div className="flex min-w-screen min-h-screen items-center justify-center bg-gradient-to-r from-blue-950 to-indigo-600">
+            <div className='bg-white rounded-3xl border shadow-lg p-12 w-1/4'>
+                <Form onSubmit={handleLogin} error={!!error} loading={loading}>
                     <h1 className='text-gray-600 text-center'>เข้าสู่ระบบ</h1>
+
                     <FormInput
                         label='Username'
                         type='text'
-                        placeholder='Enter your ID' />
+                        placeholder='Enter your Username'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
 
                     <FormInput
                         label='Password'
                         type='password'
-                        placeholder='Enter your Password' />
+                        placeholder='Enter your Password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+
+                    {error && (
+                        <Message
+                            error
+                            content={error}
+                        />
+                    )}
 
                     <br />
                     <div className='flex items-center justify-center gap-6'>
-                        <button
-                            // type='submit'
+                        <Button
+                            type='submit'
                             className='bg-blue-700 flex-1 pr-5 pl-5 pt-3 pb-3 rounded-lg 
-                        shadow-10 text-white hover:bg-blue-800 text-center'
-                            onClick={handleLoginClick}
+                            shadow-10 text-white hover:bg-blue-800 text-center'
+                            disabled={loading}
                         >
-                            Login
-                        </button>
+                            {loading ? 'Logging in...' : 'Login'}
+                        </Button>
                     </div>
-
-
-
                 </Form>
             </div>
-
         </div>
-    )
+    );
 }
 
-export default Login
+export default Login;

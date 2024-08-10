@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import Background from './img/Background.svg';
 
-
 import Navbar from './Components/Navbar/Navbar';
 import AddUser_Form from './Components/User/AddUser_Form';
 
@@ -11,6 +10,10 @@ import Course_Analysis_Information from './Components/RequestForm/Course_Analysi
 import Management_Information from './Components/RequestForm/Management_Information';
 import Student_Admission from './Components/RequestForm/Student_Admission';
 import Teachers_Information from './Components/RequestForm/Teachers_Information';
+
+import Homepage_Admin from './Components/HomeAdmin/Homepage_Admin';
+import Homepage_User from './Components/HomeUser/Homepage_User';
+import Homepage_Director from './Components/HomeDirector/Homepage_Director';
 
 
 
@@ -27,13 +30,17 @@ function App() {
       <div className='pt-20'>
         <Navbar />
 
-        <AddUser_Form />
+        <Homepage_Admin />
+        <Homepage_Director />
+        <Homepage_User />
+
+        {/* <AddUser_Form />
 
         <Basic_Information />
         <Course_Analysis_Information />
         <Student_Admission />
         <Management_Information />
-        <Teachers_Information />
+        <Teachers_Information /> */}
       </div>
 
 

@@ -40,6 +40,7 @@ const CourseAnalysisInformation = () => {
                         fluid
                         label='หลักการและเหตุผลในการขอเปิดหลักสูตร'
                         placeholder='โปรดอธิบายรายละเอียด'
+                        
                     />
 
                     <FormGroup grouped inline>
@@ -90,15 +91,18 @@ const CourseAnalysisInformation = () => {
                         fluid
                         label='ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายใน'
                         placeholder='วิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต'
+                        
                     />
 
                     <FormTextArea
                         label='ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต'
                         placeholder='โปรดอธิบายรายละเอียด'
+                        
                     />
                     <FormTextArea
                         label='จุดเด่นของหลักสูตรและการดำเนินการที่จะแข่งขันกับหลักสูตรอื่นที่ใกล้เคียง'
                         placeholder='โปรดอธิบายรายละเอียด'
+                        
                     />
 
                     <FormButton className='grid gap-4 place-items-end' type='submit'>ต่อไป</FormButton>
