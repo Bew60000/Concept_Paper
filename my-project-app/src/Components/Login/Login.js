@@ -77,8 +77,7 @@ function Login() {
 
                     <br />
                     <div className='flex items-center justify-center gap-6'>
-                        <button
-                            
+                        <button                            
                             type='submit'
                             className='bg-blue-500 flex-1 pr-5 pl-5 pt-3 pb-3 rounded-lg 
                             shadow-10 text-white hover:bg-blue-800 text-center'
