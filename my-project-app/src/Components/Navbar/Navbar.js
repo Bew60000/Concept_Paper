@@ -5,11 +5,10 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // ลบข้อมูล session ของผู้ใช้
-    localStorage.removeItem('token'); // ถ้ามีการใช้ token ในการจัดการ session
-    sessionStorage.clear(); // ล้างข้อมูลทั้งหมดใน sessionStorage
+    localStorage.removeItem('token'); 
+    sessionStorage.clear(); 
 
-    // นำผู้ใช้ไปยังหน้า Login และป้องกันไม่ให้ย้อนกลับ
+   
     navigate('/', { replace: true });
   };
   return (
