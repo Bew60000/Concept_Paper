@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, FormInput, Message, Button } from 'semantic-ui-react';
+import { Form, FormInput, Message,} from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -77,14 +77,15 @@ function Login() {
 
                     <br />
                     <div className='flex items-center justify-center gap-6'>
-                        <Button
+                        <button
+                            
                             type='submit'
-                            className='bg-blue-700 flex-1 pr-5 pl-5 pt-3 pb-3 rounded-lg 
+                            className='bg-blue-500 flex-1 pr-5 pl-5 pt-3 pb-3 rounded-lg 
                             shadow-10 text-white hover:bg-blue-800 text-center'
                             disabled={loading}
                         >
                             {loading ? 'Logging in...' : 'Login'}
-                        </Button>
+                        </button>
                     </div>
                 </Form>
             </div>
