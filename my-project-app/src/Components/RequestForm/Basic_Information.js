@@ -33,8 +33,8 @@ const BasicInformation = () => {
     if (name === 'Nature' && value === 'เฉพาะสาขาเดียว') {
       setFormData(prevState => ({
         ...prevState,
-        // AdditionalInfo: null,
-        AdditionalInfo: 'ไม่มีข้อมูล',
+        AdditionalInfo: null, 
+        // AdditionalInfo: 'ไม่มีข้อมูล',
       }));
     }
   };
