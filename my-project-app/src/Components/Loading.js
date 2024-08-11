@@ -5,7 +5,7 @@ function Loading() {
 
 
     return (
-        <div className="flex justify-center items-center min-h-9 bg-white">
+        <div className="flex justify-center items-center min-h-9 w-auto bg-white">
 
             {/* <img src={logo} className='scale-50 flex space-x-2 animate-pulse' /> */}
 
