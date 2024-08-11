@@ -6,30 +6,24 @@ import {
 } from 'semantic-ui-react';
 import axios from 'axios';
 
+
 function ShowUserData() {
     const [dataUser, setDataUser] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const deleteUser = (id) => {
-        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(err => console.error(err));
-    };
+        // axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/ID/${id}`)
+        axios.delete(`http://localhost:8080/test/delete_user/${id}`)
 
-    const EditUser = (id) => {
-        axios.put('')
             .then(() => {
                 window.location.reload();
             })
             .catch(err => {
                 console.error(err);
-                alert('ไม่สามารถแก้ไขข้อมูลได้');
-            }
-            );
-    }
+                console.log(id);
+            });
+    };
 
     useEffect(() => {
         // axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
@@ -74,18 +68,19 @@ function ShowUserData() {
                     {currentItems.map((val, index) => (
                         <Table.Row key={index}>
                             <Table.Cell><p className='text-center'> {indexOfFirstItem + index + 1} </p></Table.Cell>
-                            <Table.Cell><p className='text-center'> {val.Position} </p></Table.Cell>
-                            <Table.Cell>{val.Name}&nbsp;&nbsp;&nbsp;{val.LastName} </Table.Cell>
-                            <Table.Cell><p className='text-center'> {val.Username} </p></Table.Cell>
-                            <Table.Cell><p className='text-center'> {val.Password} </p></Table.Cell>
-                            <Table.Cell><p className='text-center'> {val.Affiliation} </p></Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.position} </p></Table.Cell>
+                            <Table.Cell>{val.name}&nbsp;&nbsp;&nbsp;{val.lastname} </Table.Cell>
+                            {/* <Table.Cell>{val.id}</Table.Cell> */}
+                            <Table.Cell><p className='text-center'> {val.username} </p></Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.password} </p></Table.Cell>
+                            <Table.Cell><p className='text-center'> {val.affiliation} </p></Table.Cell>
 
-                            <Table.Cell>{val.Email}</Table.Cell>
-                            <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
-                            <Table.Cell>{val.Campus}</Table.Cell>
+                            <Table.Cell>{val.email}</Table.Cell>
+                            <Table.Cell>{val.phone ? val.phone : 'ไม่พบข้อมูล'}</Table.Cell>
+                            <Table.Cell>{val.campus}</Table.Cell>
                             <Table.Cell>
-                                <Button onClick={() => EditUser(val.id)} >แก้ไข</Button>
-                                <Button onClick={() => deleteUser(val.ID)}>ลบ</Button>
+                                <Button >แก้ไข</Button>
+                                <Button onClick={() => deleteUser(val.id)}>ลบ</Button>
                             </Table.Cell>
                         </Table.Row>
                     ))}

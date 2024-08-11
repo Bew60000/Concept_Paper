@@ -51,6 +51,8 @@ app.get('/test', async (req, res) => {
     }
 });
 
+// ส่วนของการเพิ่มข้อมูล
+
 // เพิ่มข้อมูลส่วนที่ 1
 app.post('/test/add_basic_info', async (req, res) => {
     // const input = req.body;
@@ -73,6 +75,69 @@ app.post('/test/add_basic_info', async (req, res) => {
 });
 
 
+// เพิ่มข้อมูลส่วนที่ 1
+app.post('/add_basic_info', async (req, res) => {
+    // const input = req.body;
+
+    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO basic_info(
+	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
+	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+            [
+                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+// เพิ่มข้อมูลส่วนที่ 2
+app.post('/add_basic_info', async (req, res) => {
+    // const input = req.body;
+
+    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO basic_info(
+	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
+	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+            [
+                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+// เพิ่มข้อมูลส่วนที่ 3
+app.post('/add_basic_info', async (req, res) => {
+    // const input = req.body;
+
+    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO basic_info(
+	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
+	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+            [
+                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
 app.put('/test/update', async (req, res) => {
 
     const { id, name } = req.body;
@@ -90,6 +155,69 @@ app.put('/test/update', async (req, res) => {
     }
 });
 
+// เพิ่มข้อมูลส่วนที่ 4
+app.post('/add_basic_info', async (req, res) => {
+    // const input = req.body;
+
+    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO basic_info(
+	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
+	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+            [
+                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+// เพิ่มข้อมูลส่วนที่ 5
+app.post('/add_basic_info', async (req, res) => {
+    // const input = req.body;
+
+    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO basic_info(
+	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
+	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+            [
+                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+// เพิ่มข้อมูลส่วนที่ 6
+app.post('/add_basic_info', async (req, res) => {
+    // const input = req.body;
+
+    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO basic_info(
+	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
+	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+            [
+                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
 
 app.put('/test/update/:id', async (req, res) => {
     const { id } = req.params;
@@ -144,7 +272,7 @@ app.post('/test/add_info_User', async (req, res) => {
 
 
     try {
-        await pool.query(`insert into user_info (Position,Name,LastName,Username,Password,Email,Phone,Affiliation,Campus) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) `,
+        await pool.query(`insert into user_info (Position,Name,LastName,Username,Password,Email,Phone,Affiliation,Campus) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) `,
             [
                 Position,
                 Name,
@@ -166,18 +294,14 @@ app.post('/test/add_info_User', async (req, res) => {
 
 // delete user
 
-app.delete('/test/delete_user', async (req, res) => {
+app.delete(`/test/delete_user/:id`, async (req, res) => {
     const { id } = req.params;
-    // const {id} = req.params.id;
+    // const { id } = req.params.id;
     // const {  } = req.body;
 
     try {
-        await pool.query(`delete from user_info where id = $1`,
-            [
-                id
-            ]);
+        await pool.query(`DELETE from user_info where id = $1`, [id]);
         res.status(201).send('Delete successfull');
-        console.log();
     } catch (error) {
         console.error(error);
         res.status(500).send('Error adding authors');
@@ -194,35 +318,48 @@ app.get('/getinfo_user/all', async (req, res) => {
     }
 });
 
+// getuser by Id
 
-
+app.get('/getinfo_user/:ById', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query(`select * from user_info where id = $1`, [id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
 
 // update user
 
 app.put('/test/update/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.id;
-    const { Position,
+    const {
+        Position,
         Name,
         LastName,
-        Affiliation,
-        Password,
         Email,
-        Phone } = req.body;
+        Phone,
+        Affiliation,
+        Campus } = req.body;
 
     try {
-        await pool.query(`update profile set Name = $1,
-            LastName = $2,
-            Affiliation = $3,
-            Password = $4,
+        await pool.query(`update profile set Name = $2,
+            LastName = $3,
+            Affiliation = $4,
             Email = $5,
-            Phone = $6 where id = $7`, [Position,
-            Name,
-            LastName,
-            Affiliation,
-            Password,
-            Email,
-            Phone, id]);
+            Phone = $6,
+            Campus = $7 where id = $1`,
+            [id,
+                Position,
+                Name,
+                LastName,
+                Email,
+                Phone,
+                Affiliation,
+                Campus]);
         // res.json(result.rows);
         console.log();
         res.status(201).send('update successfull');

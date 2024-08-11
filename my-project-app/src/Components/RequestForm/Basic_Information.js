@@ -33,7 +33,7 @@ const BasicInformation = () => {
     if (name === 'Nature' && value === 'เฉพาะสาขาเดียว') {
       setFormData(prevState => ({
         ...prevState,
-        AdditionalInfo: null, 
+        AdditionalInfo: null,
         // AdditionalInfo: 'ไม่มีข้อมูล',
       }));
     }
@@ -42,7 +42,8 @@ const BasicInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585', formData);
+      // const response = await axios.post('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585', formData);
+      const response = await axios.post('http://localhost:8080/add_basic_info', formData);
       console.log('Data successfully saved:', response.data);
     } catch (error) {
       console.error('Error saving data:', error);

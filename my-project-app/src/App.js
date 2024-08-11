@@ -33,10 +33,10 @@ function App() {
         <Homepage_Admin />
         <Homepage_Director />
         <Homepage_User />
-
+        {/* <Basic_Information /> */}
         {/* <AddUser_Form />
 
-        <Basic_Information />
+       
         <Course_Analysis_Information />
         <Student_Admission />
         <Management_Information />

@@ -51,7 +51,21 @@ export default function AddUser_Form() {
             Phone: '', Affiliation: '', Position: '', Campus: '',
         });
     };
+    const [isEditing, setIsEditing] = useState(false);
+    const [id, setid] = useState(null);
 
+    useEffect(() => {
+        if (id) {
+            axios.get(`http://localhost:8080/test/get_user/${id}`)
+                .then(res => {
+                    setUserMember(res.data);
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('ไม่สามารถดึงข้อมูลผู้ใช้ได้');
+                });
+        }
+    }, [id]);
 
     return (
 
