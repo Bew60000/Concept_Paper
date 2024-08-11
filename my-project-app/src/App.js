@@ -3,7 +3,7 @@ import './App.css';
 import Background from './img/Background.svg';
 
 import Navbar from './Components/Navbar/Navbar';
-import AddUser_Form from './Components/User/AddUser_Form';
+import AddUser_Form from './Components/Role_Admin/AddUser_Form';
 
 import Basic_Information from './Components/RequestForm/Basic_Information';
 import Course_Analysis_Information from './Components/RequestForm/Course_Analysis_Information';
