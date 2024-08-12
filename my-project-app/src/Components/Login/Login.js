@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, FormInput, Message,} from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,11 +11,24 @@ function Login() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            const user = JSON.parse(loggedInUser);
+            if (user.Position === 'User') {
+                navigate('homeuser', { replace: true });
+            } else if (user.Position === 'Director') {
+                navigate('homedirector', { replace: true });
+            } else if (user.Position === 'Admin') {
+                navigate('homeadmin', { replace: true });
+            }
+        }
+    }, [navigate]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
-
+        setError('')
         try {
 
             const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
@@ -25,6 +38,7 @@ function Login() {
             const user = data.find(user => user.Username === username && user.Password === password);
 
             if (user) {
+                localStorage.setItem('loggedInUser', JSON.stringify(user));
                 if (user.Position === 'User') {
                     navigate('homeuser');
                 } else if (user.Position === 'Director') {
