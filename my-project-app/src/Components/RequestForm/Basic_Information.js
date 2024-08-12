@@ -13,7 +13,7 @@ import axios from 'axios';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/Navbar';
 
-const BasicInformation = () => {
+const Basic_Information = () => {
   const BackgroundImage = {
     backgroundImage: `url(${Background})`,
     backgroundSize: 'cover',
@@ -45,39 +45,31 @@ const BasicInformation = () => {
       setFormData(prevState => ({
         ...prevState,
         AdditionalInfo: null,
-        // AdditionalInfo: 'ไม่มีข้อมูล',
       }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // const response = await axios.post('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585', formData);
-      const response = await axios.post('http://localhost:8080/add_basic_info', formData);
-      console.log('Data successfully saved:', response.data);
-    } catch (error) {
-      console.error('Error saving data:', error);
-      const isFormComplete = Object.values(formData).every(
-        (field) => field !== ''
-      );
+    const isFormComplete = Object.values(formData).every(
+      (field) => field !== ''
+    );
 
-      if (isFormComplete) {
-        try {
-          const response = await axios.post(
-            'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-            formData
-          );
-          console.log('Data successfully saved:', response.data);
+    if (isFormComplete) {
+      try {
+        const response = await axios.post(
+          'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+          formData
+        );
+        console.log('Data successfully saved:', response.data);
 
-          navigate('/course_analysis_information', { replace: true });
-        } catch (error) {
-          console.error('Error saving data:', error);
-        }
-      } else {
-        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        navigate('/course_analysis_information', { replace: true });
+      } catch (error) {
+        console.error('Error saving data:', error);
       }
-    };
+    } else {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+    }
   };
 
   // useEffect(() => {
@@ -230,4 +222,4 @@ const BasicInformation = () => {
   );
 };
 
-export default BasicInformation;
+export default Basic_Information;
