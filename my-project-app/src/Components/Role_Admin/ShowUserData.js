@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
 import {
     Table,
@@ -10,6 +11,7 @@ function ShowUserData() {
     const [dataUser, setDataUser] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const navigate = useNavigate(); // ใช้ useNavigate เพื่อทำการนำทาง   
 
     const deleteUser = (Username) => {
         axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${Username}`)
@@ -19,16 +21,21 @@ function ShowUserData() {
             .catch(err => console.error(err));
     };
 
-    const EditUser = (Username) => {
-        axios.put('')
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(err => {
-                console.error(err);
-                alert('ไม่สามารถแก้ไขข้อมูลได้');
-            });
+    const editUser = (user) => {
+        // นำทางไปยังหน้าส่วนแก้ไขข้อมูลพร้อมกับส่งข้อมูลของผู้ใช้ไปด้วย
+        navigate('/edit-user', { state: { user } });
     };
+
+    // const EditUser = (Username) => {
+    //     axios.put('')
+    //         .then(() => {
+    //             window.location.reload();
+    //         })
+    //         .catch(err => {
+    //             console.error(err);
+    //             alert('ไม่สามารถแก้ไขข้อมูลได้');
+    //         });
+    // };
 
     useEffect(() => {
         // axios.get('http://localhost:8080/getinfo_user/all')
@@ -80,7 +87,8 @@ function ShowUserData() {
                             <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
                             <Table.Cell>{val.Campus}</Table.Cell>
                             <Table.Cell>
-                                <Button onClick={() => EditUser(val.Username)}>แก้ไข</Button>
+                                {/* <Button onClick={() => EditUser(val.Username)}>แก้ไข</Button> */}
+                                <Button onClick={() => editUser(val)}>แก้ไข</Button>
                                 <Button onClick={() => deleteUser(val.Username)}>ลบ</Button>
                             </Table.Cell>
                         </Table.Row>

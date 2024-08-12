@@ -54,7 +54,7 @@ app.get('/test', async (req, res) => {
 // ส่วนของการเพิ่มข้อมูล
 
 // เพิ่มข้อมูลส่วนที่ 1
-app.post('/test/add_basic_info', async (req, res) => {
+app.post('/test/add_basic_infos', async (req, res) => {
     // const input = req.body;
 
     const { curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes } = req.body;
@@ -75,7 +75,7 @@ app.post('/test/add_basic_info', async (req, res) => {
 });
 
 
-// เพิ่มข้อมูลส่วนที่ 1
+// เพิ่มข้อมูลส่วนที่ 1 basic_info
 app.post('/add_basic_info', async (req, res) => {
     // const input = req.body;
 
@@ -96,19 +96,34 @@ app.post('/add_basic_info', async (req, res) => {
     }
 });
 
-// เพิ่มข้อมูลส่วนที่ 2
-app.post('/add_basic_info', async (req, res) => {
-    // const input = req.body;
-
-    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+app.delete('/deletebasic_info/:ById', async (req, res) => {
+    const { id } = req.params; //รับ params id 
+    // const {id} = req.params.id;
 
 
     try {
-        await pool.query(`INSERT INTO basic_info(
-	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
-	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+        await pool.query(`delete from basic_info where id = $1`, [id]);
+        res.status(201).send('Delete successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error Delete');
+    }
+});
+
+// เพิ่มข้อมูลส่วนที่ 2  CourseAnalysisInformation
+app.post('/add_Course_Analysis_Information', async (req, res) => {
+    // const input = req.body;
+
+    const { curriculum_id, principle_reasons, required_eq_id, cooperation, high_lights } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO course_analysis_information(
+	curriculum_id, principle_reasons, required_eq_id, cooperation, high_lights)
+	VALUES (?, ?, ?, ?, ?);`,
             [
-                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+                curriculum_id, principle_reasons, required_eq_id, cooperation, high_lights
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {
@@ -135,23 +150,6 @@ app.post('/add_basic_info', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Error adding authors');
-    }
-});
-
-app.put('/test/update', async (req, res) => {
-
-    const { id, name } = req.body;
-    // const id = req.id;
-    // const name = req.name;
-
-    try {
-        await pool.query(`update profile set name = $1 where id = $2`, [name, id]);
-        // res.json(result.rows);
-        res.status(201).send('update successfull');
-        console.log();
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving section');
     }
 });
 
@@ -218,6 +216,25 @@ app.post('/add_basic_info', async (req, res) => {
         res.status(500).send('Error adding authors');
     }
 });
+
+
+app.put('/test/update', async (req, res) => {
+
+    const { id, name } = req.body;
+    // const id = req.id;
+    // const name = req.name;
+
+    try {
+        await pool.query(`update profile set name = $1 where id = $2`, [name, id]);
+        // res.json(result.rows);
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
 
 app.put('/test/update/:id', async (req, res) => {
     const { id } = req.params;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     FormInput,
     FormGroup,
@@ -7,19 +8,20 @@ import {
     FormField,
 } from 'semantic-ui-react';
 import axios from 'axios';
-import ShowUserData from './ShowUserData';
 
 export default function AddUser_Form() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { user } = location.state;
     const [userMember, setUserMember] = useState({
-        Name: '',
-        LastName: '',
-        Username: '',
-        Password: '',
-        Email: '',
-        Phone: '',
-        Affiliation: '',
-        Position: '',
-        Campus: '',
+        Name: user.Name,
+        LastName: user.LastName,
+        Username: user.Username,
+        Password: user.Password,
+        Affiliation: user.Affiliation,
+        Email: user.Email,
+        Phone: user.Phone,
+        Campus: user.Campus
     });
 
 
@@ -34,16 +36,17 @@ export default function AddUser_Form() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/test/add_info_User', userMember)
-            // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
+        // axios.post('http://localhost:8080/test/add_info_User', userMember)
+        axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
             .then(res => {
                 console.log(res);
-                alert('กรอกข้อมูลเสร็จสิ้น');
+                alert('แก้ไขข้อมูลสำเร็จ');
+                navigate('/adduser'); // กลับไปยังหน้าหลักหรือหน้าที่ต้องการหลังแก้ไขเสร็จ
                 window.location.reload();
             })
             .catch(err => {
                 console.error(err);
-                alert('ไม่สามารถเพิ่มข้อมูลได้');
+                alert('ไม่สามารถแก้ไขข้อมูลได้');
             });
 
         setUserMember({
@@ -164,15 +167,11 @@ export default function AddUser_Form() {
                         />
                     </FormGroup>
 
-                    <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
+                    <FormButton color='blue' type='submit'>แก้ไขสมาชิก</FormButton>
 
                 </Form>
 
-                <br />
-                <hr />
-                <h1>สมาชิก</h1>
-                <br />
-                <ShowUserData />
+
             </div>
         </div>
     );
