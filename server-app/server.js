@@ -399,6 +399,36 @@ app.put('/update_user/:ById', async (req, res) => {
 });
 
 
+app.get('/get_role', async (req, res) => {
+    try {
+        const result = await pool.query('select * from role')
+        res.json(result.rows);
+    } catch {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+})
+
+app.get('/get_campus', async (req, res) => {
+    try {
+        const result = await pool.query('select * from campus')
+        res.json(result.rows);
+    } catch {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+})
+
+app.get('/get_faculty', async (req, res) => {
+    try {
+        const result = await pool.query('select * from faculty')
+        res.json(result.rows);
+    } catch {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+})
+
 app.listen(8080, () =>
     console.log(`Example app Listening on port ${port}`)
 );

@@ -57,6 +57,10 @@ const Basic_Information = () => {
 
     if (isFormComplete) {
       try {
+        // const response = await axios.post(
+        //   'http://localhost:8080/test/get_info',
+        //   formData
+        // );
         const response = await axios.post(
           'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
           formData

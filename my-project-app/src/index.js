@@ -18,6 +18,7 @@ import Teachers_Information from './Components/RequestForm/Teachers_Information'
 
 import AddUser_Form from './Components/Role_Admin/AddUser_Form';
 import UpdateUser from './Components/Role_Admin/Update_user';
+import UpdateInfo from './Components/EditForm/Edit_Basic_Info';
 
 import {
   BrowserRouter,
@@ -32,6 +33,8 @@ root.render(
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/edit-user" element={<UpdateUser />} />
+        <Route path="/edit-info" element={<UpdateInfo />} />
+
         <Route path="homeuser" element={<Homepage_User />} />
         <Route path="homedirector" element={<Homepage_Director />} />
         <Route path="homeadmin" element={<Homepage_Admin />} />

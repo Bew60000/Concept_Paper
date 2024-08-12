@@ -32,11 +32,11 @@ function ShowFormRequestForm() {
                     <ul className="space-y-5">
                         {dataUser.map((info, index) => (
                             <React.Fragment key={index}>
-                                <li className="bg-sky-200 p-8 rounded-lg shadow-md m-5">
+                                <li onClick={() => editinfo(info)} className="bg-sky-200 p-8 rounded-lg shadow-md m-5">
                                     <h1 className="font-bold text-xl mb-2">{info.majorthai}</h1>
                                     <p className="text-gray-700">ชื่อภาษาอังกฤษ: {info.majoreng} คณะ: {info.faculty_id}</p>
                                     <p className="text-gray-700">วิทยาเขต: {info.campus} ปีที่เริ่มสอน: {info.yearstarted}</p>
-                                    onClick={() => editinfo(info)}
+
                                 </li>
                                 {index < dataUser.length - 1 && <hr className="my-3 border-gray-300 w-11/12 mx-auto" />}
                             </React.Fragment>
