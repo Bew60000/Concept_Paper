@@ -33,7 +33,7 @@ function App() {
         <Homepage_Admin />
         <Homepage_Director />
         <Homepage_User />
-        {/* <Basic_Information /> */}
+        <Basic_Information />
         {/* <AddUser_Form />
 
        

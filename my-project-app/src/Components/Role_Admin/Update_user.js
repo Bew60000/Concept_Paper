@@ -36,7 +36,7 @@ export default function AddUser_Form() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        // axios.post('http://localhost:8080/test/add_info_User', userMember)
+        // axios.post('http://localhost:8080/test/update_user/${user.Username}', userMember)
         axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
             .then(res => {
                 console.log(res);

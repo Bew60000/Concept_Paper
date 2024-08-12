@@ -111,6 +111,17 @@ app.delete('/deletebasic_info/:ById', async (req, res) => {
     }
 });
 
+
+app.get('/test/get_info', async (req, res) => {
+    try {
+        const result = await pool.query(`select * from basic_info`);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
 // เพิ่มข้อมูลส่วนที่ 2  CourseAnalysisInformation
 app.post('/add_Course_Analysis_Information', async (req, res) => {
     // const input = req.body;
@@ -350,7 +361,7 @@ app.get('/getinfo_user/:ById', async (req, res) => {
 
 // update user
 
-app.put('/test/update/:id', async (req, res) => {
+app.put('/update_user/:ById', async (req, res) => {
     const { id } = req.params;
     // const id = req.id;
     const {
