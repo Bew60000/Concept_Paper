@@ -1,8 +1,8 @@
 import React from 'react'
 import Background from '../../img/Background.svg';
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../Navbar/NavbarDirector';
 
-export default function Homepage_Admin() {
+export default function Homepage_Director() {
 
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,

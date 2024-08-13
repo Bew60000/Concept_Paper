@@ -11,7 +11,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import Background from '../../img/Background.svg';
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../Navbar/NavbarUser';
 
 const Basic_Information = () => {
   const BackgroundImage = {
