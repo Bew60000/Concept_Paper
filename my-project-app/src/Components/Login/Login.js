@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, FormInput, Message,} from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import LogoIcon from '../../img/Logo_BlueSky.svg'
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -62,7 +63,8 @@ function Login() {
         <div className="flex min-w-screen min-h-screen items-center justify-center bg-gradient-to-r from-blue-950 to-indigo-600">
             <div className='bg-white rounded-3xl border shadow-lg p-12 w-1/4'>
                 <Form onSubmit={handleLogin} error={!!error} loading={loading}>
-                    <h1 className='text-gray-600 text-center'>เข้าสู่ระบบ</h1>
+                    {/* <h1 className='text-gray-600 text-center'>เข้าสู่ระบบ</h1> */}
+                    <img src={LogoIcon} className="mx-auto justify-center items-center text-center h-32 w-32 mb-6" />                    
 
                     <FormInput
                         label='Username'

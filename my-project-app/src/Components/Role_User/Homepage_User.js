@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Background from '../../img/Background.svg';
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../Navbar/NavbarUser';
 
 import Basic_Information from '../RequestForm/Basic_Information';
 import Course_Analysis_Information from '../RequestForm/Course_Analysis_Information';
@@ -9,7 +9,7 @@ import Management_Information from '../RequestForm/Management_Information';
 import Student_Admission from '../RequestForm/Student_Admission';
 import Teachers_Information from '../RequestForm/Teachers_Information';
 
-export default function Homepage_Admin() {
+export default function Homepage_User() {
 
   const BackgroundImage = {
     backgroundImage: `url(${Background})`,

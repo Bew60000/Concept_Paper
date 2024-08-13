@@ -16,9 +16,10 @@ import Management_Information from './Components/RequestForm/Management_Informat
 import Student_Admission from './Components/RequestForm/Student_Admission';
 import Teachers_Information from './Components/RequestForm/Teachers_Information';
 
-import AddUser_Form from './Components/Role_Admin/AddUser_Form';
-import UpdateUser from './Components/Role_Admin/Update_user';
-import UpdateInfo from './Components/EditForm/Edit_Basic_Info';
+import AddUser_Form from './Components/Role_Admin/UserManagemaent/AddUser_Form';
+import ShowUserData from './Components/Role_Admin/UserManagemaent/ShowUserData'
+import UserStatistics from './Components/Role_Admin/UserManagemaent/UserStatistics'
+import UpdateUser from './Components/Role_Admin/UserManagemaent/Update_user';
 
 import AllForm from './App';
 
@@ -35,13 +36,14 @@ root.render(
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/edit-user" element={<UpdateUser />} />
-        <Route path="/edit-info" element={<UpdateInfo />} />
-
         <Route path="homeuser" element={<Homepage_User />} />
         <Route path="homedirector" element={<Homepage_Director />} />
         <Route path="homeadmin" element={<Homepage_Admin />} />
 
+        <Route path="/showuserdata" element={<ShowUserData />} />
+        <Route path="/userStatistics" element={<UserStatistics />} />
         <Route path="/adduser" element={<AddUser_Form />} />
+        <Route path="/edit-user" element={<UpdateUser />} />
 
         <Route path="/basic_information" element={<Basic_Information />} />
         <Route path="/course_analysis_information" element={<Course_Analysis_Information />} />
