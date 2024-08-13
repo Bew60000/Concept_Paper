@@ -16,8 +16,10 @@ import Management_Information from './Components/RequestForm/Management_Informat
 import Student_Admission from './Components/RequestForm/Student_Admission';
 import Teachers_Information from './Components/RequestForm/Teachers_Information';
 
-import AddUser_Form from './Components/Role_Admin/AddUser_Form';
-import UpdateUser from './Components/Role_Admin/Update_user';
+import AddUser_Form from './Components/Role_Admin/UserManagemaent/AddUser_Form';
+import ShowUserData from './Components/Role_Admin/UserManagemaent/ShowUserData'
+import UserStatistics from './Components/Role_Admin/UserManagemaent/UserStatistics'
+import UpdateUser from './Components/Role_Admin/UserManagemaent/Update_user';
 
 import {
   BrowserRouter,
