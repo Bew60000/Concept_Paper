@@ -126,15 +126,15 @@ app.get('/test/get_info', async (req, res) => {
 app.post('/add_Course_Analysis_Information', async (req, res) => {
     // const input = req.body;
 
-    const { curriculum_id, principle_reasons, required_eq_id, cooperation, high_lights } = req.body;
+    const { principle_reasons, required_eq_id, analysis_of_future_target, cooperation, high_lights } = req.body;
 
 
     try {
         await pool.query(`INSERT INTO course_analysis_information(
-	curriculum_id, principle_reasons, required_eq_id, cooperation, high_lights)
-	VALUES (?, ?, ?, ?, ?);`,
+  principle_reasons, required_eq_id,analysis_of_future_target, cooperation, high_lights)
+	VALUES ($1, $2, $3, $4, $5);`,
             [
-                curriculum_id, principle_reasons, required_eq_id, cooperation, high_lights
+                principle_reasons, required_eq_id, analysis_of_future_target, cooperation, high_lights
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {
@@ -144,18 +144,18 @@ app.post('/add_Course_Analysis_Information', async (req, res) => {
 });
 
 // เพิ่มข้อมูลส่วนที่ 3
-app.post('/add_basic_infos', async (req, res) => {
+app.post('/student_admissions_plan', async (req, res) => {
     // const input = req.body;
 
-    const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
+    const { curriculum_id, year, count_students, year_opened } = req.body;
 
 
     try {
-        await pool.query(`INSERT INTO basic_info(
-	Nature,AddtionalInfo, Campus, MajorThai, MajorEng,DegreeName, faculty_id, yearstarted, Affiliation, learn_outcomes)
-	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10);`,
+        await pool.query(`INSERT INTO student_admission(
+	curriculum_id, year, count_students, year_opened)
+	VALUES ($1, $2, $3, $4);`,
             [
-                Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome
+                curriculum_id, year, count_students, year_opened
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {

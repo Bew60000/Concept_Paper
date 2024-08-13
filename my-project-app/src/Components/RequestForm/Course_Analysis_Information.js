@@ -9,69 +9,84 @@ import {
 import axios from 'axios';
 
 const CourseAnalysisInformation = () => {
-    const [targetGroups, setTargetGroups] = useState({
-        highSchool: false,
-        bachelor: false,
-        master: false,
-        doctorate: false,
-        other: false,
+    const [formData, setFormData] = useState({
+        targetGroups: {
+            highSchool: false,
+            bachelor: false,
+            master: false,
+            doctorate: false,
+            other: false,
+        },
+        principle_reasons: '',
+        required_eq_id: '',
+        analysis_of_future_target: '',
+        cooperation: '',
+        high_lights: '',
     });
 
-    const [otherDetails, setOtherDetails] = useState('');
-
     const handleCheckboxChange = (e, { name, checked }) => {
-        setTargetGroups(prevState => ({
+        setFormData(prevState => ({
             ...prevState,
-            [name]: checked,
+            targetGroups: {
+                ...prevState.targetGroups,
+                [name]: checked,
+            }
         }));
     };
 
-    const handleOtherDetailsChange = (e) => {
-        setOtherDetails(e.target.value);
-    };
-
-    const [formData, setFormData] = useState({
-        Nature: '',
-        AdditionalInfo: '',
-        Faculty: '',
-        Campus: '',
-        MajorThai: '',
-        MajorEng: '',
-        DegreeName: '',
-        Affiliation: '',
-        YearStarted: '',
-        LearningOutcome: '',
-    });
-
-    const HandleChange = (e, { name, value }) => {
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
             [name]: value,
         }));
     };
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const isFormComplete = Object.values(formData).every(
-            (field) => field !== ''
-        );
+
+        // Validate required fields
+        const isFormComplete =
+            formData.principle_reasons.trim() !== '' &&
+            formData.analysis_of_future_target.trim() !== '' &&
+            formData.cooperation.trim() !== '' &&
+            formData.high_lights.trim() !== '';
 
         if (isFormComplete) {
+            // Prepare required_eq_id from selected targetGroups
+            const selectedTargetGroups = Object.keys(formData.targetGroups)
+                .filter(key => formData.targetGroups[key])
+                .join(', '); // Join selected groups into a string
+
+            const dataToSubmit = {
+                ...formData,
+                required_eq_id: selectedTargetGroups, // Assign the joined string to required_eq_id
+            };
+
             try {
                 const response = await axios.post(
                     'http://localhost:8080/add_Course_Analysis_Information',
-                    formData
+                    dataToSubmit
                 );
-                // const response = await axios.post(
-                //   'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-                //   formData
-                // );
                 console.log('Data successfully saved:', response.data);
-
-                // navigate('/course_analysis_information', { replace: true });
+                alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
+                // Reset form after successful submission
+                setFormData({
+                    targetGroups: {
+                        highSchool: false,
+                        bachelor: false,
+                        master: false,
+                        doctorate: false,
+                        other: false,
+                    },
+                    principle_reasons: '',
+                    required_eq_id: '',
+                    analysis_of_future_target: '',
+                    cooperation: '',
+                    high_lights: '',
+                });
             } catch (error) {
                 console.error('Error saving data:', error);
+                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
             }
         } else {
             alert('กรุณากรอกข้อมูลให้ครบถ้วน');
@@ -84,54 +99,36 @@ const CourseAnalysisInformation = () => {
                 <h1>ส่วนที่ 2 : ข้อมูลการวิเคราะห์หลักสูตร</h1>
                 <hr />
                 <br />
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <FormTextArea
                         fluid
                         label='หลักการและเหตุผลในการขอเปิดหลักสูตร'
                         placeholder='โปรดอธิบายรายละเอียด'
-
+                        name="principle_reasons"
+                        value={formData.principle_reasons}
+                        onChange={handleInputChange}
                     />
 
                     <FormGroup grouped inline>
                         <label>กลุ่มเป้าหมายของหลักสูตร หลักสูตรเปิดรับผู้สำเร็จการศึกษาระดับ</label>
-                        <FormCheckbox
-                            label='มัธยมศึกษา'
-                            name='highSchool'
-                            checked={targetGroups.highSchool}
-                            onChange={handleCheckboxChange}
-                        />
-                        <FormCheckbox
-                            label='ปริญญาตรี'
-                            name='bachelor'
-                            checked={targetGroups.bachelor}
-                            onChange={handleCheckboxChange}
-                        />
-                        <FormCheckbox
-                            label='ปริญญาโท'
-                            name='master'
-                            checked={targetGroups.master}
-                            onChange={handleCheckboxChange}
-                        />
-                        <FormCheckbox
-                            label='ปริญญาเอก'
-                            name='doctorate'
-                            checked={targetGroups.doctorate}
-                            onChange={handleCheckboxChange}
-                        />
-                        <FormCheckbox
-                            label='อื่น ๆ'
-                            name='other'
-                            checked={targetGroups.other}
-                            onChange={handleCheckboxChange}
-                        />
+                        {['มัธยมศึกษา', 'ปริญญาตรี', 'ปริญญาโท', 'ปริญญาเอก', 'อื่น ๆ'].map(group => (
+                            <FormCheckbox
+                                key={group}
+                                label={group === 'other' ? 'อื่น ๆ' : group}
+                                name={group}
+                                checked={formData.targetGroups[group]}
+                                onChange={handleCheckboxChange}
+                            />
+                        ))}
 
-                        {targetGroups.other && (
+                        {formData.targetGroups.other && (
                             <FormTextArea
                                 fluid
                                 label='โปรดระบุรายละเอียดเพิ่มเติม'
                                 placeholder='โปรดกรอกรายละเอียดเพิ่มเติม'
-                                value={otherDetails}
-                                onChange={handleOtherDetailsChange}
+                                name="required_eq_id"
+                                value={formData.required_eq_id}
+                                onChange={handleInputChange}
                             />
                         )}
                     </FormGroup>
@@ -140,18 +137,24 @@ const CourseAnalysisInformation = () => {
                         fluid
                         label='ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายใน'
                         placeholder='วิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต'
-
+                        name="analysis_of_future_target"
+                        value={formData.analysis_of_future_target}
+                        onChange={handleInputChange}
                     />
 
                     <FormTextArea
                         label='ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต'
                         placeholder='โปรดอธิบายรายละเอียด'
-
+                        name="cooperation"
+                        value={formData.cooperation}
+                        onChange={handleInputChange}
                     />
                     <FormTextArea
                         label='จุดเด่นของหลักสูตรและการดำเนินการที่จะแข่งขันกับหลักสูตรอื่นที่ใกล้เคียง'
                         placeholder='โปรดอธิบายรายละเอียด'
-
+                        name="high_lights"
+                        value={formData.high_lights}
+                        onChange={handleInputChange}
                     />
 
                     <FormButton className='grid gap-4 place-items-end' type='submit'>ต่อไป</FormButton>

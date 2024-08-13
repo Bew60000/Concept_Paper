@@ -20,6 +20,8 @@ import AddUser_Form from './Components/Role_Admin/AddUser_Form';
 import UpdateUser from './Components/Role_Admin/Update_user';
 import UpdateInfo from './Components/EditForm/Edit_Basic_Info';
 
+import AllForm from './App';
+
 import {
   BrowserRouter,
   Routes,
@@ -43,6 +45,7 @@ root.render(
 
         <Route path="/basic_information" element={<Basic_Information />} />
         <Route path="/course_analysis_information" element={<Course_Analysis_Information />} />
+        <Route path="/app" element={<AllForm />} />
 
       </Routes>
     </BrowserRouter>
