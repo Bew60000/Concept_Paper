@@ -19,7 +19,7 @@ function ShowFormRequestForm() {
 
     const editinfo = (info) => {
         // นำทางไปยังหน้าส่วนแก้ไขข้อมูลพร้อมกับส่งข้อมูลของผู้ใช้ไปด้วย
-        navigate('/edit-info', { state: { info } });
+        navigate('/edit_info', { state: { info } });
     };
 
 

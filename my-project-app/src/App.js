@@ -2,8 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Background from './img/Background.svg';
 
-import Navbar from './Components/Navbar/Navbar';
-import AddUser_Form from './Components/Role_Admin/AddUser_Form';
+import Navbar from './Components/Navbar/NavbarUser';
+import AddUser_Form from './Components/Role_Admin/UserManagemaent/AddUser_Form';
 
 import Basic_Information from './Components/RequestForm/Basic_Information';
 import Course_Analysis_Information from './Components/RequestForm/Course_Analysis_Information';
@@ -11,10 +11,10 @@ import Management_Information from './Components/RequestForm/Management_Informat
 import Student_Admission from './Components/RequestForm/Student_Admission';
 import Teachers_Information from './Components/RequestForm/Teachers_Information';
 
-import Homepage_Admin from './Components/HomeAdmin/Homepage_Admin';
-import Homepage_User from './Components/HomeUser/Homepage_User';
-import Homepage_Director from './Components/HomeDirector/Homepage_Director';
-import UpdateUser from './Components/Role_Admin/Update_user';
+import Homepage_Admin from './Components/Role_Admin/Homepage_Admin';
+import Homepage_User from './Components/Role_User/Homepage_User';
+import Homepage_Director from './Components/Role_Director/Homepage_Director';
+import UpdateUser from './Components/Role_Admin/UserManagemaent/Update_user';
 
 
 function App() {

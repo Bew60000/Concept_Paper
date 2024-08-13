@@ -23,6 +23,8 @@ import UpdateUser from './Components/Role_Admin/UserManagemaent/Update_user';
 
 import AllForm from './App';
 
+import UpdateBasicInfo from './Components/Role_User/EditForm/Edit_Basic_Info';
+
 import {
   BrowserRouter,
   Routes,
@@ -35,7 +37,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/edit-user" element={<UpdateUser />} />
+
         <Route path="homeuser" element={<Homepage_User />} />
         <Route path="homedirector" element={<Homepage_Director />} />
         <Route path="homeadmin" element={<Homepage_Admin />} />
@@ -48,6 +50,9 @@ root.render(
         <Route path="/basic_information" element={<Basic_Information />} />
         <Route path="/course_analysis_information" element={<Course_Analysis_Information />} />
         <Route path="/app" element={<AllForm />} />
+
+        <Route path="/edit_info" element={<UpdateBasicInfo />} />
+
 
       </Routes>
     </BrowserRouter>

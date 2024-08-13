@@ -24,15 +24,16 @@ export default function AddUser_Form() {
     const navigate = useNavigate();
     const { user } = location.state;
     const [userMember, setUserMember] = useState({
-        Name: user.Name,
-        LastName: user.LastName,
-        Username: user.Username,
-        Password: user.Password,
-        Position: user.Position,
-        Affiliation: user.Affiliation,
-        Email: user.Email,
-        Phone: user.Phone,
-        Campus: user.Campus
+        ID: user.id,
+        Name: user.name,
+        LastName: user.lastname,
+        Username: user.username,
+        Password: user.password,
+        Position: user.position,
+        Affiliation: user.affiliation,
+        Email: user.email,
+        Phone: user.phone,
+        Campus: user.campus
     });
     const [id, setid] = useState(null);
 
@@ -46,8 +47,8 @@ export default function AddUser_Form() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        // axios.post('http://localhost:8080/test/add_info_User', userMember)
-        axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
+        axios.put(`http://localhost:8080/test/update_user/${user.id}`, userMember)
+            // axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
             .then(res => {
                 console.log(res);
                 alert('แก้ไขข้อมูลสำเร็จ');

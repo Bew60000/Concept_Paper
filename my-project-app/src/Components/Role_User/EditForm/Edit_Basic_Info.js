@@ -10,8 +10,8 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-import Background from '../../img/Background.svg';
-import Navbar from '../Navbar/Navbar';
+import Background from '../../../img/Background.svg';
+import Navbar from '../../Navbar/NavbarUser';
 
 const Basic_Information = () => {
     const BackgroundImage = {
@@ -87,32 +87,32 @@ const Basic_Information = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const isFormComplete = Object.values(formData).every(
-            (field) => field !== ''
-        );
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const isFormComplete = Object.values(formData).every(
+    //         (field) => field !== ''
+    //     );
 
-        if (isFormComplete) {
-            try {
-                // const response = await axios.post(
-                //     'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-                //     formData
-                // );
-                const response = await axios.put(
-                    'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-                    formData
-                );
-                console.log('Data successfully saved:', response.data);
+    //     if (isFormComplete) {
+    //         try {
+    //             // const response = await axios.post(
+    //             //     'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+    //             //     formData
+    //             // );
+    //             const response = await axios.put(
+    //                 'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+    //                 formData
+    //             );
+    //             console.log('Data successfully saved:', response.data);
 
-                navigate('/course_analysis_information', { replace: true });
-            } catch (error) {
-                console.error('Error saving data:', error);
-            }
-        } else {
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-        }
-    };
+    //             navigate('/course_analysis_information', { replace: true });
+    //         } catch (error) {
+    //             console.error('Error saving data:', error);
+    //         }
+    //     } else {
+    //         alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+    //     }
+    // };
 
     // useEffect(() => {
     //   window.history.pushState(null, null, location.href);
@@ -129,7 +129,7 @@ const Basic_Information = () => {
                     <h1>ส่วนที่ 1 : ข้อมูลเบื้องต้นหลักสูตร</h1>
                     <hr />
                     <br />
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={UpdateSubmit}>
                         <FormGroup widths="equal">
                             <FormInput
                                 fluid
@@ -247,9 +247,9 @@ const Basic_Information = () => {
                         />
 
                         <div className="flex justify-end gap-4">
-                            <FormButton>
+                            <button type="button">
                                 ยกเลิก
-                            </FormButton>
+                            </button>
                             <FormButton type="submit">
                                 ต่อไป
                             </FormButton>
