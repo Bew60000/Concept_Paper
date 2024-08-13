@@ -58,9 +58,13 @@ const Basic_Information = () => {
     if (isFormComplete) {
       try {
         const response = await axios.post(
-          'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+          'http://localhost:8080/add_basic_info',
           formData
         );
+        // const response = await axios.post(
+        //   'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+        //   formData
+        // );
         console.log('Data successfully saved:', response.data);
 
         navigate('/course_analysis_information', { replace: true });

@@ -96,7 +96,7 @@ app.post('/add_basic_info', async (req, res) => {
     }
 });
 
-app.delete('/deletebasic_info/:ById', async (req, res) => {
+app.delete('/deletebasic_info/:id', async (req, res) => {
     const { id } = req.params; //รับ params id 
     // const {id} = req.params.id;
 
@@ -108,6 +108,17 @@ app.delete('/deletebasic_info/:ById', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Error Delete');
+    }
+});
+
+
+app.get('/test/get_info', async (req, res) => {
+    try {
+        const result = await pool.query(`select * from basic_info`);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
     }
 });
 
@@ -133,7 +144,7 @@ app.post('/add_Course_Analysis_Information', async (req, res) => {
 });
 
 // เพิ่มข้อมูลส่วนที่ 3
-app.post('/add_basic_info', async (req, res) => {
+app.post('/add_basic_infos', async (req, res) => {
     // const input = req.body;
 
     const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
@@ -154,7 +165,7 @@ app.post('/add_basic_info', async (req, res) => {
 });
 
 // เพิ่มข้อมูลส่วนที่ 4
-app.post('/add_basic_info', async (req, res) => {
+app.post('/add_basic_infoff', async (req, res) => {
     // const input = req.body;
 
     const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
@@ -176,7 +187,7 @@ app.post('/add_basic_info', async (req, res) => {
 
 
 // เพิ่มข้อมูลส่วนที่ 5
-app.post('/add_basic_info', async (req, res) => {
+app.post('/add_basic_infoff', async (req, res) => {
     // const input = req.body;
 
     const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
@@ -197,7 +208,7 @@ app.post('/add_basic_info', async (req, res) => {
 });
 
 // เพิ่มข้อมูลส่วนที่ 6
-app.post('/add_basic_info', async (req, res) => {
+app.post('/add_basic_infoff', async (req, res) => {
     // const input = req.body;
 
     const { Nature, AdditionalInfo, Campus, MajorThai, MajorEng, DegreeName, Faculty, YearStarted, Affiliation, LearningOutcome } = req.body;
@@ -273,7 +284,7 @@ app.delete('/test/test/deletebyid/:id', async (req, res) => {
 
 
 //  add user เพิ่มข้อมูลผู้ใช้ใหม่
-app.post('/test/add_info_User', async (req, res) => {
+app.post('/add_info_User', async (req, res) => {
     // const input = req.body;
 
     const {
@@ -312,6 +323,7 @@ app.post('/test/add_info_User', async (req, res) => {
 // delete user
 
 app.delete(`/test/delete_user/:id`, async (req, res) => {
+    // การตั้งชื่อพารามิเตอร์ใน req.params กับใน URL '/update_user/:id' พารามิเตอร์ต้องชื่อ id ชื่อพารามิเตอร์กับ ตัวแปร URL ต้องเหมือนกัน
     const { id } = req.params;
     // const { id } = req.params.id;
     // const {  } = req.body;
@@ -337,7 +349,7 @@ app.get('/getinfo_user/all', async (req, res) => {
 
 // getuser by Id
 
-app.get('/getinfo_user/:ById', async (req, res) => {
+app.get('/getinfo_user/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const result = await pool.query(`select * from user_info where id = $1`, [id]);
@@ -350,7 +362,7 @@ app.get('/getinfo_user/:ById', async (req, res) => {
 
 // update user
 
-app.put('/test/update/:id', async (req, res) => {
+app.put('/update_user/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.id;
     const {
@@ -363,30 +375,61 @@ app.put('/test/update/:id', async (req, res) => {
         Campus } = req.body;
 
     try {
-        await pool.query(`update profile set Name = $2,
-            LastName = $3,
-            Affiliation = $4,
-            Email = $5,
-            Phone = $6,
-            Campus = $7 where id = $1`,
-            [id,
+        await pool.query(`update user_info set position = $1,
+            name = $2,
+            lastname = $3,
+            affiliation = $4,
+            email = $5,
+            phone = $6,
+            campus = $7 where id = $8 RETURNING *`,
+            [
                 Position,
                 Name,
                 LastName,
                 Email,
                 Phone,
                 Affiliation,
-                Campus]);
+                Campus, id]);
         // res.json(result.rows);
-        console.log();
-        res.status(201).send('update successfull');
 
+        res.status(201).send('update successfull');
+        console.log();
     } catch (error) {
         console.error(error);
         res.status(500).send('Error retrieving section');
     }
 });
 
+
+app.get('/get_role', async (req, res) => {
+    try {
+        const result = await pool.query('select * from role')
+        res.json(result.rows);
+    } catch {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+})
+
+app.get('/get_campus', async (req, res) => {
+    try {
+        const result = await pool.query('select * from campus')
+        res.json(result.rows);
+    } catch {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+})
+
+app.get('/get_faculty', async (req, res) => {
+    try {
+        const result = await pool.query('select * from faculty')
+        res.json(result.rows);
+    } catch {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+})
 
 app.listen(8080, () =>
     console.log(`Example app Listening on port ${port}`)
