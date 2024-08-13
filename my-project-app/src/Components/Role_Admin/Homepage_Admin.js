@@ -29,14 +29,14 @@ export default function Homepage_Admin() {
 
           <Link to="/basic_information" className="flex flex-col items-center col-span-10">
             <img src="/path/to/icon2.svg" alt="icon2" className="mb-4" />
-            <span className="font-bold text-center">ทดสอบการเพิ่มbasic_info</span>
+            <span className="font-bold text-center">ทดสอบการเพิ่ม basic_info</span>
           </Link>
 
           <div className="border-r border-gray-300 h-20"></div>
 
-          <Link to="" className="flex flex-col items-center col-span-10">
+          <Link to="/course_analysis_information" className="flex flex-col items-center col-span-10">
             <img src="/path/to/icon3.svg" alt="icon3" className="mb-4" />
-            <span className="font-bold text-center">ยังไม่ทดสอบ</span>
+            <span className="font-bold text-center">ทดสอบเพิ่มcourse_analysis_information</span>
           </Link>
 
         </div>

@@ -6,6 +6,7 @@ import {
     FormGroup,
     Form,
 } from 'semantic-ui-react';
+import axios from 'axios';
 
 const CourseAnalysisInformation = () => {
     const [targetGroups, setTargetGroups] = useState({
@@ -29,6 +30,54 @@ const CourseAnalysisInformation = () => {
         setOtherDetails(e.target.value);
     };
 
+    const [formData, setFormData] = useState({
+        Nature: '',
+        AdditionalInfo: '',
+        Faculty: '',
+        Campus: '',
+        MajorThai: '',
+        MajorEng: '',
+        DegreeName: '',
+        Affiliation: '',
+        YearStarted: '',
+        LearningOutcome: '',
+    });
+
+    const HandleChange = (e, { name, value }) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const isFormComplete = Object.values(formData).every(
+            (field) => field !== ''
+        );
+
+        if (isFormComplete) {
+            try {
+                const response = await axios.post(
+                    'http://localhost:8080/add_Course_Analysis_Information',
+                    formData
+                );
+                // const response = await axios.post(
+                //   'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+                //   formData
+                // );
+                console.log('Data successfully saved:', response.data);
+
+                // navigate('/course_analysis_information', { replace: true });
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
+        } else {
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        }
+    };
+
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
             <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
@@ -40,7 +89,7 @@ const CourseAnalysisInformation = () => {
                         fluid
                         label='หลักการและเหตุผลในการขอเปิดหลักสูตร'
                         placeholder='โปรดอธิบายรายละเอียด'
-                        
+
                     />
 
                     <FormGroup grouped inline>
@@ -91,18 +140,18 @@ const CourseAnalysisInformation = () => {
                         fluid
                         label='ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายใน'
                         placeholder='วิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต'
-                        
+
                     />
 
                     <FormTextArea
                         label='ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต'
                         placeholder='โปรดอธิบายรายละเอียด'
-                        
+
                     />
                     <FormTextArea
                         label='จุดเด่นของหลักสูตรและการดำเนินการที่จะแข่งขันกับหลักสูตรอื่นที่ใกล้เคียง'
                         placeholder='โปรดอธิบายรายละเอียด'
-                        
+
                     />
 
                     <FormButton className='grid gap-4 place-items-end' type='submit'>ต่อไป</FormButton>

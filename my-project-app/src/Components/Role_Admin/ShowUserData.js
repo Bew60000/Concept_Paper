@@ -13,10 +13,15 @@ function ShowUserData() {
     const itemsPerPage = 10;
     const navigate = useNavigate(); // ใช้ useNavigate เพื่อทำการนำทาง   
 
-    const deleteUser = (Username) => {
-        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${Username}`)
+    const deleteUser = (id) => {
+        // const deleteUser = (Username) => {
+
+        axios.delete(`http://localhost:8080/test/delete_user/${id}`)
+            // axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${Username}`)
             .then(() => {
-                setDataUser(prevData => prevData.filter(user => user.Username !== Username));
+                // setDataUser(prevData => prevData.filter(user => user.Username !== Username));
+                setDataUser(prevData => prevData.filter(user => user.id !== id));
+
             })
             .catch(err => console.error(err));
     };
@@ -38,8 +43,8 @@ function ShowUserData() {
     // };
 
     useEffect(() => {
-        // axios.get('http://localhost:8080/getinfo_user/all')
-        axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
+        axios.get('http://localhost:8080/getinfo_user/all')
+            // axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);
@@ -78,18 +83,20 @@ function ShowUserData() {
                     {currentItems.map((val, index) => (
                         <Table.Row key={index}>
                             <Table.Cell><p className='text-center'>{indexOfFirstItem + index + 1}</p></Table.Cell>
-                            <Table.Cell><p className='text-center'>{val.Position}</p></Table.Cell>
-                            <Table.Cell>{val.Name}&nbsp;&nbsp;&nbsp;{val.LastName}</Table.Cell>
-                            <Table.Cell><p className='text-center'>{val.Username}</p></Table.Cell>
-                            <Table.Cell><p className='text-center'>{val.Password}</p></Table.Cell>
-                            <Table.Cell><p className='text-center'>{val.Affiliation}</p></Table.Cell>
-                            <Table.Cell>{val.Email}</Table.Cell>
-                            <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
-                            <Table.Cell>{val.Campus}</Table.Cell>
+                            <Table.Cell><p className='text-center'>{val.position}</p></Table.Cell>
+                            <Table.Cell>{val.name}&nbsp;&nbsp;&nbsp;{val.lastname}</Table.Cell>
+                            <Table.Cell><p className='text-center'>{val.username}</p></Table.Cell>
+                            <Table.Cell><p className='text-center'>{val.password}</p></Table.Cell>
+                            <Table.Cell><p className='text-center'>{val.affiliation}</p></Table.Cell>
+                            <Table.Cell>{val.email}</Table.Cell>
+                            <Table.Cell>{val.phone ? val.phone : 'ไม่พบข้อมูล'}</Table.Cell>
+                            <Table.Cell>{val.campus}</Table.Cell>
                             <Table.Cell>
                                 {/* <Button onClick={() => EditUser(val.Username)}>แก้ไข</Button> */}
                                 <Button onClick={() => editUser(val)}>แก้ไข</Button>
-                                <Button onClick={() => deleteUser(val.Username)}>ลบ</Button>
+                                {/* <Button onClick={() => deleteUser(val.username)}>ลบ</Button> */}
+                                <Button onClick={() => deleteUser(val.id)}>ลบ</Button>
+
                             </Table.Cell>
                         </Table.Row>
                     ))}

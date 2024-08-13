@@ -14,14 +14,16 @@ export default function AddUser_Form() {
     const navigate = useNavigate();
     const { user } = location.state;
     const [userMember, setUserMember] = useState({
-        Name: user.Name,
-        LastName: user.LastName,
-        Username: user.Username,
-        Password: user.Password,
-        Affiliation: user.Affiliation,
-        Email: user.Email,
-        Phone: user.Phone,
-        Campus: user.Campus
+        ID: user.id,
+        Name: user.name,
+        LastName: user.lastname,
+        Username: user.username,
+        Password: user.password,
+        Affiliation: user.affiliation,
+        Email: user.email,
+        Phone: user.phone,
+        Campus: user.campus,
+        Position: user.position
     });
 
 
@@ -34,18 +36,21 @@ export default function AddUser_Form() {
         }));
     };
 
-    const HandleSubmit = (e) => {
+    const UpdateSubmit = (e) => {
         e.preventDefault();
-        // axios.post('http://localhost:8080/test/update_user/${user.Username}', userMember)
-        axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
+        axios.put(`http://localhost:8080/update_user/${user.id}`, userMember)
+            // axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
             .then(res => {
                 console.log(res);
+                console.log(user.id);
                 alert('แก้ไขข้อมูลสำเร็จ');
                 navigate('/adduser'); // กลับไปยังหน้าหลักหรือหน้าที่ต้องการหลังแก้ไขเสร็จ
                 window.location.reload();
             })
             .catch(err => {
                 console.error(err);
+                console.log(user.id);
+
                 alert('ไม่สามารถแก้ไขข้อมูลได้');
             });
 
@@ -54,21 +59,21 @@ export default function AddUser_Form() {
             Phone: '', Affiliation: '', Position: '', Campus: '',
         });
     };
-    const [isEditing, setIsEditing] = useState(false);
-    const [id, setid] = useState(null);
+    // const [isEditing, setIsEditing] = useState(false);
+    // const [id, setid] = useState(null);
 
-    useEffect(() => {
-        if (id) {
-            axios.get(`http://localhost:8080/test/get_user/${id}`)
-                .then(res => {
-                    setUserMember(res.data);
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('ไม่สามารถดึงข้อมูลผู้ใช้ได้');
-                });
-        }
-    }, [id]);
+    // useEffect(() => {
+    //     if (id) {
+    //         axios.get(`http://localhost:8080/test/get_user/${id}`)
+    //             .then(res => {
+    //                 setUserMember(res.data);
+    //             })
+    //             .catch(err => {
+    //                 console.error(err);
+    //                 alert('ไม่สามารถดึงข้อมูลผู้ใช้ได้');
+    //             });
+    //     }
+    // }, [id]);
 
     return (
 
@@ -78,7 +83,7 @@ export default function AddUser_Form() {
                 <hr />
                 <h1>เพิ่มสมาชิก</h1>
 
-                <Form onSubmit={HandleSubmit}>
+                <Form onSubmit={UpdateSubmit}>
                     <FormGroup widths='equal'>
                         <FormInput
                             fluid label='Username'

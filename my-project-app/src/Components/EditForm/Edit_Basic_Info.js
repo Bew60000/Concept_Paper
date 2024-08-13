@@ -52,6 +52,41 @@ const Basic_Information = () => {
         }
     };
 
+    const UpdateSubmit = (e) => {
+        e.preventDefault();
+        const isFormComplete = Object.values(formData).every(
+            (field) => field !== ''
+        );
+
+        if (isFormComplete) {
+            try {
+                axios.put(`http://localhost:8080/update_user/${info.id}`, formData)
+                    .then(res => {
+                        console.log(res);
+                        console.log(info.id);
+                        alert('แก้ไขข้อมูลสำเร็จ');
+                        navigate('/'); // กลับไปยังหน้าหลักหรือหน้าที่ต้องการหลังแก้ไขเสร็จ
+                        window.location.reload();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        console.log(info.id);
+
+                        alert('ไม่สามารถแก้ไขข้อมูลได้');
+                    });
+
+                setFormData({
+                    Name: '', LastName: '', Username: '', Password: '', Email: '',
+                    Phone: '', Affiliation: '', Position: '', Campus: '',
+                });
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
+        } else {
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormComplete = Object.values(formData).every(
@@ -60,7 +95,11 @@ const Basic_Information = () => {
 
         if (isFormComplete) {
             try {
-                const response = await axios.post(
+                // const response = await axios.post(
+                //     'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+                //     formData
+                // );
+                const response = await axios.put(
                     'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
                     formData
                 );
