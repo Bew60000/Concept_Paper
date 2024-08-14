@@ -20,31 +20,30 @@ const Basic_Information = () => {
     backgroundPosition: 'center',
   }
   const [formData, setFormData] = useState({
-    Nature: '',
-    AdditionalInfo: '',
-    Faculty: '',
-    Campus: '',
-    MajorThai: '',
-    MajorEng: '',
-    DegreeName: '',
-    Affiliation: '',
-    YearStarted: '',
-    LearningOutcome: '',
+    nature: '',
+    additionalinfo: '',
+    faculty: '',
+    campus: '',
+    majorthai: '',
+    majoreng: '',
+    degreename: '',
+    affiliation: '',
+    yearstarted: '',
+    learningoutcome: '',
   });
 
   const navigate = useNavigate();
-  // const location = useLocation();
-
+ 
   const HandleChange = (e, { name, value }) => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value,
     }));
 
-    if (name === 'Nature' && value === 'เฉพาะสาขาเดียว') {
+    if (name === 'nature' && value === 'เฉพาะสาขาเดียว') {
       setFormData(prevState => ({
         ...prevState,
-        AdditionalInfo: null,
+        additionalinfo: null,
       }));
     }
   };
@@ -57,31 +56,26 @@ const Basic_Information = () => {
 
     if (isFormComplete) {
       try {
-        const response = await axios.post(
-          'http://localhost:8080/add_basic_info',
-          formData
-        );
         // const response = await axios.post(
-        //   'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+        //   'http://localhost:8080/add_basic_info',
         //   formData
         // );
+        const response = await axios.post(
+          'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+          formData
+        );
         console.log('Data successfully saved:', response.data);
-
-        navigate('/course_analysis_information', { replace: true });
+        // navigate('/course_analysis_information', { replace: true });
+        navigate('/homepage_user', { replace: true });
       } catch (error) {
         console.error('Error saving data:', error);
       }
     } else {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     }
+
   };
 
-  // useEffect(() => {
-  //   window.history.pushState(null, null, location.href);
-  //   window.onpopstate = () => {
-  //     window.history.pushState(null, null, location.href);
-  //   };
-  // }, [location]);
 
   return (
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
@@ -97,16 +91,16 @@ const Basic_Information = () => {
                 fluid
                 label="คณะ"
                 placeholder="โปรดระบุคณะ"
-                name="Faculty"
-                value={formData.Faculty}
+                name="faculty"
+                value={formData.faculty}
                 onChange={HandleChange}
               />
               <FormInput
                 fluid
                 label="วิทยาเขต"
                 placeholder="โปรดระบุวิทยาเขต"
-                name="Campus"
-                value={formData.Campus}
+                name="campus"
+                value={formData.campus}
                 onChange={HandleChange}
               />
             </FormGroup>
@@ -116,16 +110,16 @@ const Basic_Information = () => {
                 fluid
                 label="ชื่อสาขาวิชา (ภาษาไทย)"
                 placeholder="โปรดระบุชื่อสาขาวิชา *ภาษาไทย"
-                name="MajorThai"
-                value={formData.MajorThai}
+                name="majorthai"
+                value={formData.majorthai}
                 onChange={HandleChange}
               />
               <FormTextArea
                 fluid
                 label="ชื่อสาขาวิชา (ภาษาอังกฤษ)"
                 placeholder="โปรดระบุชื่อสาขาวิชา *ภาษาอังกฤษ"
-                name="MajorEng"
-                value={formData.MajorEng}
+                name="majoreng"
+                value={formData.majoreng}
                 onChange={HandleChange}
               />
             </FormGroup>
@@ -135,24 +129,24 @@ const Basic_Information = () => {
                 fluid
                 label="ชื่อปริญญา"
                 placeholder="โปรดระบุชื่อปริญญา"
-                name="DegreeName"
-                value={formData.DegreeName}
+                name="degreename"
+                value={formData.degreename}
                 onChange={HandleChange}
               />
               <FormInput
                 fluid
                 label="สังกัด"
                 placeholder="โปรดระบุสังกัด"
-                name="Affiliation"
-                value={formData.Affiliation}
+                name="affiliation"
+                value={formData.affiliation}
                 onChange={HandleChange}
               />
               <FormInput
                 fluid
                 label="ปีที่เริ่มดำเนินการเปิดสอน"
                 placeholder="โปรดระบุปีที่เริ่มดำเนินการเปิดสอน"
-                name="YearStarted"
-                value={formData.YearStarted}
+                name="yearstarted"
+                value={formData.yearstarted}
                 onChange={HandleChange}
               />
             </FormGroup>
@@ -163,36 +157,36 @@ const Basic_Information = () => {
                 fluid
                 label="เฉพาะสาขาเดียว"
                 value="เฉพาะสาขาเดียว"
-                checked={formData.Nature === 'เฉพาะสาขาเดียว'}
-                name="Nature"
+                checked={formData.nature === 'เฉพาะสาขาเดียว'}
+                name="nature"
                 onChange={HandleChange}
               />
               <FormRadio
                 fluid
                 label="พหุวิทยาการ"
                 value="พหุวิทยาการ"
-                checked={formData.Nature === 'พหุวิทยาการ'}
-                name="Nature"
+                checked={formData.nature === 'พหุวิทยาการ'}
+                name="nature"
                 onChange={HandleChange}
               />
               <FormRadio
                 fluid
                 label="มีจุดเด่นเฉพาะ"
                 value="มีจุดเด่นเฉพาะ"
-                checked={formData.Nature === 'มีจุดเด่นเฉพาะ'}
-                name="Nature"
+                checked={formData.nature === 'มีจุดเด่นเฉพาะ'}
+                name="nature"
                 onChange={HandleChange}
               />
 
-              {(formData.Nature === 'พหุวิทยาการ' ||
-                formData.Nature === 'มีจุดเด่นเฉพาะ') && (
+              {(formData.nature === 'พหุวิทยาการ' ||
+                formData.nature === 'มีจุดเด่นเฉพาะ') && (
                   <FormGroup widths="equal">
                     <FormTextArea
                       fluid
                       label="รายละเอียดเพิ่มเติม (*ลักษณะของหลักสูตร)"
                       placeholder="โปรดกรอกรายละเอียดเพิ่มเติม"
-                      name="AdditionalInfo"
-                      value={formData.AdditionalInfo}
+                      name="additionalinfo"
+                      value={formData.additionalinfo}
                       onChange={HandleChange}
                     />
                   </FormGroup>
@@ -203,8 +197,8 @@ const Basic_Information = () => {
               fluid
               label="ผลลัพธ์การเรียนรู้ระดับหลักสูตร"
               placeholder="โปรดอธิบายรายละเอียด"
-              name="LearningOutcome"
-              value={formData.LearningOutcome}
+              name="learningoutcome"
+              value={formData.learningoutcome}
               onChange={HandleChange}
             />
 

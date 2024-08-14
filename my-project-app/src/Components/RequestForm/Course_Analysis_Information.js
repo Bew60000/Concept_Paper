@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 
 const CourseAnalysisInformation = () => {
+    
     const [formData, setFormData] = useState({
         targetGroups: {
             highSchool: false,

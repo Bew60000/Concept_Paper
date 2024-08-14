@@ -20,25 +20,29 @@ function ShowUserData() {
     const itemsPerPage = 10;
     const navigate = useNavigate();
 
-    const deleteUser = (Username) => {
-        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${Username}`)
-            .then(() => {
-                setDataUser(prevData => prevData.filter(user => user.Username !== Username));
+    const deleteUser = (username) => {
+        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${username}`)
+            .then(response => {
+                console.log('Delete Response:', response);
+                setDataUser(prevData => prevData.filter(user => user.username !== username));
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error('Error deleting user:', err.response ? err.response.data : err.message);
+            });
     };
+    
 
     const editUser = (user) => {
-        navigate('/edit-user', { state: { user } });
+        navigate('/edit_user', { state: { user } });
     };
 
     const handleAddUserClick = () => {
-        navigate('/adduser');
+        navigate('/add_user');
     };
 
     useEffect(() => {
-        axios.get('http://localhost:8080/getinfo_user/all')
-            // axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
+        // axios.get('http://localhost:8080/getinfo_user/all')
+            axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);
@@ -65,16 +69,16 @@ function ShowUserData() {
 
                 <div className="bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl w-Screen">
 
-                    <div className="flex justify-between gap-4 mt-2 mb-10">
+                    <div className="flex justify-between gap-4 mb-10">
                         <h1>สมาชิก</h1>
                         <button
                             onClick={handleAddUserClick}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 rounded-xl"
                         >
                             เพิ่มสมาชิก
                         </button>
                     </div>
-                    <hr />
+                    
                     <br />
                     <Table selectable responsive basic='very'>
                         <Table.Header>
@@ -88,7 +92,7 @@ function ShowUserData() {
                                 <Table.HeaderCell><p className='text-center'>Email</p></Table.HeaderCell>
                                 <Table.HeaderCell>Phone</Table.HeaderCell>
                                 <Table.HeaderCell>Campus</Table.HeaderCell>
-                                <Table.HeaderCell><p className='text-center'>Action</p></Table.HeaderCell>
+                                <Table.HeaderCell>Action</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
 
@@ -96,17 +100,17 @@ function ShowUserData() {
                             {currentItems.map((val, index) => (
                                 <Table.Row key={index}>
                                     <Table.Cell><p className='text-center'>{indexOfFirstItem + index + 1}</p></Table.Cell>
-                                    <Table.Cell><p className='text-center'>{val.Position}</p></Table.Cell>
-                                    <Table.Cell>{val.Name}&nbsp;&nbsp;&nbsp;{val.LastName}</Table.Cell>
-                                    <Table.Cell><p className='text-center'>{val.Username}</p></Table.Cell>
-                                    <Table.Cell><p className='text-center'>{val.Password}</p></Table.Cell>
-                                    <Table.Cell><p className='text-center'>{val.Affiliation}</p></Table.Cell>
-                                    <Table.Cell>{val.Email}</Table.Cell>
-                                    <Table.Cell>{val.Phone ? val.Phone : 'ไม่พบข้อมูล'}</Table.Cell>
-                                    <Table.Cell>{val.Campus}</Table.Cell>
+                                    <Table.Cell><p className='text-center'>{val.position}</p></Table.Cell>
+                                    <Table.Cell>{val.name}&nbsp;&nbsp;&nbsp;{val.lastname}</Table.Cell>
+                                    <Table.Cell><p className='text-center'>{val.username}</p></Table.Cell>
+                                    <Table.Cell><p className='text-center'>{val.password}</p></Table.Cell>
+                                    <Table.Cell><p className='text-center'>{val.affiliation}</p></Table.Cell>
+                                    <Table.Cell>{val.email ? val.email : 'ไม่พบข้อมูล'}</Table.Cell>
+                                    <Table.Cell>{val.phone ? val.phone : 'ไม่พบข้อมูล'}</Table.Cell>
+                                    <Table.Cell>{val.campus}</Table.Cell>
                                     <Table.Cell>
                                         <Button onClick={() => editUser(val)}>แก้ไข</Button>
-                                        <Button onClick={() => deleteUser(val.Username)}>ลบ</Button>
+                                        <Button onClick={() => deleteUser(val.username)}>ลบ</Button>
                                     </Table.Cell>
                                 </Table.Row>
                             ))}

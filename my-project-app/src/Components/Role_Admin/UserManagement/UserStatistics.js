@@ -14,9 +14,9 @@ const UserStatistics = () => {
         axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(response => {
                 const data = response.data;
-                const users = data.filter(item => item.Position === 'User').length;
-                const directors = data.filter(item => item.Position === 'Director').length;
-                const admins = data.filter(item => item.Position === 'Admin').length;
+                const users = data.filter(item => item.position === 'User').length;
+                const directors = data.filter(item => item.position === 'Director').length;
+                const admins = data.filter(item => item.position === 'Admin').length;
                 const total = data.length;
 
                 setUserData({

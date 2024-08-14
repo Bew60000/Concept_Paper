@@ -3,7 +3,7 @@ import './App.css';
 import Background from './img/Background.svg';
 
 import Navbar from './Components/Navbar/NavbarUser';
-import AddUser_Form from './Components/Role_Admin/UserManagemaent/AddUser_Form';
+import AddUser_Form from './Components/Role_Admin/UserManagement/AddUser_Form';
 
 import Basic_Information from './Components/RequestForm/Basic_Information';
 import Course_Analysis_Information from './Components/RequestForm/Course_Analysis_Information';
@@ -14,7 +14,7 @@ import Teachers_Information from './Components/RequestForm/Teachers_Information'
 import Homepage_Admin from './Components/Role_Admin/Homepage_Admin';
 import Homepage_User from './Components/Role_User/Homepage_User';
 import Homepage_Director from './Components/Role_Director/Homepage_Director';
-import UpdateUser from './Components/Role_Admin/UserManagemaent/Update_user';
+import UpdateUser from './Components/Role_Admin/UserManagement/Update_user';
 
 
 function App() {
@@ -30,17 +30,17 @@ function App() {
       <div className='pt-20'>
         <Navbar />
 
-        <Homepage_Admin />
+        {/* <Homepage_Admin />
         <Homepage_Director />
-        <Homepage_User />
-        <Basic_Information />
-        {/* <AddUser_Form />
+        <Homepage_User /> */}
 
-       
+        <AddUser_Form />
+
+        <Basic_Information />
         <Course_Analysis_Information />
         <Student_Admission />
         <Management_Information />
-        <Teachers_Information /> */}
+        <Teachers_Information />
       </div>
 
 

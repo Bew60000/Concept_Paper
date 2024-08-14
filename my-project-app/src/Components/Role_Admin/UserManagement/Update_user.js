@@ -24,16 +24,17 @@ export default function AddUser_Form() {
     const navigate = useNavigate();
     const { user } = location.state;
     const [userMember, setUserMember] = useState({
-        ID: user.id,
-        Name: user.name,
-        LastName: user.lastname,
-        Username: user.username,
-        Password: user.password,
-        Position: user.position,
-        Affiliation: user.affiliation,
-        Email: user.email,
-        Phone: user.phone,
-        Campus: user.campus
+        id: user.id,
+        name: user.name,
+        lastname: user.lastname,
+        username: user.username,
+        password: user.password,
+        position: user.position,
+        affiliation: user.affiliation,
+        email: user.email,
+        phone: user.phone,
+        campus: user.campus
+
     });
     const [id, setid] = useState(null);
 
@@ -47,12 +48,12 @@ export default function AddUser_Form() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:8080/test/update_user/${user.id}`, userMember)
-            // axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/Username/${user.Username}`, userMember)
+        // axios.put(`http://localhost:8080/test/update_user/${user.id}`, userMember)
+        axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${user.username}`, userMember)
             .then(res => {
                 console.log(res);
                 alert('แก้ไขข้อมูลสำเร็จ');
-                navigate('/showuserdata', { replace: true });
+                navigate('/show_user_data', { replace: true });
             })
             .catch(err => {
                 console.error(err);
@@ -60,8 +61,8 @@ export default function AddUser_Form() {
             });
 
         setUserMember({
-            Name: '', LastName: '', Username: '', Password: '', Email: '',
-            Phone: '', Affiliation: '', Position: '', Campus: '',
+            name: '', lastname: '', username: '', password: '', email: '',
+            phone: '', affiliation: '', position: '', campus: '',
         });
     };
 
@@ -97,16 +98,16 @@ export default function AddUser_Form() {
                             <FormInput
                                 fluid label='Username'
                                 type='text'
-                                name='Username'
-                                value={userMember.Username}
+                                name='username'
+                                value={userMember.username}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
                             <FormInput
                                 fluid label='Password'
                                 type='text'
-                                name='Password'
-                                value={userMember.Password}
+                                name='password'
+                                value={userMember.password}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
@@ -117,24 +118,24 @@ export default function AddUser_Form() {
                             <FormInput
                                 fluid label='Position'
                                 type='text'
-                                name='Position'
-                                value={userMember.Position}
+                                name='position'
+                                value={userMember.position}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
                             <FormInput
                                 fluid label='Campus'
                                 type='text'
-                                name='Campus'
-                                value={userMember.Campus}
+                                name='campus'
+                                value={userMember.campus}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
                             <FormInput
                                 fluid label='Affiliation'
                                 type='text'
-                                name='Affiliation'
-                                value={userMember.Affiliation}
+                                name='affiliation'
+                                value={userMember.affiliation}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
@@ -144,16 +145,16 @@ export default function AddUser_Form() {
                             <FormInput
                                 fluid label='Name'
                                 type='text'
-                                name='Name'
-                                value={userMember.Name}
+                                name='name'
+                                value={userMember.name}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
                             <FormInput
-                                fluid label='LastName'
+                                fluid label='Lastname'
                                 type='text'
-                                name='LastName'
-                                value={userMember.LastName}
+                                name='lastname'
+                                value={userMember.lastname}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
@@ -163,8 +164,8 @@ export default function AddUser_Form() {
                             <FormInput
                                 fluid label='Email'
                                 type='email'
-                                name='Email'
-                                value={userMember.Email}
+                                name='email'
+                                value={userMember.email}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
@@ -174,8 +175,8 @@ export default function AddUser_Form() {
                             <FormInput
                                 fluid label='Phone'
                                 type='tel'
-                                name='Phone'
-                                value={userMember.Phone}
+                                name='phone'
+                                value={userMember.phone}
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
