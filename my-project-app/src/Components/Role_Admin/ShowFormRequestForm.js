@@ -9,8 +9,8 @@ function ShowFormRequestForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
-            // axios.get('http://localhost:8080/test/get_info')
+        // axios.get('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
+        axios.get('http://localhost:8080/test/get_info')
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);

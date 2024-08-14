@@ -8,6 +8,7 @@ import {
     Form,
     FormField
 } from 'semantic-ui-react';
+import axios from 'axios';
 
 const options = [
     { key: '1', text: 'ชั้นปีที่ 1', value: '1' },
@@ -20,13 +21,13 @@ const StudentAdmission = () => {
     const [forms, setForms] = useState([{
         id: 1,
         year: '',
-        count_students: ''
+        count_students: '',
+        curriculum_id: '',
+        year_offered: ''
     }]);
 
-    const [formCount, setFormCount] = useState(1);
-
     const handleChange = useCallback((id, field, value) => {
-        setForms(prevForms => 
+        setForms(prevForms =>
             prevForms.map(form =>
                 form.id === id ? { ...form, [field]: value } : form
             )
@@ -37,17 +38,35 @@ const StudentAdmission = () => {
         setForms(prevForms => [
             ...prevForms,
             {
-                id: formCount + 1,
+                id: '',
                 year: '',
-                count_students: ''
+                count_students: '',
+                curriculum_id: '',
+                year_offered: ''
             }
         ]);
-        setFormCount(prevCount => prevCount + 1);
-    }, [formCount]);
+    }, []);
 
     const removeForm = useCallback((id) => {
         setForms(prevForms => prevForms.filter(form => form.id !== id));
     }, []);
+
+    const handleSubmit = async () => {
+        try {
+            for (let form of forms) {
+                // Convert year_offered to number before sending
+                const response = await axios.post('http://localhost:8080/student_admissions_plan', {
+                    curriculum_id: form.curriculum_id,
+                    year: form.year,
+                    count_students: form.count_students,
+                    year_opened: Number(form.year_offered) // Make sure it's a number
+                });
+                console.log('Data saved:', response.data);
+            }
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    };
 
     return (
         <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
@@ -55,7 +74,7 @@ const StudentAdmission = () => {
                 <h1>ส่วนที่ 3 : แผนการรับนักศึกษา</h1>
                 <hr />
                 <br />
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     {forms.map((form) => (
                         <div key={form.id}>
                             <FormGroup widths='equal'>
@@ -63,11 +82,19 @@ const StudentAdmission = () => {
                                 <br />
                                 <FormSelect
                                     fluid
-                                    label='ชั้นปีที่ที่เปิดสอน'
+                                    label='หลักสูตร'
                                     options={options}
-                                    placeholder='ชั้นปี**'
+                                    placeholder='โปรดเลือกระบบหลักสูตร'
                                     value={form.year}
                                     onChange={(e, { value }) => handleChange(form.id, 'year', value)}
+                                />
+                                <FormInput
+                                    fluid
+                                    label='ปีที่เปิดสอน'
+                                    placeholder='โปรดระบุปีที่เปิดสอน'
+                                    type='number'
+                                    value={form.year_offered}
+                                    onChange={(e) => handleChange(form.id, 'year_offered', e.target.value)}
                                 />
                                 <FormInput
                                     fluid
@@ -102,5 +129,4 @@ const StudentAdmission = () => {
         </div>
     );
 };
-
 export default StudentAdmission;
