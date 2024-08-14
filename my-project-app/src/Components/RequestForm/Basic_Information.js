@@ -6,6 +6,7 @@ import {
   FormGroup,
   FormButton,
   Form,
+  FormSelect,
 } from 'semantic-ui-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -13,12 +14,21 @@ import axios from 'axios';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
 
+const optionscampus = [
+  { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
+  { key: 'PK', text: 'ภูเก็ต', value: 'ภูเก็ต' },
+  { key: 'PT', text: 'ปัตตานี', value: 'ปัตตานี' },
+  { key: 'T', text: 'ตรัง', value: 'ตรัง' },
+  { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
+];
+
 const Basic_Information = () => {
   const BackgroundImage = {
     backgroundImage: `url(${Background})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }
+
   const [formData, setFormData] = useState({
     nature: '',
     additionalinfo: '',
@@ -56,17 +66,17 @@ const Basic_Information = () => {
 
     if (isFormComplete) {
       try {
-        // const response = await axios.post(
-        //   'http://localhost:8080/add_basic_info',
-        //   formData
-        // );
         const response = await axios.post(
-          'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+          'http://localhost:8080/add_basic_info',
           formData
         );
+        // const response = await axios.post(
+        //   'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
+        //   formData
+        // );
         console.log('Data successfully saved:', response.data);
-        // navigate('/course_analysis_information', { replace: true });
-        navigate('/homepage_user', { replace: true });
+        navigate('/course_analysis_information', { replace: true });
+        // navigate('/homepage_user', { replace: true });
       } catch (error) {
         console.error('Error saving data:', error);
       }
@@ -95,14 +105,16 @@ const Basic_Information = () => {
                 value={formData.faculty}
                 onChange={HandleChange}
               />
-              <FormInput
+
+              <FormSelect
                 fluid
-                label="วิทยาเขต"
-                placeholder="โปรดระบุวิทยาเขต"
-                name="campus"
+                label='วิทยาเขต'
+                options={optionscampus}
+                name='campus'
+                placeholder='โปรดเลือก'
                 value={formData.campus}
                 onChange={HandleChange}
-              />
+              />              
             </FormGroup>
 
             <FormGroup widths="equal">

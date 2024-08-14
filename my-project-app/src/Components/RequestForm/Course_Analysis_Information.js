@@ -7,9 +7,20 @@ import {
     Form,
 } from 'semantic-ui-react';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+import Background from '../../img/Background.svg';
+import Navbar from '../Navbar/NavbarUser';
 
 const CourseAnalysisInformation = () => {
-    
+
+    const BackgroundImage = {
+        backgroundImage: `url(${Background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    }
+
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         targetGroups: {
             highSchool: false,
@@ -71,6 +82,7 @@ const CourseAnalysisInformation = () => {
                 console.log('Data successfully saved:', response.data);
                 alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
                 // Reset form after successful submission
+                navigate('/homepage_user', { replace: true });
                 setFormData({
                     targetGroups: {
                         highSchool: false,
@@ -95,72 +107,77 @@ const CourseAnalysisInformation = () => {
     };
 
     return (
-        <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-            <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
-                <h1>ส่วนที่ 2 : ข้อมูลการวิเคราะห์หลักสูตร</h1>
-                <hr />
-                <br />
-                <Form onSubmit={handleSubmit}>
-                    <FormTextArea
-                        fluid
-                        label='หลักการและเหตุผลในการขอเปิดหลักสูตร'
-                        placeholder='โปรดอธิบายรายละเอียด'
-                        name="principle_reasons"
-                        value={formData.principle_reasons}
-                        onChange={handleInputChange}
-                    />
+        <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
+            <Navbar />
+            <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5 pt-20">
+                <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
+                    <h1>ส่วนที่ 2 : ข้อมูลการวิเคราะห์หลักสูตร</h1>
+                    <hr />
+                    <br />
+                    <Form onSubmit={handleSubmit}>
+                        <FormTextArea
+                            fluid
+                            label='หลักการและเหตุผลในการขอเปิดหลักสูตร'
+                            placeholder='โปรดอธิบายรายละเอียด'
+                            name="principle_reasons"
+                            value={formData.principle_reasons}
+                            onChange={handleInputChange}
+                        />
 
-                    <FormGroup grouped inline>
-                        <label>กลุ่มเป้าหมายของหลักสูตร หลักสูตรเปิดรับผู้สำเร็จการศึกษาระดับ</label>
-                        {['มัธยมศึกษา', 'ปริญญาตรี', 'ปริญญาโท', 'ปริญญาเอก', 'อื่น ๆ'].map(group => (
-                            <FormCheckbox
-                                key={group}
-                                label={group === 'other' ? 'อื่น ๆ' : group}
-                                name={group}
-                                checked={formData.targetGroups[group]}
-                                onChange={handleCheckboxChange}
-                            />
-                        ))}
+                        <FormGroup grouped inline>
+                            <label>กลุ่มเป้าหมายของหลักสูตร หลักสูตรเปิดรับผู้สำเร็จการศึกษาระดับ</label>
+                            {['มัธยมศึกษา', 'ปริญญาตรี', 'ปริญญาโท', 'ปริญญาเอก', 'อื่น ๆ'].map(group => (
+                                <FormCheckbox
+                                    key={group}
+                                    label={group === 'other' ? 'อื่น ๆ' : group}
+                                    name={group}
+                                    checked={formData.targetGroups[group]}
+                                    onChange={handleCheckboxChange}
+                                />
+                            ))}
 
-                        {formData.targetGroups.other && (
-                            <FormTextArea
-                                fluid
-                                label='โปรดระบุรายละเอียดเพิ่มเติม'
-                                placeholder='โปรดกรอกรายละเอียดเพิ่มเติม'
-                                name="required_eq_id"
-                                value={formData.required_eq_id}
-                                onChange={handleInputChange}
-                            />
-                        )}
-                    </FormGroup>
+                            {formData.targetGroups.other && (
+                                <FormTextArea
+                                    fluid
+                                    label='โปรดระบุรายละเอียดเพิ่มเติม'
+                                    placeholder='โปรดกรอกรายละเอียดเพิ่มเติม'
+                                    name="required_eq_id"
+                                    value={formData.required_eq_id}
+                                    onChange={handleInputChange}
+                                />
+                            )}
+                        </FormGroup>
 
-                    <FormTextArea
-                        fluid
-                        label='ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายใน'
-                        placeholder='วิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต'
-                        name="analysis_of_future_target"
-                        value={formData.analysis_of_future_target}
-                        onChange={handleInputChange}
-                    />
+                        <FormTextArea
+                            fluid
+                            label='ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายใน'
+                            placeholder='วิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต'
+                            name="analysis_of_future_target"
+                            value={formData.analysis_of_future_target}
+                            onChange={handleInputChange}
+                        />
 
-                    <FormTextArea
-                        label='ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต'
-                        placeholder='โปรดอธิบายรายละเอียด'
-                        name="cooperation"
-                        value={formData.cooperation}
-                        onChange={handleInputChange}
-                    />
-                    <FormTextArea
-                        label='จุดเด่นของหลักสูตรและการดำเนินการที่จะแข่งขันกับหลักสูตรอื่นที่ใกล้เคียง'
-                        placeholder='โปรดอธิบายรายละเอียด'
-                        name="high_lights"
-                        value={formData.high_lights}
-                        onChange={handleInputChange}
-                    />
+                        <FormTextArea
+                            label='ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต'
+                            placeholder='โปรดอธิบายรายละเอียด'
+                            name="cooperation"
+                            value={formData.cooperation}
+                            onChange={handleInputChange}
+                        />
+                        <FormTextArea
+                            label='จุดเด่นของหลักสูตรและการดำเนินการที่จะแข่งขันกับหลักสูตรอื่นที่ใกล้เคียง'
+                            placeholder='โปรดอธิบายรายละเอียด'
+                            name="high_lights"
+                            value={formData.high_lights}
+                            onChange={handleInputChange}
+                        />
 
-                    <FormButton className='grid gap-4 place-items-end' type='submit'>ต่อไป</FormButton>
-                </Form>
+                        <FormButton className='grid gap-4 place-items-end' type='submit'>ต่อไป</FormButton>
+                    </Form>
+                </div>
             </div>
+
+
         </div>
     );
 };

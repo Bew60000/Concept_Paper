@@ -4,13 +4,28 @@ import {
     FormGroup,
     FormButton,
     Form,
-    FormField,
+    FormSelect,
 } from 'semantic-ui-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import Background from '../../../img/Background.svg';
 import Navbar from '../../Navbar/NavbarAdmin';
+
+const options = [
+    { key: 'A', text: 'Admin', value: 'Admin' },
+    { key: 'U', text: 'User', value: 'User' },
+    { key: 'D', text: 'Director', value: 'Director' },
+];
+
+const optionscampus = [
+    { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
+    { key: 'PK', text: 'ภูเก็ต', value: 'ภูเก็ต' },
+    { key: 'PT', text: 'ปัตตานี', value: 'ปัตตานี' },
+    { key: 'T', text: 'ตรัง', value: 'ตรัง' },
+    { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
+];
+
 
 export default function AddUser_Form() {
     const navigate = useNavigate();
@@ -33,8 +48,7 @@ export default function AddUser_Form() {
         phone: '',
     });
 
-    const HandleChange = (e) => {
-        const { name, value } = e.target;
+    const HandleChange = (e, { name, value }) => {
         setUserMember(prevState => ({
             ...prevState,
             [name]: value
@@ -50,8 +64,8 @@ export default function AddUser_Form() {
             return;
         }
 
+        // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
         axios.post('http://localhost:8080/add_info_User', userMember)
-            // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
             .then(res => {
                 console.log(res);
                 alert('กรอกข้อมูลเสร็จสิ้น');
@@ -96,26 +110,27 @@ export default function AddUser_Form() {
                                 onChange={HandleChange}
                                 placeholder='โปรดระบุ'
                             />
-                            <FormField />
                         </FormGroup>
 
                         <FormGroup widths='equal'>
-                            <FormInput
-                                fluid label='Position'
-                                type='text'
+                            <FormSelect
+                                fluid
+                                label='Role'
+                                options={options}
                                 name='position'
+                                placeholder='โปรดเลือก'
                                 value={userMember.position}
                                 onChange={HandleChange}
-                                placeholder='โปรดระบุ'
                             />
-                            <FormInput
-                                fluid label='Campus'
-                                type='text'
+                            <FormSelect
+                                fluid
+                                label='Campus'
+                                options={optionscampus}
                                 name='campus'
+                                placeholder='โปรดเลือก'
                                 value={userMember.campus}
                                 onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
+                            />                            
                             <FormInput
                                 fluid label='Affiliation'
                                 type='text'
