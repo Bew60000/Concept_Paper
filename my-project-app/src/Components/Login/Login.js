@@ -16,12 +16,12 @@ function Login() {
         const loggedInUser = localStorage.getItem('loggedInUser');
         if (loggedInUser) {
             const user = JSON.parse(loggedInUser);
-            if (user.Position === 'User') {
-                navigate('homeuser', { replace: true });
-            } else if (user.Position === 'Director') {
-                navigate('homedirector', { replace: true });
-            } else if (user.Position === 'Admin') {
-                navigate('homeadmin', { replace: true });
+            if (user.position === 'User') {
+                navigate('homepage_user', { replace: true });
+            } else if (user.position === 'Director') {
+                navigate('homepage_director', { replace: true });
+            } else if (user.position === 'Admin') {
+                navigate('homepage_admin', { replace: true });
             }
         }
     }, [navigate]);
@@ -40,11 +40,11 @@ function Login() {
 
             if (user) {
                 localStorage.setItem('loggedInUser', JSON.stringify(user));
-                if (user.Position === 'User') {
+                if (user.position === 'User') {
                     navigate('homepage_user');
-                } else if (user.Position === 'Director') {
+                } else if (user.position === 'Director') {
                     navigate('homepage_director');
-                } else if (user.Position === 'Admin') {
+                } else if (user.position === 'Admin') {
                     navigate('homepage_admin');
                 } else {
                     setError('Invalid position');
