@@ -40,10 +40,11 @@ export default function UpdateForm() {
     const HandleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(
-                `https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/majorthai/${formData.majorthai}`,
-                formData
-            );
+            const response = await axios.put(`http://localhost:8080/update_user/${info.id}`, formData);
+            // const response = await axios.put(
+            //     `https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/majorthai/${formData.majorthai}`,
+            //     formData
+            // );
             console.log(response);
             alert('แก้ไขข้อมูลสำเร็จ');
             navigate('/homepage_user', { replace: true });

@@ -7,7 +7,9 @@ function ShowStatusForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
+        // axios.get('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
+        axios.get('http://localhost:8080/test/get_info')
+
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);
@@ -53,13 +55,13 @@ function ShowStatusForm() {
                             </div>
                             <hr className='border-white m-5 mt-4' />
                             <div className="flex justify-end items-center mt-2">
-                                <button 
+                                <button
                                     className="bg-red-500 text-white px-4 py-2 rounded-lg ml-2"
                                     onClick={() => deleteRequest(info)}
                                 >
                                     ยกเลิกคำขอ
                                 </button>
-                                <button 
+                                <button
                                     className="bg-blue-500 text-white px-4 py-2 rounded-lg ml-2"
                                     onClick={() => editRequest(info)}
                                 >
