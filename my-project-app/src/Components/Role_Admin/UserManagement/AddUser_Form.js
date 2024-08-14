@@ -50,8 +50,8 @@ export default function AddUser_Form() {
             return;
         }
 
-        // axios.post('http://localhost:8080/test/add_info_User', userMember)
-            axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
+        axios.post('http://localhost:8080/add_info_User', userMember)
+            // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
             .then(res => {
                 console.log(res);
                 alert('กรอกข้อมูลเสร็จสิ้น');
@@ -75,7 +75,7 @@ export default function AddUser_Form() {
             <div className="flex items-center justify-center grid grid-cols-12 auto-rows-auto p-5 pt-20">
 
                 <div className="bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl w-Screen">
-                    <h1>เพิ่มสมาชิก</h1>                    
+                    <h1>เพิ่มสมาชิก</h1>
                     <br />
 
                     <Form onSubmit={HandleSubmit}>

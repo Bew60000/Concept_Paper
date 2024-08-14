@@ -48,10 +48,12 @@ export default function Update_user() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        // axios.put(`http://localhost:8080/test/update_user/${user.id}`, userMember)
-        axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${user.username}`, userMember)
+        axios.put(`http://localhost:8080/update_user/${user.id}`, userMember)
+            // axios.put(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${user.username}`, userMember)
             .then(res => {
                 console.log(res);
+                console.log(res);
+
                 alert('แก้ไขข้อมูลสำเร็จ');
                 navigate('/show_user_data', { replace: true });
             })

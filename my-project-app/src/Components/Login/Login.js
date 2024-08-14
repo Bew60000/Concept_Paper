@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, FormInput, Message,} from 'semantic-ui-react';
+import { Form, FormInput, Message, } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LogoIcon from '../../img/Logo_BlueSky.svg'
@@ -16,12 +16,12 @@ function Login() {
         const loggedInUser = localStorage.getItem('loggedInUser');
         if (loggedInUser) {
             const user = JSON.parse(loggedInUser);
-            if (user.Position === 'User') {
-                navigate('homeuser', { replace: true });
-            } else if (user.Position === 'Director') {
-                navigate('homedirector', { replace: true });
-            } else if (user.Position === 'Admin') {
-                navigate('homeadmin', { replace: true });
+            if (user.position === 'User') {
+                navigate('homepage_user', { replace: true });
+            } else if (user.position === 'Director') {
+                navigate('homepage_director', { replace: true });
+            } else if (user.position === 'Admin') {
+                navigate('homepage_admin', { replace: true });
             }
         }
     }, [navigate]);
@@ -32,20 +32,21 @@ function Login() {
         setError('')
         try {
 
-            const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
+            const response = await axios.get('http://localhost:8080/getinfo_user/all');
+            // const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
             const data = response.data;
 
 
-            const user = data.find(user => user.Username === username && user.Password === password);
+            const user = data.find(user => user.username === username && user.password === password);
 
             if (user) {
                 localStorage.setItem('loggedInUser', JSON.stringify(user));
-                if (user.Position === 'User') {
-                    navigate('homeuser');
-                } else if (user.Position === 'Director') {
-                    navigate('homedirector');
-                } else if (user.Position === 'Admin') {
-                    navigate('homeadmin');
+                if (user.position === 'User') {
+                    navigate('homepage_user');
+                } else if (user.position === 'Director') {
+                    navigate('homepage_director');
+                } else if (user.position === 'Admin') {
+                    navigate('homepage_admin');
                 } else {
                     setError('Invalid position');
                 }
@@ -64,7 +65,7 @@ function Login() {
             <div className='bg-white rounded-3xl border shadow-lg p-12 w-1/4'>
                 <Form onSubmit={handleLogin} error={!!error} loading={loading}>
                     {/* <h1 className='text-gray-600 text-center'>เข้าสู่ระบบ</h1> */}
-                    <img src={LogoIcon} className="mx-auto justify-center items-center text-center h-32 w-32 mb-6" />                    
+                    <img src={LogoIcon} className="mx-auto justify-center items-center text-center h-32 w-32 mb-6" />
 
                     <FormInput
                         label='Username'
@@ -93,7 +94,7 @@ function Login() {
 
                     <br />
                     <div className='flex items-center justify-center gap-6'>
-                        <button                            
+                        <button
                             type='submit'
                             className='bg-blue-500 flex-1 pr-5 pl-5 pt-3 pb-3 rounded-lg 
                             shadow-10 text-white hover:bg-blue-800 text-center'
