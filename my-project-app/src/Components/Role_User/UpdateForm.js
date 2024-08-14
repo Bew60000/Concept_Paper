@@ -17,7 +17,7 @@ export default function UpdateForm() {
     const navigate = useNavigate();
     const { info } = location.state;
     const [formData, setFormData] = useState({
-        faculty: info.faculty,
+        faculty_id: info.faculty_id,
         campus: info.campus,
         majorthai: info.majorthai,
         majoreng: info.majoreng,
@@ -49,8 +49,14 @@ export default function UpdateForm() {
 
         if (isFormComplete) {
             try {
+
+                // const response = await axios.put(
+                // `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
+                //     formData
+                // );
+
                 const response = await axios.put(
-                    `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
+                    `http://localhost:8080/update_basic_info/${formData.majorthai}`,
                     formData
                 );
 
@@ -83,7 +89,7 @@ export default function UpdateForm() {
                                 label="คณะ"
                                 placeholder="โปรดระบุคณะ"
                                 name="faculty"
-                                value={formData.faculty}
+                                value={formData.faculty_id}
                                 onChange={HandleChange}
                             />
                             <FormInput

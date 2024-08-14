@@ -97,14 +97,14 @@ app.post('/add_basic_info', async (req, res) => {
 });
 
 
-app.put('/update_basic_info/:curriculum_id', async (req, res) => {
-    const { curriculum_id } = req.params;
+app.put('/update_basic_info/:MajorThai', async (req, res) => {
+    const { MajorThai } = req.params;
     // const id = req.id;
     const {
         Nature,
         AdditionalInfo,
         Campus,
-        MajorThai,
+        // MajorThai,
         MajorEng,
         DegreeName,
         Faculty,
@@ -114,19 +114,19 @@ app.put('/update_basic_info/:curriculum_id', async (req, res) => {
 
     try {
         await pool.query(`UPDATE public.basic_infos
-	SET nature = $1, addtionalinfo=$2, majorthai=$3, majoreng=$4, faculty_id=$5, degreename=$6, affiliation=$7, campus=$8, yearstarted=$9, learn_outcomes=$10
-	WHERE curriculum_id = $11 RETURNING *`,
+	SET nature = $1, addtionalinfo=$2,  majoreng=$3, faculty_id=$4, degreename=$5, affiliation=$6, campus=$7, yearstarted=$8, learn_outcomes=$9
+	WHERE MajorThai = $10 RETURNING *`,
             [
                 Nature,
                 AdditionalInfo,
                 Campus,
-                MajorThai,
+                // MajorThai,
                 MajorEng,
                 DegreeName,
                 Faculty,
                 YearStarted,
                 Affiliation,
-                LearningOutcome, curriculum_id]);
+                LearningOutcome, MajorThai]);
         // res.json(result.rows);
 
         res.status(201).send('update successfull');
@@ -139,13 +139,13 @@ app.put('/update_basic_info/:curriculum_id', async (req, res) => {
 
 
 
-app.delete('/deletebasic_info/:id', async (req, res) => {
-    const { id } = req.params; //รับ params id 
+app.delete('/deletebasic_info/:majorthai', async (req, res) => {
+    const { majorthai } = req.params; //รับ params id 
     // const {id} = req.params.id;
 
 
     try {
-        await pool.query(`delete from basic_info where id = $1`, [id]);
+        await pool.query(`delete from basic_info where majorthai = $1`, [majorthai]);
         res.status(201).send('Delete successfull');
         console.log();
     } catch (error) {
