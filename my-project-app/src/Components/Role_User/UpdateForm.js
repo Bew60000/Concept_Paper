@@ -17,6 +17,7 @@ export default function UpdateForm() {
     const navigate = useNavigate();
     const { info } = location.state;
     const [formData, setFormData] = useState({
+        id: info.id,
         faculty: info.faculty,
         campus: info.campus,
         majorthai: info.majorthai,
@@ -28,16 +29,18 @@ export default function UpdateForm() {
         additionalInfo: info.additionalInfo,
         learningoutcome: info.learningoutcome
     });
+    const [id, setid] = useState(null);
 
     const HandleChange = (e, { name, value }) => {
         setFormData(prevState => ({
             ...prevState,
             [name]: value
         }));
-        if (name === 'nature' && value === 'เฉพาะสาขาเดียว') {
+        
+        if (name === 'nature') {
             setFormData(prevState => ({
                 ...prevState,
-                additionalinfo: null,
+                additionalInfo: '',
             }));
         }
     };
@@ -45,17 +48,29 @@ export default function UpdateForm() {
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.put(
-                `https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/majorthai/${formData.majorthai}`,
-                formData
-            );
-            console.log(response);
-            alert('แก้ไขข้อมูลสำเร็จ');
-            navigate('/homepage_user', { replace: true });
-        } catch (err) {
-            console.error(err);
-            alert('ไม่สามารถแก้ไขข้อมูลได้');
+
+        const isFormComplete = Object.entries(formData).every(([key, value]) => {
+            if (key === 'additionalInfo' && formData.nature === 'เฉพาะสาขาเดียว') {
+                return true; 
+            }
+            return value !== ''; 
+        });
+
+        if (isFormComplete) {
+            try {
+                const response = await axios.put(
+                    `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
+                    formData
+                );
+                console.log(response);
+                alert('แก้ไขข้อมูลสำเร็จ');
+                navigate('/homepage_user', { replace: true });
+            } catch (err) {
+                console.error(err);
+                alert('ไม่สามารถแก้ไขข้อมูลได้');
+            }
+        } else {
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
         }
     };
 
