@@ -58,6 +58,7 @@ export default function UpdateForm() {
 
         if (isFormComplete) {
             try {
+                //const response = axios.gut('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
                 const response = await axios.put(
                     `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
                     formData
