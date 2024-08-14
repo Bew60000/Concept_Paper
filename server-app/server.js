@@ -325,35 +325,34 @@ app.delete('/test/test/deletebyid/:id', async (req, res) => {
     }
 });
 
-
 //  add user เพิ่มข้อมูลผู้ใช้ใหม่
 app.post('/add_info_User', async (req, res) => {
     // const input = req.body;
 
     const {
-        Position,
-        Name,
-        LastName,
-        Username,
-        Password,
-        Email,
-        Phone,
-        Affiliation,
-        Campus } = req.body;
+        position,
+        name,
+        lastname,
+        username,
+        password,
+        email,
+        phone,
+        affiliation,
+        campus } = req.body;
 
 
     try {
         await pool.query(`insert into user_info (Position,Name,LastName,Username,Password,Email,Phone,Affiliation,Campus) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) `,
             [
-                Position,
-                Name,
-                LastName,
-                Username,
-                Password,
-                Email,
-                Phone,
-                Affiliation,
-                Campus
+                position,
+                name,
+                lastname,
+                username,
+                password,
+                email,
+                phone,
+                affiliation,
+                campus
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {
@@ -409,16 +408,17 @@ app.put('/update_user/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.id;
     const {
-        Position,
-        Name,
-        LastName,
-        Email,
-        Phone,
-        Affiliation,
-        Campus } = req.body;
+        position,
+        name,
+        lastname,
+        affiliation,
+        email,
+        phone,
+        campus } = req.body;
 
     try {
-        await pool.query(`update user_info set position = $1,
+        await pool.query(`UPDATE user_info set 
+            position = $1,
             name = $2,
             lastname = $3,
             affiliation = $4,
@@ -426,13 +426,13 @@ app.put('/update_user/:id', async (req, res) => {
             phone = $6,
             campus = $7 where id = $8 RETURNING *`,
             [
-                Position,
-                Name,
-                LastName,
-                Email,
-                Phone,
-                Affiliation,
-                Campus, id]);
+                position,
+                name,
+                lastname,
+                affiliation,
+                email,
+                phone,
+                campus, id]);
         // res.json(result.rows);
 
         res.status(201).send('update successfull');

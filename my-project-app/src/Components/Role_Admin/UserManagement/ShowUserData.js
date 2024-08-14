@@ -20,20 +20,24 @@ function ShowUserData() {
     const itemsPerPage = 10;
     const navigate = useNavigate();
 
-    const deleteUser = (username) => {
-        axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${username}`)
+    // const deleteUser = (username) => {
+    const deleteUser = (id) => {
+        axios.delete(`http://localhost:8080/test/delete_user/${id}`)
+            // axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${username}`)
             .then(response => {
                 console.log('Delete Response:', response);
-                setDataUser(prevData => prevData.filter(user => user.username !== username));
+                // setDataUser(prevData => prevData.filter(user => user.username !== username));
+                setDataUser(prevData => prevData.filter(user => user.id !== id));
+
             })
             .catch(err => {
                 console.error('Error deleting user:', err.response ? err.response.data : err.message);
             });
     };
-    
+
 
     const editUser = (user) => {
-        navigate('/edit_user', { state: { user } });
+        navigate('/Update_User', { state: { user } });
     };
 
     const handleAddUserClick = () => {
@@ -41,8 +45,8 @@ function ShowUserData() {
     };
 
     useEffect(() => {
-        // axios.get('http://localhost:8080/getinfo_user/all')
-            axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
+        axios.get('http://localhost:8080/getinfo_user/all')
+            // axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60')
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);
@@ -78,7 +82,7 @@ function ShowUserData() {
                             เพิ่มสมาชิก
                         </button>
                     </div>
-                    
+
                     <br />
                     <Table selectable responsive basic='very'>
                         <Table.Header>
@@ -110,7 +114,9 @@ function ShowUserData() {
                                     <Table.Cell>{val.campus}</Table.Cell>
                                     <Table.Cell>
                                         <Button onClick={() => editUser(val)}>แก้ไข</Button>
-                                        <Button onClick={() => deleteUser(val.username)}>ลบ</Button>
+                                        {/* <Button onClick={() => deleteUser(val.username)}>ลบ</Button> */}
+                                        <Button onClick={() => deleteUser(val.id)}>ลบ</Button>
+
                                     </Table.Cell>
                                 </Table.Row>
                             ))}

@@ -61,7 +61,7 @@ root.render(
 
 
 
-        <Route path="/app" element={<AllForm />} />
+        <Route path="/Update_User" element={<UpdateUser />} />
 
       </Routes>
     </BrowserRouter>
