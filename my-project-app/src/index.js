@@ -28,7 +28,8 @@ import UserStatistics from './Components/Role_Admin/UserManagement/UserStatistic
 //Test All App
 import AllForm from './App';
 
-import UpdateBasicInfo from './Components/Role_User/EditForm/Edit_Basic_Info';
+//Role_User
+import UpdateForm from './Components/Role_User/UpdateForm';
 
 import {
   BrowserRouter,
@@ -54,9 +55,11 @@ root.render(
 
         <Route path="/basic_information" element={<Basic_Information />} />
         <Route path="/course_analysis_information" element={<Course_Analysis_Information />} />
+
+        <Route path="/edit_form" element={<UpdateForm />} />
+
         <Route path="/app" element={<AllForm />} />
 
-        <Route path="/edit_info" element={<UpdateBasicInfo />} />
 
 
       </Routes>
