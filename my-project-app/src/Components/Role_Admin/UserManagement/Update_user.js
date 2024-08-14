@@ -13,7 +13,7 @@ import Background from '../../../img/Background.svg';
 import Navbar from '../../Navbar/NavbarAdmin';
 
 
-export default function AddUser_Form() {
+export default function Update_user() {
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,
         backgroundSize: 'cover',

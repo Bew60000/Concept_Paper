@@ -3,11 +3,18 @@ import { Link } from 'react-router-dom';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
 
+//Icon image
+import Icon_SentRequest from './Icon_img/SentRequest.svg';
+import Icon_Search from './Icon_img/Search.svg';
+import Icon_Status from './Icon_img/Status.svg';
+
 import Basic_Information from '../RequestForm/Basic_Information';
 import Course_Analysis_Information from '../RequestForm/Course_Analysis_Information';
 import Management_Information from '../RequestForm/Management_Information';
 import Student_Admission from '../RequestForm/Student_Admission';
 import Teachers_Information from '../RequestForm/Teachers_Information';
+
+import ShowStatusForm from './ShowStatusForm';
 
 export default function Homepage_User() {
 
@@ -25,25 +32,27 @@ export default function Homepage_User() {
         <div className="bg-white flex justify-around items-center col-span-10 col-start-2 p-10 rounded-2xl shadow-md ">
 
           <Link to="/basic_information" className="flex flex-col items-center col-span-3">
-            <img src="/path/to/icon1.svg" alt="icon1" className="mb-4" />
+            <img src={Icon_SentRequest} alt="icon1" className="h-24" />
             <span className="font-bold text-center">ส่งคำขอเปิดหลักสูตร</span>
           </Link>
 
           <div className="border-r border-gray-300 h-20"></div>
 
           <Link to="" className="flex flex-col items-center col-span-10">
-            <img src="/path/to/icon2.svg" alt="icon2" className="mb-4" />
-            <span className="font-bold text-center">ยังไม่ทดสอบ</span>
+            <img src={Icon_Search} alt="icon2" className="h-24 " />
+            <span className="font-bold text-center mt-2">ค้นหาหลักสูตร</span>
           </Link>
 
           <div className="border-r border-gray-300 h-20"></div>
 
           <Link to="" className="flex flex-col items-center col-span-10">
-            <img src="/path/to/icon3.svg" alt="icon3" className="mb-4" />
-            <span className="font-bold text-center">ยังไม่ทดสอบ</span>
+            <img src={Icon_Status} alt="icon3" className="h-24" />
+            <span className="font-bold text-center">ติดตามสถานะ</span>
           </Link>
         </div>
       </div>
+
+      <ShowStatusForm />
       
     </div>
   )
