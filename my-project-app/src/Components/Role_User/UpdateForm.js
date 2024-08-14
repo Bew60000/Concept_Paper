@@ -37,8 +37,7 @@ export default function UpdateForm() {
         learningoutcome: info.learningoutcome
     });
 
-    const HandleChange = (e) => {
-        const { name, value } = e.target;
+    const HandleChange = (e, { name, value }) => {
         setFormData(prevState => ({
             ...prevState,
             [name]: value

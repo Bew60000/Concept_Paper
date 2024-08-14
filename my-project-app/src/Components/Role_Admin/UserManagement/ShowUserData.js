@@ -21,10 +21,11 @@ function ShowUserData() {
     const navigate = useNavigate();
 
     // const deleteUser = (username) => {
+    //     axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${username}`)
     const deleteUser = (id) => {
         axios.delete(`http://localhost:8080/test/delete_user/${id}`)
-            // axios.delete(`https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60/username/${username}`)
             .then(response => {
+
                 console.log('Delete Response:', response);
                 // setDataUser(prevData => prevData.filter(user => user.username !== username));
                 setDataUser(prevData => prevData.filter(user => user.id !== id));

@@ -6,7 +6,7 @@ import {
     FormButton,
     Form,
     FormField,
-    FormSelect,
+    FormSelect
 } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -52,8 +52,7 @@ export default function Update_user() {
     });
     const [id, setid] = useState(null);
 
-    const HandleChange = (e) => {
-        const { name, value } = e.target;
+    const HandleChange = (e, { name, value }) => {
         setUserMember(prevState => ({
             ...prevState,
             [name]: value
