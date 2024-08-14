@@ -17,7 +17,6 @@ export default function UpdateForm() {
     const navigate = useNavigate();
     const { info } = location.state;
     const [formData, setFormData] = useState({
-        id: info.id,
         faculty: info.faculty,
         campus: info.campus,
         majorthai: info.majorthai,
@@ -29,22 +28,14 @@ export default function UpdateForm() {
         additionalInfo: info.additionalInfo,
         learningoutcome: info.learningoutcome
     });
-    const [id, setid] = useState(null);
 
-    const HandleChange = (e, { name, value }) => {
+    const HandleChange = (e) => {
+        const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
             [name]: value
         }));
-        
-        if (name === 'nature') {
-            setFormData(prevState => ({
-                ...prevState,
-                additionalInfo: '',
-            }));
-        }
     };
-
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
@@ -58,7 +49,6 @@ export default function UpdateForm() {
 
         if (isFormComplete) {
             try {
-                //const response = axios.gut('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
                 const response = await axios.put(
                     `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
                     formData

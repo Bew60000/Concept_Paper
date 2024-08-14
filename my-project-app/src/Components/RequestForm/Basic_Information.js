@@ -33,7 +33,7 @@ const Basic_Information = () => {
   });
 
   const navigate = useNavigate();
- 
+
   const HandleChange = (e, { name, value }) => {
     setFormData(prevState => ({
       ...prevState,
