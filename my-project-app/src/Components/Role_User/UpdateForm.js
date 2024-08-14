@@ -42,9 +42,9 @@ export default function UpdateForm() {
 
         const isFormComplete = Object.entries(formData).every(([key, value]) => {
             if (key === 'additionalInfo' && formData.nature === 'เฉพาะสาขาเดียว') {
-                return true; 
+                return true;
             }
-            return value !== ''; 
+            return value !== '';
         });
 
         if (isFormComplete) {
@@ -53,6 +53,7 @@ export default function UpdateForm() {
                     `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
                     formData
                 );
+
                 console.log(response);
                 alert('แก้ไขข้อมูลสำเร็จ');
                 navigate('/homepage_user', { replace: true });

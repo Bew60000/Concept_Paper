@@ -32,19 +32,21 @@ function Login() {
         setError('')
         try {
 
-            const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
+            const response = await axios.get('http://localhost:8080/getinfo_user/all');
+            // const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
             const data = response.data;
+
 
 
             const user = data.find(user => user.username === username && user.password === password);
 
             if (user) {
                 localStorage.setItem('loggedInUser', JSON.stringify(user));
-                if (user.Position === 'User') {
+                if (user.position === 'User') {
                     navigate('homepage_user');
-                } else if (user.Position === 'Director') {
+                } else if (user.position === 'Director') {
                     navigate('homepage_director');
-                } else if (user.Position === 'Admin') {
+                } else if (user.position === 'Admin') {
                     navigate('homepage_admin');
                 } else {
                     setError('Invalid position');

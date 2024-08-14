@@ -408,13 +408,13 @@ app.put('/update_user/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.id;
     const {
-        Position,
-        Name,
-        LastName,
-        Email,
-        Phone,
-        Affiliation,
-        Campus } = req.body;
+        position,
+        name,
+        lastname,
+        affiliation,
+        email,
+        phone,
+        campus } = req.body;
 
     try {
         await pool.query(`UPDATE user_info set 
@@ -426,14 +426,14 @@ app.put('/update_user/:id', async (req, res) => {
             phone = $6,
             campus = $7 where id = $8 RETURNING *`,
             [
-                Position,
-                Name,
-                LastName,
-                Email,
-                Phone,
-                Affiliation,
-                Campus, id]);
-        res.json(result.rows);
+                position,
+                name,
+                lastname,
+                affiliation,
+                email,
+                phone,
+                campus, id]);
+        // res.json(result.rows);
 
         res.status(201).send('update successfull');
         console.log();
