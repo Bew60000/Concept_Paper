@@ -50,14 +50,17 @@ root.render(
         <Route path="/show_user_data" element={<ShowUserData />} />
         <Route path="/userstatistics" element={<UserStatistics />} />
         <Route path="/add_user" element={<AddUser_Form />} />
-        <Route path="/edit_user" element={<UpdateUser />} />
 
         <Route path="/basic_information" element={<Basic_Information />} />
         <Route path="/course_analysis_information" element={<Course_Analysis_Information />} />
-        <Route path="/app" element={<AllForm />} />
+        <Route path="/Student_Admission" element={<Student_Admission />} />
+
 
         <Route path="/edit_info" element={<UpdateBasicInfo />} />
+        <Route path="/edit_user" element={<UpdateUser />} />
 
+
+        <Route path="/app" element={<AllForm />} />
 
       </Routes>
     </BrowserRouter>
