@@ -6,12 +6,26 @@ import {
     FormButton,
     Form,
     FormField,
+    FormSelect,
 } from 'semantic-ui-react';
 import axios from 'axios';
 
 import Background from '../../../img/Background.svg';
 import Navbar from '../../Navbar/NavbarAdmin';
 
+const options = [
+    { key: 'A', text: 'Admin', value: 'Admin' },
+    { key: 'U', text: 'User', value: 'User' },
+    { key: 'D', text: 'Director', value: 'Director' },
+];
+
+const optionscampus = [
+    { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
+    { key: 'PK', text: 'ภูเก็ต', value: 'ภูเก็ต' },
+    { key: 'PT', text: 'ปัตตานี', value: 'ปัตตานี' },
+    { key: 'T', text: 'ตรัง', value: 'ตรัง' },
+    { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
+];
 
 export default function Update_user() {
     const BackgroundImage = {
@@ -117,22 +131,24 @@ export default function Update_user() {
                         </FormGroup>
 
                         <FormGroup widths='equal'>
-                            <FormInput
-                                fluid label='Position'
-                                type='text'
+                        <FormSelect
+                                fluid
+                                label='Role'
+                                options={options}
                                 name='position'
+                                placeholder='โปรดเลือก'
                                 value={userMember.position}
                                 onChange={HandleChange}
-                                placeholder='โปรดระบุ'
                             />
-                            <FormInput
-                                fluid label='Campus'
-                                type='text'
+                            <FormSelect
+                                fluid
+                                label='Campus'
+                                options={optionscampus}
                                 name='campus'
+                                placeholder='โปรดเลือก'
                                 value={userMember.campus}
                                 onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
+                            />       
                             <FormInput
                                 fluid label='Affiliation'
                                 type='text'

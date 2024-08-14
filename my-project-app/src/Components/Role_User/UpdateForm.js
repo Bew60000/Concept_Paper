@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormInput, FormGroup, FormButton, Form, FormTextArea, FormRadio } from 'semantic-ui-react';
+import { FormInput, FormGroup, FormButton, Form, FormTextArea, FormRadio, FormSelect, } from 'semantic-ui-react';
 import axios from 'axios';
 
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
+
+const optionscampus = [
+    { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
+    { key: 'PK', text: 'ภูเก็ต', value: 'ภูเก็ต' },
+    { key: 'PT', text: 'ปัตตานี', value: 'ปัตตานี' },
+    { key: 'T', text: 'ตรัง', value: 'ตรัง' },
+    { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
+];
 
 export default function UpdateForm() {
     const BackgroundImage = {
@@ -92,11 +100,12 @@ export default function UpdateForm() {
                                 value={formData.faculty_id}
                                 onChange={HandleChange}
                             />
-                            <FormInput
+                            <FormSelect
                                 fluid
-                                label="วิทยาเขต"
-                                placeholder="โปรดระบุวิทยาเขต"
-                                name="campus"
+                                label='วิทยาเขต'
+                                options={optionscampus}
+                                name='campus'
+                                placeholder='โปรดเลือก'
                                 value={formData.campus}
                                 onChange={HandleChange}
                             />
