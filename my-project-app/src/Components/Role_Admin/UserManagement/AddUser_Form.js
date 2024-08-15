@@ -64,8 +64,8 @@ export default function AddUser_Form() {
             return;
         }
 
-        axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
-        // axios.post('http://localhost:8080/add_info_User', userMember)
+        // axios.post('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60', userMember)
+        axios.post('http://localhost:8080/add_info_User', userMember)
             .then(res => {
                 console.log(res);
                 alert('กรอกข้อมูลเสร็จสิ้น');
@@ -130,7 +130,7 @@ export default function AddUser_Form() {
                                 placeholder='โปรดเลือก'
                                 value={userMember.campus}
                                 onChange={HandleChange}
-                            />                            
+                            />
                             <FormInput
                                 fluid label='Affiliation'
                                 type='text'

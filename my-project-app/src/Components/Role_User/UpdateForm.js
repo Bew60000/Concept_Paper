@@ -25,7 +25,8 @@ export default function UpdateForm() {
     const navigate = useNavigate();
     const { info } = location.state;
     const [formData, setFormData] = useState({
-        faculty_id: info.faculty_id,
+        curriculum_id: info.curriculum_id,
+        faculty: info.faculty,
         campus: info.campus,
         majorthai: info.majorthai,
         majoreng: info.majoreng,
@@ -33,7 +34,7 @@ export default function UpdateForm() {
         affiliation: info.affiliation,
         yearstarted: info.yearstarted,
         nature: info.nature,
-        additionalInfo: info.additionalInfo,
+        additionalinfo: info.additionalinfo,
         learningoutcome: info.learningoutcome
     });
 
@@ -47,36 +48,37 @@ export default function UpdateForm() {
     const HandleSubmit = async (e) => {
         e.preventDefault();
 
-        const isFormComplete = Object.entries(formData).every(([key, value]) => {
-            if (key === 'additionalInfo' && formData.nature === 'เฉพาะสาขาเดียว') {
-                return true;
-            }
-            return value !== '';
-        });
+        // const isFormComplete = Object.entries(formData).every(([key, value]) => {
+        //     if (key === 'additionalinfo' && formData.nature === 'เฉพาะสาขาเดียว') {
+        //         return true;
+        //     }
+        //     return value !== '';
+        // });
 
-        if (isFormComplete) {
-            try {
+        // if (isFormComplete) {
+        try {
 
-                // const response = await axios.put(
-                // `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
-                //     formData
-                // );
+            // const response = await axios.put(
+            // `https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${formData.majorthai}`,
+            //     formData
+            // );
 
-                const response = await axios.put(
-                    `http://localhost:8080/update_basic_info/${formData.majorthai}`,
-                    formData
-                );
+            const response = await axios.put(
+                `http://localhost:8080/update_basic_info/${formData.curriculum_id}`,
+                formData
+            );
 
-                console.log(response);
-                alert('แก้ไขข้อมูลสำเร็จ');
-                navigate('/homepage_user', { replace: true });
-            } catch (err) {
-                console.error(err);
-                alert('ไม่สามารถแก้ไขข้อมูลได้');
-            }
-        } else {
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            console.log(response);
+            console.log(formData.curriculum_id);
+            alert('แก้ไขข้อมูลสำเร็จ');
+            navigate('/homepage_user', { replace: true });
+        } catch (err) {
+            console.error(err);
+            alert('ไม่สามารถแก้ไขข้อมูลได้');
         }
+        // } else {
+        //     alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        // }
     };
 
     return (
@@ -96,7 +98,7 @@ export default function UpdateForm() {
                                 label="คณะ"
                                 placeholder="โปรดระบุคณะ"
                                 name="faculty"
-                                value={formData.faculty_id}
+                                value={formData.faculty}
                                 onChange={HandleChange}
                             />
                             <FormSelect
@@ -185,8 +187,8 @@ export default function UpdateForm() {
                                     <FormTextArea
                                         label="รายละเอียดเพิ่มเติม (*ลักษณะของหลักสูตร)"
                                         placeholder="โปรดกรอกรายละเอียดเพิ่มเติม"
-                                        name="additionalInfo"
-                                        value={formData.additionalInfo}
+                                        name="additionalinfo"
+                                        value={formData.additionalinfo}
                                         onChange={HandleChange}
                                     />
                                 </FormGroup>

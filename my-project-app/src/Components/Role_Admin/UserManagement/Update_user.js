@@ -130,7 +130,7 @@ export default function Update_user() {
                         </FormGroup>
 
                         <FormGroup widths='equal'>
-                        <FormSelect
+                            <FormSelect
                                 fluid
                                 label='Role'
                                 options={options}
@@ -147,7 +147,7 @@ export default function Update_user() {
                                 placeholder='โปรดเลือก'
                                 value={userMember.campus}
                                 onChange={HandleChange}
-                            />       
+                            />
                             <FormInput
                                 fluid label='Affiliation'
                                 type='text'

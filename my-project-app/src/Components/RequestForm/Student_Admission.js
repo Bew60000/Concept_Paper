@@ -9,7 +9,7 @@ import {
     FormField
 } from 'semantic-ui-react';
 import axios from 'axios';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 const options = [
     { key: '1', text: 'ชั้นปีที่ 1', value: '1' },
     { key: '2', text: 'ชั้นปีที่ 2', value: '2' },
@@ -18,6 +18,12 @@ const options = [
 ];
 
 const StudentAdmission = () => {
+
+    const location = useLocation();
+
+    // รับค่า curriculum_id จากฟอร์มก่อนหน้า
+    const curriculum_id = location.state?.curriculum_id;
+
     const [forms, setForms] = useState([{
         id: 1,
         year: '',
@@ -41,11 +47,11 @@ const StudentAdmission = () => {
                 id: '',
                 year: '',
                 count_students: '',
-                curriculum_id: '',
+                curriculum_id: curriculum_id,
                 year_offered: ''
             }
         ]);
-    }, []);
+    }, [curriculum_id]);
 
     const removeForm = useCallback((id) => {
         setForms(prevForms => prevForms.filter(form => form.id !== id));

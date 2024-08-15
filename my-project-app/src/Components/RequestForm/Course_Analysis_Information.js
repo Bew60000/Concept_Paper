@@ -19,8 +19,12 @@ const CourseAnalysisInformation = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     }
-
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // รับค่า curriculum_id จากฟอร์มก่อนหน้า
+    const curriculum_id = location.state?.curriculum_id;
+
     const [formData, setFormData] = useState({
         targetGroups: {
             highSchool: false,
@@ -72,6 +76,7 @@ const CourseAnalysisInformation = () => {
             const dataToSubmit = {
                 ...formData,
                 required_eq_id: selectedTargetGroups, // Assign the joined string to required_eq_id
+                curriculum_id, // ส่งค่า curriculum_id ที่รับมาไปยัง API
             };
 
             try {
@@ -97,6 +102,9 @@ const CourseAnalysisInformation = () => {
                     cooperation: '',
                     high_lights: '',
                 });
+                // navigate('/StudentAdmission', {
+                //     state: { curriculum_id: curriculum_id },
+                // });
             } catch (error) {
                 console.error('Error saving data:', error);
                 alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');

@@ -59,7 +59,7 @@ function ShowFormRequestForm() {
                                     <p className="text-gray-700">วันที่ยื่น : {info.yearstarted}</p>
                                 </div>
                                 <div className="col-span-4 text-center">
-                                    <p className="text-gray-700">คณะ{info.faculty_id}</p>
+                                    <p className="text-gray-700">คณะ{info.faculty}</p>
                                 </div>
                                 <div className="col-span-4 text-center">
                                     <p className="text-gray-700">หลักสูตร{info.majorthai}</p>
