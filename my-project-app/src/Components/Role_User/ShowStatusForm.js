@@ -41,18 +41,20 @@ function ShowStatusForm() {
                         <div key={index} className="bg-gray-200 p-6 rounded-xl w-full mb-4">
                             <div className="grid grid-cols-12 gap-4 items-center">
                                 <div className="col-span-2 text-center p-10">
-                                    <p className="text-gray-700">วันที่ยื่น : {info.yearstarted}</p>
+                                    <p className="text-gray-700 m-1">ปีที่เปิดสอน</p>
+                                    <p className="text-gray-700">'{info.yearstarted}'</p>
                                 </div>
                                 <div className="col-span-4 text-center">
-                                    <p className="text-gray-700">คณะ {info.faculty}</p>
+                                    <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>
+                                    <p className="text-gray-700">วิทยาเขต: {info.campus}</p>
                                 </div>
                                 <div className="col-span-4 text-center">
-                                    <p className="text-gray-700">หลักสูตร {info.majorthai}</p>
-                                    <p className="text-gray-700">( {info.majoreng})</p>
+                                    <p className="text-gray-700 font-bold m-1">หลักสูตร{info.majorthai}</p>
+                                    <p className="text-gray-700">({info.majoreng})</p>
                                 </div>
                                 <div className="col-span-2 text-center">
-                                    <p className="text-gray-700">สถานะ</p>
-                                    <p className="text-blue-600">"รอการตอบรับ"</p>
+                                    <p className="text-gray-700 m-1">สถานะ</p>
+                                    <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
                                 </div>
                             </div>
                             <hr className='border-white m-5 mt-4' />

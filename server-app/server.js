@@ -36,44 +36,7 @@ pool.connect((err) => {
     console.log('connected to postgresql');
 });
 
-
-app.get('/', (req, res) => {
-    res.send('Hellow World by ME!!!');
-});
-
-app.get('/test', async (req, res) => {
-    try {
-        const result = await pool.query(`select * from profile`);
-        res.json(result.rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving section');
-    }
-});
-
 // ส่วนของการเพิ่มข้อมูล
-
-// // เพิ่มข้อมูลส่วนที่ 1
-// app.post('/test/add_basic_infos', async (req, res) => {
-//     // const input = req.body;
-
-//     const { curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes } = req.body;
-
-
-//     try {
-//         await pool.query(`INSERT INTO basic_infos(
-// 	curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes)
-// 	VALUES (1, $2, $3, $4, $5, $6, $7);`,
-//             [
-//                 curriculum_id, thai_name, english_name, faculty_id, year_started, course_id, learn_outcomes
-//             ]);
-//         res.status(201).send('Add successfull');
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send('Error adding authors');
-//     }
-// });
-
 
 // เพิ่มข้อมูลส่วนที่ 1 basic_info
 app.post('/add_basic_info', async (req, res) => {
@@ -81,27 +44,45 @@ app.post('/add_basic_info', async (req, res) => {
 
 
 
-    const { nature, additionalinfo, majorthai, majoreng, faculty, degreename, affiliation, campus, yearstarted, learningoutcome } = req.body;
+    const { nature,
+        additionalinfo,
+        majorthai,
+        majoreng,
+        faculty,
+        degreename,
+        affiliation,
+        campus,
+        yearstarted,
+        learningoutcome } = req.body;
 
 
     try {
-        // ดึงค่า curriculum_id สูงสุดที่มีในฐานข้อมูล
+
         const result = await pool.query('SELECT curriculum_id FROM basic_infos ORDER BY curriculum_id DESC LIMIT 1');
         let lastId = result.rows[0]?.curriculum_id || 'C0000';
 
-        // สร้าง curriculum_id ใหม่โดยเพิ่มลำดับจากค่าเดิม
+
         let idNumber = parseInt(lastId.replace('C', ''), 10) + 1;
         let newCurriculumId = `C${idNumber.toString().padStart(4, '0')}`;
 
         // nature	additionalInfo	faculty	campus	majorthai	majoreng	degreename	affiliation	yearstarted	learningoutcome
         await pool.query(`INSERT INTO basic_infos(
             curriculum_id,
-	nature,additionalinfo, majorthai, majoreng, faculty,degreename,  affiliation,campus, yearstarted, learningoutcome)
-	VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11);`,
+	        nature,
+            additionalinfo,
+            majorthai,
+            majoreng,
+            faculty,
+            degreename, 
+            affiliation,
+            campus, 
+            yearstarted, 
+            learningoutcome)
+	        VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11);`,
             [
                 newCurriculumId, nature, additionalinfo, majorthai, majoreng, faculty, degreename, affiliation, campus, yearstarted, learningoutcome
             ]);
-        // ส่งค่า curriculum_id กลับไปยัง Client
+
         res.status(201).json({ curriculum_id: newCurriculumId });
     } catch (error) {
         console.error(error);

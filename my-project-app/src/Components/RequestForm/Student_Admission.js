@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import {
-    FormTextArea,
     FormSelect,
     FormInput,
     FormGroup,
@@ -9,7 +8,8 @@ import {
     FormField
 } from 'semantic-ui-react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 const options = [
     { key: '1', text: 'ชั้นปีที่ 1', value: '1' },
     { key: '2', text: 'ชั้นปีที่ 2', value: '2' },
@@ -18,17 +18,16 @@ const options = [
 ];
 
 const StudentAdmission = () => {
-
     const location = useLocation();
 
     // รับค่า curriculum_id จากฟอร์มก่อนหน้า
-    const curriculum_id = location.state?.curriculum_id;
+    const curriculum_id = location.state?.curriculum_id || '';
 
     const [forms, setForms] = useState([{
         id: 1,
         year: '',
         count_students: '',
-        curriculum_id: '',
+        curriculum_id: curriculum_id, // ใส่ค่า curriculum_id ที่รับมา
         year_offered: ''
     }]);
 
@@ -44,10 +43,10 @@ const StudentAdmission = () => {
         setForms(prevForms => [
             ...prevForms,
             {
-                id: '',
+                id: prevForms.length + 1,
                 year: '',
                 count_students: '',
-                curriculum_id: curriculum_id,
+                curriculum_id: curriculum_id, // ใส่ค่า curriculum_id ในฟอร์มใหม่
                 year_offered: ''
             }
         ]);
@@ -135,4 +134,5 @@ const StudentAdmission = () => {
         </div>
     );
 };
+
 export default StudentAdmission;

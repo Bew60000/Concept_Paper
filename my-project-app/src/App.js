@@ -34,7 +34,7 @@ function App() {
         <Homepage_Director />
         <Homepage_User /> */}
 
-        <AddUser_Form />
+        {/* <AddUser_Form /> */}
 
         <Basic_Information />
         <Course_Analysis_Information />

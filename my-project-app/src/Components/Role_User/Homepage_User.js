@@ -53,7 +53,7 @@ export default function Homepage_User() {
       </div>
 
       <ShowStatusForm />
-      
+
     </div>
   )
 }

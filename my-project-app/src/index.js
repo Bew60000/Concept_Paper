@@ -54,6 +54,8 @@ root.render(
 
         <Route path="/basic_information" element={<Basic_Information />} />
         <Route path="/course_analysis_information" element={<Course_Analysis_Information />} />
+        <Route path="/StudentAdmission" element={<Student_Admission />} />
+
 
         <Route path="/edit_form" element={<UpdateForm />} />
 

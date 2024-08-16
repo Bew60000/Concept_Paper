@@ -88,6 +88,9 @@ const Basic_Information = () => {
       navigate('/course_analysis_information', {
         state: { curriculum_id: newCurriculumId },
       });
+      // navigate('/StudentAdmission', {
+      //   state: { curriculum_id: newCurriculumId },
+      // });
       // navigate('/homepage_user', { replace: true });
     } catch (error) {
       console.error('Error saving data:', error);
