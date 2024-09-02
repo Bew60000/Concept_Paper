@@ -6,9 +6,6 @@ function Loading() {
 
     return (
         <div className="flex justify-center items-center min-h-9 w-auto bg-white">
-
-            {/* <img src={logo} className='scale-50 flex space-x-2 animate-pulse' /> */}
-
             <div className="flex space-x-2 animate-pulse">
                 <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
                 <div className="w-4 h-4 bg-blue-700 rounded-full"></div>

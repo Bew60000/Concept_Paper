@@ -7,7 +7,6 @@ function ShowStatusForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // axios.get('https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585')
         axios.get('http://localhost:8080/test/get_info')
 
             .then(res => setDataUser(res.data))
@@ -15,7 +14,6 @@ function ShowStatusForm() {
     }, []);
 
     const deleteRequest = (info) => {
-        // axios.delete(`https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585/majorthai/${info.majorthai}`)
         axios.delete(`http://localhost:8080/deletebasic_info/${info.curriculum_id}`)
 
             .then(() => {

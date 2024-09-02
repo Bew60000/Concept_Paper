@@ -33,7 +33,6 @@ function Login() {
         try {
 
             const response = await axios.get('http://localhost:8080/getinfo_user/all');
-            // const response = await axios.get('https://sheet.best/api/sheets/3feab3e0-5ebe-4337-8133-894169c2ac60');
             const data = response.data;
 
 

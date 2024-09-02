@@ -80,12 +80,10 @@ const CourseAnalysisInformation = () => {
             };
 
             try {
-                const response = await axios.post(
-                    'http://localhost:8080/add_Course_Analysis_Information',
-                    dataToSubmit
-                );
+                const response = await axios.post('http://localhost:8080/add_Course_Analysis_Information', dataToSubmit);
                 console.log('Data successfully saved:', response.data);
                 alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
+
                 // Reset form after successful submission
                 navigate('/homepage_user', { replace: true });
                 setFormData({
@@ -102,9 +100,11 @@ const CourseAnalysisInformation = () => {
                     cooperation: '',
                     high_lights: '',
                 });
+
                 // navigate('/StudentAdmission', {
                 //     state: { curriculum_id: curriculum_id },
                 // });
+                
             } catch (error) {
                 console.error('Error saving data:', error);
                 alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');

@@ -68,11 +68,7 @@ const Basic_Information = () => {
     // if (isFormComplete) {
     try {
       const response = await axios.post('http://localhost:8080/add_basic_info', formData);
-      // const response = await axios.post(
-      //   'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-      //   formData
-      // );
-
+      
       const newCurriculumId = response.data.curriculum_id;
       console.log('Data saved with curriculum_id:', newCurriculumId);
 
@@ -88,10 +84,13 @@ const Basic_Information = () => {
       navigate('/course_analysis_information', {
         state: { curriculum_id: newCurriculumId },
       });
+
       // navigate('/StudentAdmission', {
       //   state: { curriculum_id: newCurriculumId },
       // });
+
       // navigate('/homepage_user', { replace: true });
+
     } catch (error) {
       console.error('Error saving data:', error);
     }

@@ -30,11 +30,11 @@ function App() {
       <div className='pt-20'>
         <Navbar />
 
-        {/* <Homepage_Admin />
-        <Homepage_Director />
-        <Homepage_User /> */}
+        <Homepage_Admin />
+        {/* <Homepage_Director /> */}
+        <Homepage_User />
 
-        {/* <AddUser_Form /> */}
+        <AddUser_Form />
 
         <Basic_Information />
         <Course_Analysis_Information />

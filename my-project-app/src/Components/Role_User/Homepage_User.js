@@ -8,12 +8,6 @@ import Icon_SentRequest from './Icon_img/SentRequest.svg';
 import Icon_Search from './Icon_img/Search.svg';
 import Icon_Status from './Icon_img/Status.svg';
 
-import Basic_Information from '../RequestForm/Basic_Information';
-import Course_Analysis_Information from '../RequestForm/Course_Analysis_Information';
-import Management_Information from '../RequestForm/Management_Information';
-import Student_Admission from '../RequestForm/Student_Admission';
-import Teachers_Information from '../RequestForm/Teachers_Information';
-
 import ShowStatusForm from './ShowStatusForm';
 
 export default function Homepage_User() {
