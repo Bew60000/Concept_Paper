@@ -9,9 +9,9 @@ import {
 } from 'semantic-ui-react';
 
 const options = [
-    { key: 'A', text: 'อาจารย์', value: 'AJ' },
-    { key: 'B', text: 'ผศ.ดร', value: 'TAJ' },
-    { key: 'B', text: 'ศ.ดร', value: 'TT' },
+    { key: 'A', text: 'นาย', value: 'AJ' },
+    { key: 'B', text: 'นาง', value: 'TAJ' },
+    { key: 'B', text: 'นางสาว', value: 'TT' },
 ]
 const TeachersInformation = () => {
     const [forms, setForms] = useState([{

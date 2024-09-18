@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Background from '../../../img/Background.svg';
 import Navbar from '../../Navbar/NavbarAdmin';
+import UserStatistics from './UserStatistics';
 
 const options = [
     { key: 'A', text: 'Admin', value: 'Admin' },
@@ -85,106 +86,121 @@ export default function AddUser_Form() {
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
             <Navbar />
 
-            <div className="flex items-center justify-center grid grid-cols-12 auto-rows-auto p-5 pt-20">
+            <div className="grid grid-cols-12 content-start auto-rows-auto text-gray-700 p-5 pt-20 ">
 
-                <div className="bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl w-Screen">
-                    <h1>เพิ่มสมาชิก</h1>
-                    <br />
+                <div className="col-span-8 col-start-2">
 
-                    <Form onSubmit={HandleSubmit}>
-                        <FormGroup widths='equal'>
-                            <FormInput
-                                fluid label='Username'
-                                type='text'
-                                name='username'
-                                value={userMember.username}
-                                onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
-                            <FormInput
-                                fluid label='Password'
-                                type='text'
-                                name='password'
-                                value={userMember.password}
-                                onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
-                        </FormGroup>
+                    <div className='bg-white p-6 border-2 rounded-2xl'>
+                        <h1 className='text-gray-500 pl-8'>เพิ่มสมาชิก</h1>
+                    </div>
 
-                        <FormGroup widths='equal'>
-                            <FormSelect
-                                fluid
-                                label='Role'
-                                options={options}
-                                name='position'
-                                placeholder='โปรดเลือก'
-                                value={userMember.position}
-                                onChange={HandleChange}
-                            />
-                            <FormSelect
-                                fluid
-                                label='Campus'
-                                options={optionscampus}
-                                name='campus'
-                                placeholder='โปรดเลือก'
-                                value={userMember.campus}
-                                onChange={HandleChange}
-                            />
-                            <FormInput
-                                fluid label='Affiliation'
-                                type='text'
-                                name='affiliation'
-                                value={userMember.affiliation}
-                                onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
-                        </FormGroup>
+                    <div className='bg-white p-20 px-36 mt-4 border-2 rounded-2xl'>
+                        <Form onSubmit={HandleSubmit}>
+                            <FormGroup widths='equal'>
+                                <FormInput
+                                    fluid label='ชื่อผู้ใช้งาน'
+                                    type='text'
+                                    name='username'
+                                    value={userMember.username}
+                                    onChange={HandleChange}
+                                    placeholder='โปรดระบุ'
+                                />
+                                <FormInput
+                                    fluid label='รหัสผ่าน'
+                                    type='text'
+                                    name='password'
+                                    value={userMember.password}
+                                    onChange={HandleChange}
+                                    placeholder='โปรดระบุ'
+                                />
+                            </FormGroup>
 
-                        <FormGroup widths='equal'>
-                            <FormInput
-                                fluid label='Name'
-                                type='text'
-                                name='name'
-                                value={userMember.name}
-                                onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
-                            <FormInput
-                                fluid label='Lastname'
-                                type='text'
-                                name='lastname'
-                                value={userMember.lastname}
-                                onChange={HandleChange}
-                                placeholder='โปรดระบุ'
-                            />
-                        </FormGroup>
+                            <FormGroup widths='equal'>
+                                <FormSelect
+                                    fluid
+                                    label='ตำแหน่ง'
+                                    options={options}
+                                    name='position'
+                                    placeholder='โปรดเลือก'
+                                    value={userMember.position}
+                                    onChange={HandleChange}
+                                />
+                                <FormSelect
+                                    fluid
+                                    label='วิทยาเขต'
+                                    options={optionscampus}
+                                    name='campus'
+                                    placeholder='โปรดเลือก'
+                                    value={userMember.campus}
+                                    onChange={HandleChange}
+                                />
+                                <FormInput
+                                    fluid label='สังกัด'
+                                    type='text'
+                                    name='affiliation'
+                                    value={userMember.affiliation}
+                                    onChange={HandleChange}
+                                    placeholder='โปรดระบุ'
+                                />
+                            </FormGroup>
 
-                        <FormGroup widths='equal'>
-                            <FormInput
-                                fluid label='Email'
-                                type='email'
-                                name='email'
-                                value={userMember.email}
-                                onChange={HandleChange}
-                                placeholder='ไม่บังคับ'
-                            />
-                        </FormGroup>
+                            <FormGroup widths='equal'>
+                                <FormInput
+                                    fluid label='ชื่อ'
+                                    type='text'
+                                    name='name'
+                                    value={userMember.name}
+                                    onChange={HandleChange}
+                                    placeholder='โปรดระบุ'
+                                />
+                                <FormInput
+                                    fluid label='นามสกุล'
+                                    type='text'
+                                    name='lastname'
+                                    value={userMember.lastname}
+                                    onChange={HandleChange}
+                                    placeholder='โปรดระบุ'
+                                />
+                            </FormGroup>
 
-                        <FormGroup widths='equal'>
-                            <FormInput
-                                fluid label='Phone'
-                                type='tel'
-                                name='phone'
-                                value={userMember.phone}
-                                onChange={HandleChange}
-                                placeholder='ไม่บังคับ'
-                            />
-                        </FormGroup>
+                            <FormGroup widths='equal'>
+                                <FormInput
+                                    fluid label='อีเมล'
+                                    type='email'
+                                    name='email'
+                                    value={userMember.email}
+                                    onChange={HandleChange}
+                                    placeholder='ไม่บังคับ'
+                                />
+                            </FormGroup>
 
-                        <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
+                            <FormGroup widths='equal'>
+                                <FormInput
+                                    fluid label='เบอร์ติดต่อ'
+                                    type='tel'
+                                    name='phone'
+                                    value={userMember.phone}
+                                    onChange={HandleChange}
+                                    placeholder='ไม่บังคับ'
+                                />
+                            </FormGroup>
 
-                    </Form>
+                            <FormGroup>
+                                <FormButton color='blue' type='submit'>เพิ่มสมาชิก</FormButton>
+                                <FormButton color='grey' type='button' onClick={() => navigate('/show_user_data')}>
+                                    ย้อนกลับ
+                                </FormButton>
+                            </FormGroup>
+
+                        </Form>
+                    </div>
+
                 </div>
+
+                <div className="col-span-2 col-start-10" style={{ minHeight: '670px' }}>
+                    <UserStatistics />
+                </div>
+
 
             </div>
 

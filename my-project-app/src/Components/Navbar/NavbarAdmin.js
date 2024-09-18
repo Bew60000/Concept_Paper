@@ -25,13 +25,13 @@ const NavbarAdmin = () => {
 
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0">
-              <img className="h-14 w-14" src={LogoIcon} alt="Your Logo" />
+              <img className="h-12 w-12" src={LogoIcon} alt="Your Logo" />
             </div>
 
             <div className="hidden sm:flex sm:ml-6 items-center">
               <div className="flex space-x-4">
                 <a href="/homepage_admin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                <a href="/show_user_data" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usermanagement</a>
+                <a href="/show_user_data" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User Management</a>
                 <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services</a>
                 <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
               </div>

@@ -32,23 +32,58 @@ const UserStatistics = () => {
     }, []);
 
     return (
-        <div className="flex items-center justify-center grid grid-cols-12 gap-4 p-5 pt-20">
+        <div className="">
+            {/* <div className="flex flex-col md:grid md:grid-cols-12 gap-4 p-5 pt-20 pb-0">
+                <div className="bg-white md:col-span-2 md:col-start-2 p-5 py-12 border-2 rounded-2xl">
+                    <h3 className='text-center text-gray-600'>จำนวน User: {userData.users} คน</h3>
+                </div>
 
-            <div className="bg-white col-span-2 col-start-2 p-5 py-12 border-2 rounded-2xl">
+                <div className="bg-white md:col-span-2 p-5 py-12 border-2 rounded-2xl">
+                    <h3 className='text-center text-gray-600'>จำนวน Director: {userData.directors} คน</h3>
+                </div>
+
+                <div className="bg-white md:col-span-2 p-5 py-12 border-2 rounded-2xl">
+                    <h3 className='text-center text-gray-600'>จำนวน Admin: {userData.admins} คน</h3>
+                </div>
+
+                <div className="bg-white md:col-span-4 p-5 py-12 border-2 rounded-2xl">
+                    <h3 className='text-center text-gray-600'>จำนวนผู้คนทั้งหมดในระบบ: {userData.total} คน</h3>
+                </div>
+            </div> */}
+
+
+            {/* <div className="bg-white w-full p-5 py-12 border-2 rounded-2xl">
+                <p className='text-center text-gray-600'>จำนวน User: {userData.users} คน</p>
+            </div>
+
+            <div className="bg-white p-5 py-12 border-2 rounded-2xl">
+                <p className='text-center text-gray-600'>จำนวน Director: {userData.directors} คน</p>
+            </div>
+
+            <div className="bg-white p-5 py-12 border-2 rounded-2xl">
+                <p className='text-center text-gray-600'>จำนวน Admin: {userData.admins} คน</p>
+            </div>
+
+            <div className="bg-white p-5 py-12 border-2 rounded-2xl">
+                <p className='text-center text-gray-600'>จำนวนผู้คนทั้งหมดในระบบ: {userData.total} คน</p>
+            </div> */}
+
+            <div className="bg-white col-span-2 col-start-10 m-4 mt-0 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
                 <h3 className='text-center text-gray-600'>จำนวน User: {userData.users} คน</h3>
             </div>
 
-            <div className="bg-white col-span-2 p-5 py-12 border-2 rounded-2xl">
-                <h3 className='text-center text-gray-600'>จำนวน Director: {userData.directors} คน</h3>
+            <div className="bg-white col-span-2 col-start-10 m-4 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
+                <p className='text-center text-gray-600'>จำนวน Director: {userData.directors} คน</p>
             </div>
 
-            <div className="bg-white col-span-2 p-5 py-12 border-2 rounded-2xl">
-                <h3 className='text-center text-gray-600'>จำนวน Admin: {userData.admins} คน</h3>
+            {/* <div className="bg-white col-span-2 col-start-10 m-4 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
+                <p className='text-center text-gray-600'>จำนวน Admin: {userData.admins} คน</p>
             </div>
 
-            <div className="bg-white col-span-4 p-5 py-12 border-2 rounded-2xl">
-                <h3 className='text-center text-gray-600'>จำนวนผู้คนทั้งหมดในระบบ: {userData.total} คน</h3>
-            </div>
+            <div className="bg-white col-span-2 col-start-10 m-4 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
+                <p className='text-center text-gray-600'>จำนวนผู้คนทั้งหมดในระบบ: {userData.total} คน</p>
+            </div> */}
+
 
         </div>
     );

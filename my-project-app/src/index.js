@@ -42,9 +42,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/" element={<Login />} />
 
-        <Route path="/" element={<AllForm />} />
+        {/* <Route path="/" element={<AllForm />} /> */}
        
         <Route path="homepage_user" element={<Homepage_User />} />
         <Route path="homepage_director" element={<Homepage_Director />} />
@@ -60,6 +60,8 @@ root.render(
 
 
         <Route path="/edit_form" element={<UpdateForm />} />
+
+        <Route path="/All" element={<AllForm />} />
 
         
 

@@ -25,7 +25,7 @@ const NavbarDirector = () => {
 
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0">
-              <img className="h-14 w-14" src={LogoIcon} alt="Your Logo" />
+              <img className="h-12 w-12" src={LogoIcon} alt="Your Logo" />
             </div>
 
             <div className="hidden sm:flex sm:ml-6 items-center">

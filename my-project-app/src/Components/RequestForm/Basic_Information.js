@@ -45,7 +45,7 @@ const Basic_Information = () => {
 
   const navigate = useNavigate();
 
-  const HandleChange = (e, { name, value }) => {
+  const handleChange = (e, { name, value }) => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value,
@@ -61,43 +61,45 @@ const Basic_Information = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const isFormComplete = Object.values(formData).every(
-    //   (field) => field !== ''
-    // );
 
-    // if (isFormComplete) {
-    try {
-      const response = await axios.post('http://localhost:8080/add_basic_info', formData);
-      
-      const newCurriculumId = response.data.curriculum_id;
-      console.log('Data saved with curriculum_id:', newCurriculumId);
+    const requiredFields = ['faculty', 'campus', 'majorthai',
+      'majoreng', 'degreename', 'affiliation', 'yearstarted',
+      'nature', 'learningoutcome'];
 
-      // ส่งค่า newCurriculumId ไปยังฟอร์มอื่น ๆ หรือทำการบันทึกค่าใน state เพื่อใช้งานต่อไป
-      // ตัวอย่างการบันทึกใน state
-      setFormData(prevForms =>
-        prevForms.map(f =>
-          f.id === formData.id ? { ...f, curriculum_id: newCurriculumId } : f
-        )
-      );
+    const isFormComplete = requiredFields.every(
+      (field) => formData[field] !== '' && formData[field] !== null && formData[field] !== undefined
+    );
 
-      console.log('Data successfully saved:', response.data);
-      navigate('/course_analysis_information', {
-        state: { curriculum_id: newCurriculumId },
-      });
+    if (isFormComplete) {
+      try {
+        const response = await axios.post('http://localhost:8080/add_basic_info', formData);
+        const newCurriculumId = response.data.curriculum_id;
+        console.log('Data saved with curriculum_id:', newCurriculumId);
 
-      // navigate('/StudentAdmission', {
-      //   state: { curriculum_id: newCurriculumId },
-      // });
+        // ส่งค่า newCurriculumId ไปยังฟอร์มอื่น ๆ หรือทำการบันทึกค่าใน state เพื่อใช้งานต่อไป
+        // ตัวอย่างการบันทึกใน state
+        setFormData(prevForms =>
+          prevForms.map(f =>
+            f.id === formData.id ? { ...f, curriculum_id: newCurriculumId } : f
+          )
+        );
 
-      // navigate('/homepage_user', { replace: true });
+        // navigate('/course_analysis_information', {
+        //   state: { curriculum_id: newCurriculumId },
+        // });
 
-    } catch (error) {
-      console.error('Error saving data:', error);
+        // navigate('/StudentAdmission', {
+        //   state: { curriculum_id: newCurriculumId },
+        // });
+
+        navigate('/homepage_user', { replace: true });
+
+      } catch (error) {
+        console.error('Error saving data:', error);
+      }
+    } else {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     }
-    // } else {
-    //   alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-    // }
-
   };
 
 
@@ -117,7 +119,7 @@ const Basic_Information = () => {
                 placeholder="โปรดระบุคณะ"
                 name="faculty"
                 value={formData.faculty}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
 
               <FormSelect
@@ -127,7 +129,7 @@ const Basic_Information = () => {
                 name='campus'
                 placeholder='โปรดเลือก'
                 value={formData.campus}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
             </FormGroup>
 
@@ -138,7 +140,7 @@ const Basic_Information = () => {
                 placeholder="โปรดระบุชื่อสาขาวิชา *ภาษาไทย"
                 name="majorthai"
                 value={formData.majorthai}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
               <FormTextArea
                 fluid
@@ -146,7 +148,7 @@ const Basic_Information = () => {
                 placeholder="โปรดระบุชื่อสาขาวิชา *ภาษาอังกฤษ"
                 name="majoreng"
                 value={formData.majoreng}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
             </FormGroup>
 
@@ -157,7 +159,7 @@ const Basic_Information = () => {
                 placeholder="โปรดระบุชื่อปริญญา"
                 name="degreename"
                 value={formData.degreename}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
               <FormInput
                 fluid
@@ -165,7 +167,7 @@ const Basic_Information = () => {
                 placeholder="โปรดระบุสังกัด"
                 name="affiliation"
                 value={formData.affiliation}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
               <FormInput
                 fluid
@@ -173,7 +175,7 @@ const Basic_Information = () => {
                 placeholder="โปรดระบุปีที่เริ่มดำเนินการเปิดสอน"
                 name="yearstarted"
                 value={formData.yearstarted}
-                onChange={HandleChange}
+                onChange={handleChange}
               />
             </FormGroup>
 
@@ -185,7 +187,7 @@ const Basic_Information = () => {
                 value="เฉพาะสาขาเดียว"
                 checked={formData.nature === 'เฉพาะสาขาเดียว'}
                 name="nature"
-                onChange={HandleChange}
+                onChange={handleChange}
               />
               <FormRadio
                 fluid
@@ -193,7 +195,7 @@ const Basic_Information = () => {
                 value="พหุวิทยาการ"
                 checked={formData.nature === 'พหุวิทยาการ'}
                 name="nature"
-                onChange={HandleChange}
+                onChange={handleChange}
               />
               <FormRadio
                 fluid
@@ -201,7 +203,7 @@ const Basic_Information = () => {
                 value="มีจุดเด่นเฉพาะ"
                 checked={formData.nature === 'มีจุดเด่นเฉพาะ'}
                 name="nature"
-                onChange={HandleChange}
+                onChange={handleChange}
               />
 
               {(formData.nature === 'พหุวิทยาการ' ||
@@ -213,7 +215,7 @@ const Basic_Information = () => {
                       placeholder="โปรดกรอกรายละเอียดเพิ่มเติม"
                       name="additionalinfo"
                       value={formData.additionalinfo}
-                      onChange={HandleChange}
+                      onChange={handleChange}
                     />
                   </FormGroup>
                 )}
@@ -225,7 +227,7 @@ const Basic_Information = () => {
               placeholder="โปรดอธิบายรายละเอียด"
               name="learningoutcome"
               value={formData.learningoutcome}
-              onChange={HandleChange}
+              onChange={handleChange}
             />
 
             <div className="flex justify-end gap-4">

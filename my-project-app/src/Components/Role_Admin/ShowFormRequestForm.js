@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { Table, } from 'semantic-ui-react';
 import axios from 'axios';
 
 function ShowFormRequestForm() {
     const [dataUser, setDataUser] = useState([]);
+    const [userInfo, setUserInfo] = useState(null); // เก็บข้อมูลผู้ใช้จาก localStorage
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 4;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,90 +15,113 @@ function ShowFormRequestForm() {
             .catch(err => console.error(err));
     }, []);
 
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+            setUserInfo(JSON.parse(loggedInUser));
+        }
+    }, []);
 
+    const totalPages = Math.ceil(dataUser.length / itemsPerPage);
+    const currentData = dataUser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="flex flex-col items-center justify-center p-5 gap-5 pt-0">
+        <div className="grid grid-cols-12 p-5 pt-0 content-start">
 
-            <div className="flex justify-between gap-5 pt-0">
-
-                <div className="bg-white p-3 px-5 border-2 rounded-xl text-center">
-                    <h5 className='text-gray-600'>รอการตอบรับ</h5>
-                </div>
-                <div className="bg-white p-3 px-5 border-2 rounded-xl text-center">
-                    <h5 className='text-gray-600'>ดำเนินการคัดเลือกกรรมการ</h5>
-                </div>
-                <div className="bg-white p-3 px-5 border-2 rounded-xl text-center">
-                    <h5 className='text-gray-600'>อยู่ระหว่างการประเมินผล</h5>
-                </div>
-                <div className="bg-white p-3 px-5 border-2 rounded-xl text-center">
-                    <h5 className='text-gray-600'>รอการสรุปผล</h5>
-                </div>
-                <div className="bg-white p-3 px-5 border-2 rounded-xl text-center">
-                    <h5 className='text-gray-600'>แจ้งผลประเมิน</h5>
-                </div>
-                <div className="bg-white p-3 px-5 border-2 rounded-xl text-center">
-                    <h5 className='text-gray-600'>สิ้นสุดกระบวนการ</h5>
-                </div>
-
-
-            </div>
-
-            <div className="grid grid-cols-12 gap-4 w-full">
-
-                <div className="bg-white p-4 col-start-2 col-span-10 border-2 rounded-xl text-center px-12 py-12">
+            <div className='col-start-2 col-span-8'>
+                <div className="bg-white border-2 rounded-xl p-10" style={{ minHeight: '930px' }}>
                     <h1 className='text-start text-gray-500'>คำขอเปิดหลักสูตร</h1>
                     <hr className='mb-5' />
 
+                    <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
+                        <div className="col-span-3 text-center p-5">
+                            <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
 
+                        </div>
 
-                    {dataUser.map((info, index) => (
-                        <div key={index} className="bg-gray-200 p-6 rounded-xl w-full mb-4">
+                        <div className="col-span-6 text-center p-5">
+                            <p className="text-lg font-bold m-1">หลักสูตร</p>
+
+                        </div>
+
+                        <div className="col-span-3 gap-2 flex justify-center items-center">
+                            <p className="text-lg font-bold m-1">สถานะ</p>
+                        </div>
+
+                    </div>
+
+                    {/* แสดง Card เฉพาะในหน้าปัจจุบัน */}
+                    {currentData.map((info, index) => (
+                        <div key={index} className="bg-gray-100 hover:bg-gray-200 p-6 rounded-xl w-full mb-4">
                             <div className="grid grid-cols-12 gap-4 items-center">
-                                <div className="col-span-2 text-center p-10">
-                                    <p className="text-gray-700 m-1">ปีที่เปิดสอน</p>
-                                    <p className="text-gray-700">'{info.yearstarted}'</p>
-                                </div>
-                                <div className="col-span-4 text-center">
+
+                                <div className="col-span-3 text-center">
                                     <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>
                                     <p className="text-gray-700">วิทยาเขต: {info.campus}</p>
                                 </div>
-                                <div className="col-span-4 text-center">
+                                <div className="col-span-6 text-center">
                                     <p className="text-gray-700 font-bold m-1">หลักสูตร{info.majorthai}</p>
                                     <p className="text-gray-700">({info.majoreng})</p>
                                 </div>
-                                <div className="col-span-2 text-center">
+                                <div className="col-span-3 text-center">
                                     <p className="text-gray-700 m-1">สถานะ</p>
                                     <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
                                 </div>
                             </div>
+
                             <hr className='border-white m-5 mt-4' />
                             <div className="flex justify-end items-center mt-2">
-                                <button
-                                    className="bg-gray-500 text-white px-4 py-2 rounded-lg ml-2"
-                                >
+                                <button className="bg-gray-500 text-white px-4 py-2 rounded-lg ml-2">
                                     ดูรายละเอียด
                                 </button>
-                                <button
-                                    className="bg-red-600 text-white px-4 py-2 rounded-lg ml-2"
-                                >
+
+                                <button className="bg-red-600 text-white px-4 py-2 rounded-lg ml-2">
                                     ปฏิเสธการตอบรับ
                                 </button>
-                                <button
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2"
-                                >
+
+                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2">
                                     ตอบรับ
                                 </button>
                             </div>
                         </div>
                     ))}
 
+                    {/* Pagination with page numbers */}
+                    <div className="flex justify-center mt-4 space-x-2">
+                        {[...Array(totalPages)].map((_, pageIndex) => (
+                            <button
+                                key={pageIndex}
+                                onClick={() => setCurrentPage(pageIndex + 1)}
+                                className={`w-10 h-10 rounded-lg ${currentPage === pageIndex + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-black'}`}
+                            >
+                                {pageIndex + 1}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
             </div>
 
+            <div className="col-span-2 col-start-10 bg-white m-4 mt-0 border-2 rounded-xl p-6 text-gray-700" style={{ maxHeight: '430px' }}>
+                <div>
+                    {userInfo ? (
+                        <div>
+                            <h2 className='text-start m-1'>{userInfo.name} {userInfo.lastname}</h2>
+                            <p className="m-1">วิทยาเขต{userInfo.campus}</p>
+                            <p className="m-1">{userInfo.affiliation}</p>
+
+                        </div>
+                    ) : (
+                        <p>Loading user info...</p>
+                    )}
+                </div>
+
+                <hr className=' w-11/12 mx-auto mt-4' />
+            </div>
+
+
         </div>
-    )
+    );
 }
 
 export default ShowFormRequestForm;
