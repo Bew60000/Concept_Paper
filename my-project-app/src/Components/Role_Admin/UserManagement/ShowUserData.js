@@ -72,18 +72,18 @@ function ShowUserData() {
             
 
             <div className="grid grid-cols-12 p-5 pt-20 content-start">
-                <div className=" col-span-8 col-start-2  ">
+                <div className=" col-span-7 col-start-2  ">
 
                     <div className='bg-white p-6 border-2 rounded-2xl'>
-                        <h1 className='text-gray-500 pl-8'>สมาชิก</h1>
+                        <h2 className='text-gray-700 pl-8'>สมาชิก</h2>
                     </div>
 
-                    <div className='bg-white border-2 rounded-2xl px-10 py-8 mt-4' style={{ minHeight: '930px' }}>
+                    <div className='bg-white border-2 rounded-2xl px-10 py-8 mt-4' style={{ minHeight: '810px' }}>
                         <div className="flex justify-end gap-4 mb-5 ">
-
+                        
                             <button
                                 onClick={handleAddUserClick}
-                                className="bg-sky-900 hover:bg-blue-700 text-white font-bold px-5 py-4 items-end rounded-xl"
+                                className="bg-gray-700 hover:bg-blue-700 text-white font-bold px-5 py-4 items-end rounded-xl"
                             >
                                 เพิ่มสมาชิก
                             </button>
@@ -115,7 +115,7 @@ function ShowUserData() {
                             </div>
 
                             {currentItems.map((val, index) => (
-                                <div key={index} className="bg-gray-100 hover:bg-gray-200 p-6 rounded-xl w-full mb-4">
+                                <div key={index} className="bg-gray-200 hover:bg-gray-100 p-2 rounded-xl w-full mb-4">
                                     <div className="grid grid-cols-12 gap-4 items-center">
 
                                         <div className="col-span-3 text-center p-5">
@@ -131,21 +131,21 @@ function ShowUserData() {
                                         <div className="col-span-5 gap-2 flex flex-wrap justify-center items-center">
                                             <button
                                                 onClick={() => openModal(val)}
-                                                className="bg-sky-800 hover:bg-blue-500 text-white py-3 px-5 rounded"
+                                                className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
                                             >
                                                 รายละเอียด
                                             </button>
 
                                             <button
                                                 onClick={() => editUser(val)}
-                                                className="bg-gray-400 hover:bg-green-600 text-white py-3 px-5 rounded"
+                                                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
                                             >
                                                 แก้ไข
                                             </button>
 
                                             <button
                                                 onClick={() => deleteUser(val.id)}
-                                                className="bg-red-500 hover:bg-red-700 text-white py-3 px-5 rounded"
+                                                className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
                                             >
                                                 ลบ
                                             </button>
@@ -174,7 +174,7 @@ function ShowUserData() {
 
                 </div>
 
-                <div className="col-span-2 col-start-10" style={{ minHeight: '1030px' }}>
+                <div className="col-span-3 col-start-9" style={{ minHeight: '810px' }}>
                     <UserStatistics />
                 </div>
 

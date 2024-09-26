@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Background from '../../img/Background.svg';
-import Navbar from '../Navbar/NavbarUser';
+import Navbar from '../Navbar/Navbar';
 
 //Icon image
 import Icon_SentRequest from './Icon_img/SentRequest.svg';
@@ -22,7 +22,8 @@ export default function Homepage_User() {
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
       <Navbar />
 
-      <div className="flex items-center justify-center p-5 grid grid-cols-12 pt-20">
+      <div className="grid grid-cols-12 pt-20 p-5 content-start">
+
         <div className="bg-white flex justify-around items-center col-span-10 col-start-2 p-10 rounded-2xl shadow-md ">
 
           <Link to="/basic_information" className="flex flex-col items-center col-span-3">
@@ -44,6 +45,7 @@ export default function Homepage_User() {
             <span className="font-bold text-center">ติดตามสถานะ</span>
           </Link>
         </div>
+
       </div>
 
       <ShowStatusForm />

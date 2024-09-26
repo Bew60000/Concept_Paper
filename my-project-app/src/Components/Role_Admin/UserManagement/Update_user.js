@@ -103,10 +103,10 @@ export default function Update_user() {
 
             <div className="grid grid-cols-12 auto-rows-auto content-start text-gray-700 p-5 pt-20">
 
-                <div className="col-span-8 col-start-2">
+                <div className="col-span-7 col-start-2">
 
                     <div className='bg-white p-6 border-2 rounded-2xl'>
-                        <h1 className='pl-8'>แก้ไขข้อมูลสมาชิก</h1>
+                        <h2 className='pl-8'>แก้ไขข้อมูลสมาชิก</h2>
                     </div>
 
                     <div className='bg-white p-20 px-36 mt-4 border-2 rounded-2xl'>
@@ -212,7 +212,7 @@ export default function Update_user() {
 
                 </div>
 
-                <div className="col-span-2 col-start-10" style={{ minHeight: '670px' }}>
+                <div className="col-span-3 col-start-9" style={{ minHeight: '670px' }}>
                     <UserStatistics />
                 </div>
 

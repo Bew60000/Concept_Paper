@@ -7,13 +7,28 @@ import {
     FormButton,
     Form,
 } from 'semantic-ui-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Background from '../../img/Background.svg';
+import Navbar from '../Navbar/NavbarUser';
 
+//Dropdown
 const options = [
     { key: 'A', text: 'นาย', value: 'AJ' },
     { key: 'B', text: 'นาง', value: 'TAJ' },
     { key: 'B', text: 'นางสาว', value: 'TT' },
 ]
+
+//Part V
 const TeachersInformation = () => {
+    const BackgroundImage = {
+        backgroundImage: `url(${Background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    }
+    const navigate = useNavigate();
+    const location = useLocation();
+
+
     const [forms, setForms] = useState([{
         id: 1,
         title: '',
@@ -55,83 +70,86 @@ const TeachersInformation = () => {
     }, []);
 
     return (
-        <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5">
-            <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
-                <Form>
-                    <h1>ส่วนที่ 5 : อาจารย์ประจำหลักสูตร</h1>
-                    <hr />
-                    <br />
+        <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
+            <Navbar />
+            <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5 pt-20">
+                <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
+                    <Form>
+                        <h1>ส่วนที่ 5 : อาจารย์ประจำหลักสูตร</h1>
+                        <hr />
+                        <br />
 
-                    {forms.map((form, index) => (
-                        <div key={form.id}>
-                            <FormGroup widths='equal'>
+                        {forms.map((form, index) => (
+                            <div key={form.id}>
+                                <FormGroup widths='equal'>
+                                    <hr />
+                                    <br />
+                                    <FormSelect
+                                        fluid
+                                        label='คำนำหน้า'
+                                        options={options}
+                                        placeholder='คำนำหน้า'
+                                        value={form.title}
+                                        onChange={(e, { value }) => handleChange(form.id, 'title', value)}
+                                    />
+                                    <FormInput
+                                        fluid
+                                        label='ชื่อ'
+                                        placeholder='โปรดระบุชื่อ'
+                                        value={form.firstName}
+                                        onChange={(e) => handleChange(form.id, 'firstName', e.target.value)}
+                                    />
+                                    <FormInput
+                                        fluid
+                                        label='นามสกุล'
+                                        placeholder='โปรดระบุนามสกุล'
+                                        value={form.lastName}
+                                        onChange={(e) => handleChange(form.id, 'lastName', e.target.value)}
+                                    />
+                                </FormGroup>
+
+                                <FormTextArea
+                                    fluid
+                                    label='คุณวุฒิ'
+                                    placeholder='โปรดระบุคุณวุฒิ'
+                                    value={form.qualification}
+                                    onChange={(e) => handleChange(form.id, 'qualification', e.target.value)}
+                                />
+
+                                <FormGroup widths='equal'>
+                                    <FormInput
+                                        fluid
+                                        label='ตำแหน่งทางวิชาการ'
+                                        placeholder='โปรดระบุตำแหน่งทางวิชาการ'
+                                        value={form.academicPosition}
+                                        onChange={(e) => handleChange(form.id, 'academicPosition', e.target.value)}
+                                    />
+                                </FormGroup>
+
+                                <FormTextArea
+                                    fluid
+                                    label='ผลงานทางด้านวิชาการย้อนหลัง 3 ปี'
+                                    placeholder='ผลงานทางด้านวิชาการ'
+                                    value={form.academicWork}
+                                    onChange={(e) => handleChange(form.id, 'academicWork', e.target.value)}
+                                />
+
+                                <div className='flex justify-end gap-4'>
+                                    <FormButton type='button' onClick={() => removeForm(form.id)}>ลบข้อมูล</FormButton>
+                                </div>
+
+                                <br />
                                 <hr />
                                 <br />
-                                <FormSelect
-                                    fluid
-                                    label='คำนำหน้า'
-                                    options={options}
-                                    placeholder='คำนำหน้า'
-                                    value={form.title}
-                                    onChange={(e, { value }) => handleChange(form.id, 'title', value)}
-                                />
-                                <FormInput
-                                    fluid
-                                    label='ชื่อ'
-                                    placeholder='โปรดระบุชื่อ'
-                                    value={form.firstName}
-                                    onChange={(e) => handleChange(form.id, 'firstName', e.target.value)}
-                                />
-                                <FormInput
-                                    fluid
-                                    label='นามสกุล'
-                                    placeholder='โปรดระบุนามสกุล'
-                                    value={form.lastName}
-                                    onChange={(e) => handleChange(form.id, 'lastName', e.target.value)}
-                                />
-                            </FormGroup>
-
-                            <FormTextArea
-                                fluid
-                                label='คุณวุฒิ'
-                                placeholder='โปรดระบุคุณวุฒิ'
-                                value={form.qualification}
-                                onChange={(e) => handleChange(form.id, 'qualification', e.target.value)}
-                            />
-
-                            <FormGroup widths='equal'>
-                                <FormInput
-                                    fluid
-                                    label='ตำแหน่งทางวิชาการ'
-                                    placeholder='โปรดระบุตำแหน่งทางวิชาการ'
-                                    value={form.academicPosition}
-                                    onChange={(e) => handleChange(form.id, 'academicPosition', e.target.value)}
-                                />
-                            </FormGroup>
-
-                            <FormTextArea
-                                fluid
-                                label='ผลงานทางด้านวิชาการย้อนหลัง 3 ปี'
-                                placeholder='ผลงานทางด้านวิชาการ'
-                                value={form.academicWork}
-                                onChange={(e) => handleChange(form.id, 'academicWork', e.target.value)}
-                            />
-
-                            <div className='flex justify-end gap-4'>
-                                <FormButton type='button' onClick={() => removeForm(form.id)}>ลบข้อมูล</FormButton>
                             </div>
+                        ))}
 
-                            <br />
-                            <hr />
-                            <br />
+                        <div className='flex justify-between gap-4'>
+                            <FormButton type='button' onClick={addForm}>เพิ่มอาจารย์</FormButton>
+                            <FormButton type='submit'>ยืนยัน</FormButton>
                         </div>
-                    ))}
-
-                    <div className='flex justify-between gap-4'>
-                        <FormButton type='button' onClick={addForm}>เพิ่มอาจารย์</FormButton>
-                        <FormButton type='submit'>ยืนยัน</FormButton>
-                    </div>
-                </Form>
+                    </Form>
+                </div>
             </div>
         </div>
     );

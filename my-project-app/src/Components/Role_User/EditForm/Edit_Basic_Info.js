@@ -87,39 +87,48 @@ const Basic_Information = () => {
         }
     };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const isFormComplete = Object.values(formData).every(
-    //         (field) => field !== ''
-    //     );
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    //     if (isFormComplete) {
-    //         try {
-    //             // const response = await axios.post(
-    //             //     'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-    //             //     formData
-    //             // );
-    //             const response = await axios.put(
-    //                 'https://sheet.best/api/sheets/12a6d6e6-5b9b-4502-bcc2-ec1aba194585',
-    //                 formData
-    //             );
-    //             console.log('Data successfully saved:', response.data);
+        const requiredFields = ['faculty', 'campus', 'majorthai',
+            'majoreng', 'degreename', 'affiliation', 'yearstarted',
+            'nature', 'learningoutcome'];
 
-    //             navigate('/course_analysis_information', { replace: true });
-    //         } catch (error) {
-    //             console.error('Error saving data:', error);
-    //         }
-    //     } else {
-    //         alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-    //     }
-    // };
+        const isFormComplete = requiredFields.every(
+            (field) => formData[field] !== '' && formData[field] !== null && formData[field] !== undefined
+        );
 
-    // useEffect(() => {
-    //   window.history.pushState(null, null, location.href);
-    //   window.onpopstate = () => {
-    //     window.history.pushState(null, null, location.href);
-    //   };
-    // }, [location]);
+        if (isFormComplete) {
+            try {
+                const response = await axios.post('http://localhost:8080/add_basic_info', formData);
+                const newCurriculumId = response.data.curriculum_id;
+                console.log('Data saved with curriculum_id:', newCurriculumId);
+
+                // ส่งค่า newCurriculumId ไปยังฟอร์มอื่น ๆ หรือทำการบันทึกค่าใน state เพื่อใช้งานต่อไป
+                // ตัวอย่างการบันทึกใน state
+                setFormData(prevForms =>
+                    prevForms.map(f =>
+                        f.id === formData.id ? { ...f, curriculum_id: newCurriculumId } : f
+                    )
+                );
+
+                // navigate('/course_analysis_information', {
+                //   state: { curriculum_id: newCurriculumId },
+                // });
+
+                // navigate('/StudentAdmission', {
+                //   state: { curriculum_id: newCurriculumId },
+                // });
+
+                navigate('/homepage_user', { replace: true });
+
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
+        } else {
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+        }
+    };
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>

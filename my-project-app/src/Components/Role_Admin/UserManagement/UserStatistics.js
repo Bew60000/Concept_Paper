@@ -68,11 +68,11 @@ const UserStatistics = () => {
                 <p className='text-center text-gray-600'>จำนวนผู้คนทั้งหมดในระบบ: {userData.total} คน</p>
             </div> */}
 
-            <div className="bg-white col-span-2 col-start-10 m-4 mt-0 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
+            <div className="bg-white m-4 mt-0 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
                 <h3 className='text-center text-gray-600'>จำนวน User: {userData.users} คน</h3>
             </div>
 
-            <div className="bg-white col-span-2 col-start-10 m-4 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
+            <div className="bg-white m-4 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
                 <p className='text-center text-gray-600'>จำนวน Director: {userData.directors} คน</p>
             </div>
 

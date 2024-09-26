@@ -88,13 +88,14 @@ export default function AddUser_Form() {
 
             <div className="grid grid-cols-12 content-start auto-rows-auto text-gray-700 p-5 pt-20 ">
 
-                <div className="col-span-8 col-start-2">
+                <div className="col-span-7 col-start-2">
 
                     <div className='bg-white p-6 border-2 rounded-2xl'>
-                        <h1 className='text-gray-500 pl-8'>เพิ่มสมาชิก</h1>
+                        <h2 className='text-gray-700 pl-8'>เพิ่มสมาชิก</h2>
                     </div>
 
                     <div className='bg-white p-20 px-36 mt-4 border-2 rounded-2xl'>
+                        
                         <Form onSubmit={HandleSubmit}>
                             <FormGroup widths='equal'>
                                 <FormInput
@@ -197,7 +198,7 @@ export default function AddUser_Form() {
 
                 </div>
 
-                <div className="col-span-2 col-start-10" style={{ minHeight: '670px' }}>
+                <div className="col-span-3 col-start-9" style={{ minHeight: '670px' }}>
                     <UserStatistics />
                 </div>
 

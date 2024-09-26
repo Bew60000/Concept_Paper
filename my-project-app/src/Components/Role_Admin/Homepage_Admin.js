@@ -20,7 +20,7 @@ export default function Homepage_Admin() {
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
       <Navbar />
 
-      <div className="flex items-center justify-center p-5 grid grid-cols-12 pt-20 gap-4">
+      <div className="grid grid-cols-12 pt-20 content-start">
         {/* <div className="bg-white flex justify-around items-center col-span-10 col-start-2 p-10 rounded-2xl  shadow-md mb-0">
 
           <Link to="/show_user_data" className="flex flex-col items-center col-span-3">

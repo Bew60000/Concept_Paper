@@ -14,6 +14,7 @@ import axios from 'axios';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
 
+//Dropdown
 const optionscampus = [
   { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
   { key: 'PK', text: 'ภูเก็ต', value: 'ภูเก็ต' },
@@ -22,6 +23,7 @@ const optionscampus = [
   { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
 ];
 
+//Part I
 const Basic_Information = () => {
   const BackgroundImage = {
     backgroundImage: `url(${Background})`,
@@ -59,6 +61,10 @@ const Basic_Information = () => {
     }
   };
 
+  const handleCancleClick = () => {
+    navigate('/homepage_user');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,7 +92,8 @@ const Basic_Information = () => {
 
         // navigate('/course_analysis_information', {
         //   state: { curriculum_id: newCurriculumId },
-        // });
+        // }
+        //   ,{ replace: true });
 
         // navigate('/StudentAdmission', {
         //   state: { curriculum_id: newCurriculumId },
@@ -106,7 +113,7 @@ const Basic_Information = () => {
   return (
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
       <Navbar />
-      <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5 pt-20">
+      <div className="grid grid-cols-12 content-start auto-rows-auto text-gray-700 p-5 pt-20">
         <div className="bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10">
           <h1>ส่วนที่ 1 : ข้อมูลเบื้องต้นหลักสูตร</h1>
           <hr />
@@ -231,7 +238,7 @@ const Basic_Information = () => {
             />
 
             <div className="flex justify-end gap-4">
-              <FormButton>
+              <FormButton color='grey' type='button' onClick={() => navigate('/homepage_user')}>
                 ยกเลิก
               </FormButton>
               <FormButton type="submit">
