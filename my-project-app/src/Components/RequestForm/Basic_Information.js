@@ -14,7 +14,7 @@ import axios from 'axios';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
 
-//Dropdown
+// Dropdown options
 const optionscampus = [
   { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
   { key: 'PK', text: 'ภูเก็ต', value: 'ภูเก็ต' },
@@ -23,13 +23,30 @@ const optionscampus = [
   { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
 ];
 
-//Part I
 const Basic_Information = () => {
   const BackgroundImage = {
     backgroundImage: `url(${Background})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+  };
+
+  const navigate = useNavigate();
+
+  // Check if the user is logged in
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  let username = ''; // Initial empty username
+  if (loggedInUser) {
+    const user = JSON.parse(loggedInUser); // Convert JSON string to object
+    username = user.username; // Get username from the logged-in user
   }
+
+  // If the user is not logged in, display an alert
+  useEffect(() => {
+    if (!username) {
+      alert('กรุณาล็อกอินก่อนส่งแบบฟอร์ม');
+      navigate('/login'); // Redirect to login page
+    }
+  }, [username, navigate]);
 
   const [formData, setFormData] = useState({
     curriculum_id: '',
@@ -43,9 +60,9 @@ const Basic_Information = () => {
     campus: '',
     yearstarted: '',
     learningoutcome: '',
+    sent_by: username, 
+    sent_time: '', 
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e, { name, value }) => {
     setFormData(prevState => ({
@@ -61,12 +78,8 @@ const Basic_Information = () => {
     }
   };
 
-  const handleCancleClick = () => {
-    navigate('/homepage_user');
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();    
 
     const requiredFields = ['faculty', 'campus', 'majorthai',
       'majoreng', 'degreename', 'affiliation', 'yearstarted',
@@ -78,28 +91,17 @@ const Basic_Information = () => {
 
     if (isFormComplete) {
       try {
-        const response = await axios.post('http://localhost:8080/add_basic_info', formData);
+        // Set sent_time when form is submitted
+        const currentDateTime = new Date().toISOString();
+        const updatedFormData = { ...formData, sent_time: currentDateTime, sent_by: username };
+
+        const response = await axios.post('http://localhost:8080/add_basic_info', updatedFormData);
         const newCurriculumId = response.data.curriculum_id;
         console.log('Data saved with curriculum_id:', newCurriculumId);
 
-        // ส่งค่า newCurriculumId ไปยังฟอร์มอื่น ๆ หรือทำการบันทึกค่าใน state เพื่อใช้งานต่อไป
-        // ตัวอย่างการบันทึกใน state
-        setFormData(prevForms =>
-          prevForms.map(f =>
-            f.id === formData.id ? { ...f, curriculum_id: newCurriculumId } : f
-          )
-        );
-
-        // navigate('/course_analysis_information', {
-        //   state: { curriculum_id: newCurriculumId },
-        // }
-        //   ,{ replace: true });
-
-        // navigate('/StudentAdmission', {
-        //   state: { curriculum_id: newCurriculumId },
-        // });
-
-        navigate('/homepage_user', { replace: true });
+        navigate('/course_analysis_information', {
+          state: { curriculum_id: newCurriculumId },
+        }, { replace: true });
 
       } catch (error) {
         console.error('Error saving data:', error);
@@ -108,7 +110,6 @@ const Basic_Information = () => {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
     }
   };
-
 
   return (
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
@@ -249,8 +250,6 @@ const Basic_Information = () => {
           </Form>
         </div>
       </div>
-
-
     </div>
   );
 };
