@@ -54,7 +54,12 @@ app.post('/add_basic_info', async (req, res) => {
         affiliation,
         campus,
         yearstarted,
-        learningoutcome } = req.body;
+        learningoutcome,
+        sent_by,
+        sent_time
+
+
+    } = req.body;
 
 
     try {
@@ -78,10 +83,13 @@ app.post('/add_basic_info', async (req, res) => {
             affiliation,
             campus, 
             yearstarted, 
-            learningoutcome)
-	        VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11);`,
+            learningoutcome,
+            sent_by,
+            sent_time
+            )
+	        VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11,$12,$13);`,
             [
-                newCurriculumId, nature, additionalinfo, majorthai, majoreng, faculty, degreename, affiliation, campus, yearstarted, learningoutcome
+                newCurriculumId, nature, additionalinfo, majorthai, majoreng, faculty, degreename, affiliation, campus, yearstarted, learningoutcome, sent_by, sent_time
             ]);
 
         res.status(201).json({ curriculum_id: newCurriculumId });
@@ -90,7 +98,7 @@ app.post('/add_basic_info', async (req, res) => {
         res.status(500).send('Error adding authors');
     }
 });
-
+// update ข้อมูล
 app.put('/update_basic_info/:curriculum_id', async (req, res) => {
     const { curriculum_id } = req.params;
     // const id = req.id;
@@ -130,7 +138,7 @@ app.put('/update_basic_info/:curriculum_id', async (req, res) => {
         res.status(500).send('Error retrieving section');
     }
 });
-
+// ลบ ข้อมูลในตาราง
 app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
     const { curriculum_id } = req.params; //รับ params id 
     // const {id} = req.params.id;
@@ -195,6 +203,56 @@ app.post('/student_admissions_plan', async (req, res) => {
         console.error(error);
         res.status(500).send('Error adding authors');
     }
+});
+
+// test demo 2/10/2567 ยังไม่เชื่อมด้านหน้า กำลังแก้ครับ
+
+
+// เพิ่มข้อมูลส่วนที่ 4 teaching_and_administration
+app.post('/teaching_and_administration', async (req, res) => {
+    // const input = req.body;
+
+    const result1 = { curriculum_id, teaching, cost_control, readiness } = req.body;
+
+
+    try {
+        await pool.query(` INSERT INTO teaching_and_administration(
+        curriculum_id, teaching, cost_control, readiness)
+        VALUES ($1, $2, $3, $4);`,
+            [
+                curriculum_id, teaching, cost_control, readiness
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+
+
+
+});
+
+
+// เพิ่มข้อมูลส่วนที่ 5 teacher
+app.post('/teacher', async (req, res) => {
+    // const input = req.body;
+
+    const { teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, education_qualifications, performance } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO teacher(
+        teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, education_qualifications, performance)
+        VALUES ($1, $2, $3, $4, $5, $6, $7); `,
+            [
+                teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, education_qualifications, performance
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+
 });
 
 

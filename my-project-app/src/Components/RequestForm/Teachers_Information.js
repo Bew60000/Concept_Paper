@@ -10,6 +10,8 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
+import axios from 'axios';
+
 
 //Dropdown
 const options = [
@@ -68,6 +70,23 @@ const TeachersInformation = () => {
     const removeForm = useCallback((id) => {
         setForms(prevForms => prevForms.filter(form => form.id !== id));
     }, []);
+
+
+
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     try {
+    //         const response = await axios.post('http://localhost:8080/teaching_and_administration', forms);
+    //         console.log('Data successfully saved:', response.data);
+    //         alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
+    //         navigate('/homepage_user');
+    //     } catch (error) {
+    //         console.error('Error saving data:', error);
+    //         alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+    //     }
+    // };
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
