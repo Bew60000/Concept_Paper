@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbartest from '../Navbar/Navbartest';
+import NavbarUser from '../Navbar/NavbarUser';
+import NavbarUserFunctions from '../Navbar/NavbarUserFunctions';
 
 function ShowStatusForm() {
     const [dataUser, setDataUser] = useState([]);
@@ -9,16 +10,21 @@ function ShowStatusForm() {
     const itemsPerPage = 4;
     const navigate = useNavigate();
 
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
     useEffect(() => {
         axios.get('http://localhost:8080/test/get_info')
-
-            .then(res => setDataUser(res.data))
+            .then(res => {
+                console.log("ข้อมูลที่ได้รับจากเซิร์ฟเวอร์: ", res.data);
+                setDataUser(res.data);
+            })
             .catch(err => console.error(err));
+
+        console.log("loggedInUser: ", loggedInUser);
     }, []);
 
     const deleteRequest = (info) => {
         axios.delete(`http://localhost:8080/deletebasic_info/${info.curriculum_id}`)
-
             .then(() => {
                 // ลบข้อมูลจาก state หลังจากลบจากฐานข้อมูลเสร็จแล้ว
                 setDataUser(prevData => prevData.filter(user => user.curriculum_id !== info.curriculum_id));
@@ -31,84 +37,90 @@ function ShowStatusForm() {
         navigate('/edit_form', { state: { info } });
     };
 
-    const totalPages = Math.ceil(dataUser.length / itemsPerPage);
-    const currentData = dataUser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const filteredData = dataUser.filter(info => info.sent_by === loggedInUser.username);
+
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const currentData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="grid grid-cols-12 p-5 pt-0 content-start">
-
+        <div className="grid grid-cols-12 p-5 pt-0 content-start w-9/10 mx-auto">
             <div className="col-start-2 col-span-8">
                 <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
                     <h2 className='text-start text-gray-700'>คำขอที่กำลังดำเนินการ</h2>
                     <hr className='mb-5' />
 
                     <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
-
                         <div className="col-span-2 text-center p-5">
                             <p className="text-lg font-bold m-1">จัดส่งเมื่อ</p>
                         </div>
-
-                        <div className="col-span-4 text-center p-5">
+                        <div className="col-span-3 text-center p-5">
                             <p className="text-lg font-bold m-1">ผู้รับผิดชอบ</p>
-
                         </div>
-
-                        <div className="col-span-4 gap-2 flex justify-center items-center">
+                        <div className="col-span-5 gap-2 flex justify-center items-center">
                             <p className="text-lg font-bold m-1">หลักสูตร</p>
                         </div>
-
                         <div className="col-span-2 gap-2 flex justify-center items-center">
                             <p className="text-lg font-bold m-1">สถานะ</p>
                         </div>
-
                     </div>
 
-                    {currentData.map((info, index) => (
-                        <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4" >
-                            <div className="grid grid-cols-12 gap-4 items-center">
-
-                                <div className="col-span-2 text-center">
-                                    <p className="text-gray-700 m-1">ปีที่เปิดสอน</p>
-                                    <p className="text-gray-700">'{info.yearstarted}'</p>
-                                </div>
-
-                                <div className="col-span-4 text-center">
-                                    <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>
-                                    <p className="text-gray-700">วิทยาเขต: {info.campus}</p>
-                                </div>
-
-                                <div className="col-span-4 text-center">
-                                    <p className="text-gray-700 font-bold m-1">หลักสูตร{info.majorthai}</p>
-                                    <p className="text-gray-700">({info.majoreng})</p>
-                                </div>
-
-                                <div className="col-span-2 text-center">
-                                    <p className="text-gray-700 m-1">สถานะ</p>
-                                    <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
-                                </div>
-                            </div>
-
-                            <hr className='border-white m-5 mt-4' />
-
-                            <div className="flex justify-end items-center mt-2">
-                                <button
-                                    className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg ml-2"
-                                    onClick={() => deleteRequest(info)}
-                                >
-                                    ยกเลิกคำขอ
-                                </button>
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg ml-2"
-                                    onClick={() => editRequest(info)}
-                                >
-                                    แก้ไขข้อมูล
-                                </button>
-                                <button className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg ml-2">
-                                    ดูรายละเอียด
-                                </button>
-                            </div>
+                    {currentData.length === 0 ? (
+                        <div className="flex items-center justify-center h-36 bg-gray-200 rounded-xl ">
+                            <h4 className="text-gray-700 text-center">ไม่พบข้อมูลคำขอ</h4>
                         </div>
-                    ))}
+                    ) : (
+                        currentData.map((info, index) => (
+                            <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4">
+                                <div className="grid grid-cols-12 gap-4 items-center">
+
+                                    <div className="col-span-2 text-center">
+                                        <p className="text-gray-700">
+                                            {info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}
+                                        </p>
+                                    </div>
+
+                                    <div className="col-span-3 text-center">
+                                        <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>
+                                        <p className="text-gray-700">วิทยาเขต: {info.campus}</p>
+                                    </div>
+
+                                    <div className="col-span-5 text-center">
+                                        <p className="text-gray-700 font-bold m-1">หลักสูตร{info.majorthai}</p>
+                                        <p className="text-gray-700">({info.majoreng})</p>
+                                    </div>
+
+                                    <div className="col-span-2 text-center">
+                                        <p className="text-gray-700 m-1">สถานะ</p>
+                                        <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
+                                    </div>
+
+                                </div>
+
+                                <hr className='border-white m-5 mt-4' />
+
+                                <div className="flex justify-end items-center mt-2">
+                                    <button
+                                        className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg ml-2"
+                                        onClick={() => deleteRequest(info)}
+                                    >
+                                        ยกเลิกคำขอ
+                                    </button>
+
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg ml-2"
+                                        onClick={() => editRequest(info)}
+                                    >
+                                        แก้ไขข้อมูล
+                                    </button>
+
+                                    <button className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg ml-2">
+                                        ดูรายละเอียด
+                                    </button>
+                                </div>
+
+                            </div>
+                        ))
+                    )}
 
                     {/* Pagination with page numbers */}
                     <div className="flex justify-center mt-4 space-x-2">
@@ -122,13 +134,13 @@ function ShowStatusForm() {
                             </button>
                         ))}
                     </div>
-                    
                 </div>
             </div>
 
-            <Navbartest />
+            <NavbarUserFunctions />
+            
         </div>
-    )
+    );
 }
 
 export default ShowStatusForm;

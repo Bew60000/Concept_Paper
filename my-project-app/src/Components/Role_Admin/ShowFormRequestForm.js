@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import NavbarAdminFunctions from '../Navbar/NavbarAdminFunctions';
+
 function ShowFormRequestForm() {
     const [dataUser, setDataUser] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
@@ -101,32 +103,9 @@ function ShowFormRequestForm() {
                     </div>
                 </div>
 
-            </div>
+            </div>            
 
-            <div className="col-span-2 col-start-10">
-
-                <div className='bg-white m-4 mt-0 border-2 rounded-xl p-6 text-gray-700 text-center'>
-                    {userInfo ? (
-                        <div>
-                            <h2 className='m-1'>{userInfo.name} {userInfo.lastname}</h2>
-                            <p className="text-sm m-1">{userInfo.affiliation}</p>
-                            <p className="text-sm m-1">วิทยาเขต{userInfo.campus}</p>
-                        </div>
-                    ) : (
-                        <p>Loading user info...</p>
-                    )}
-
-                    {/* <hr className=' w-11/12 mx-auto mt-4' /> */}
-                    <button className='bg-gray-400 hover:bg-red-600 text-white p-3 mt-5 border-2 rounded-xl' >ออกจากระบบ</button>
-                </div>
-
-
-
-                <hr className=' w-10/12 mx-auto mt-4' />
-
-                <h2 className='text-white text-center m-3'>สถานะการดำเนินการ</h2>
-            </div>
-
+            <NavbarAdminFunctions />
 
         </div>
     );

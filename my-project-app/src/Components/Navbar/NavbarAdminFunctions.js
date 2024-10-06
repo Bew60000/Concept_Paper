@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import LogoIcon from '../../img/Logo_White.svg';
 
-const NavbarAdmin = () => {
+const NavbarAdminFunctions = () => {
 
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState(null); 
+    const [userInfo, setUserInfo] = useState(null);
 
 
     useEffect(() => {
@@ -29,11 +31,11 @@ const NavbarAdmin = () => {
     };
 
     return (
-        <div className="col-span-2 col-start-10" style={{ maxHeight: '430px' }}>
-            <div className='bg-white m-4 mt-0 border-2 rounded-xl p-6 text-gray-700 text-center'>
+        <div className="col-span-2 col-start-10">
+            <div className='bg-white m-4 mr-0 mt-0 border-2 rounded-xl p-6 text-gray-700 text-center'>
                 {userInfo ? (
                     <div>
-                        <h2 className='m-1'>{userInfo.name} {userInfo.lastname}</h2>
+                        <h3 className='m-1'>{userInfo.name} {userInfo.lastname}</h3>
                         <p className="text-sm m-1">{userInfo.affiliation}</p>
                         <p className="text-sm m-1">วิทยาเขต{userInfo.campus}</p>
                     </div>
@@ -41,17 +43,20 @@ const NavbarAdmin = () => {
                     <p>Loading user info...</p>
                 )}
 
-                <hr className=' w-11/12 mx-auto mt-4' />
+                {/* <hr className=' w-11/12 mx-auto mt-4' />
 
                 <div className='flex items-center justify-center mt-3'>
-                    <button
-                        onClick={handleLogout}
-                        className="bg-gray-500 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-red-600"
-                    >
+                    <button onClick={handleLogout} className="bg-gray-500 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-red-600">
                         Logout
                     </button>
-                </div>
+                </div> */}
             </div>
+
+            <Link to="/basic_information">
+                <div className='bg-white hover:bg-blue-700 hover:text-white m-4 mr-0 mt-0 rounded-xl p-6 text-gray-700 text-center'>
+                    <h4>มอบหมายงาน</h4>
+                </div>
+            </Link>
 
 
 
@@ -59,4 +64,4 @@ const NavbarAdmin = () => {
     );
 };
 
-export default NavbarAdmin;
+export default NavbarAdminFunctions;

@@ -70,7 +70,7 @@ const Basic_Information = () => {
       [name]: value,
     }));
 
-    if (name === 'Nature' && value === 'เฉพาะสาขาเดียว') {
+    if (name === 'nature' && value === 'เฉพาะสาขาเดียว') {
       setFormData(prevState => ({
         ...prevState,
         additionalinfo: null,

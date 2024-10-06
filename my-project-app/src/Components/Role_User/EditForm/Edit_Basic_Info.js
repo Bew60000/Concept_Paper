@@ -86,49 +86,7 @@ const Basic_Information = () => {
             alert('กรุณากรอกข้อมูลให้ครบถ้วน');
         }
     };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const requiredFields = ['faculty', 'campus', 'majorthai',
-            'majoreng', 'degreename', 'affiliation', 'yearstarted',
-            'nature', 'learningoutcome'];
-
-        const isFormComplete = requiredFields.every(
-            (field) => formData[field] !== '' && formData[field] !== null && formData[field] !== undefined
-        );
-
-        if (isFormComplete) {
-            try {
-                const response = await axios.post('http://localhost:8080/add_basic_info', formData);
-                const newCurriculumId = response.data.curriculum_id;
-                console.log('Data saved with curriculum_id:', newCurriculumId);
-
-                // ส่งค่า newCurriculumId ไปยังฟอร์มอื่น ๆ หรือทำการบันทึกค่าใน state เพื่อใช้งานต่อไป
-                // ตัวอย่างการบันทึกใน state
-                setFormData(prevForms =>
-                    prevForms.map(f =>
-                        f.id === formData.id ? { ...f, curriculum_id: newCurriculumId } : f
-                    )
-                );
-
-                // navigate('/course_analysis_information', {
-                //   state: { curriculum_id: newCurriculumId },
-                // });
-
-                // navigate('/StudentAdmission', {
-                //   state: { curriculum_id: newCurriculumId },
-                // });
-
-                navigate('/homepage_user', { replace: true });
-
-            } catch (error) {
-                console.error('Error saving data:', error);
-            }
-        } else {
-            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-        }
-    };
+    
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
