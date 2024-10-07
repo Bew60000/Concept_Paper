@@ -22,7 +22,7 @@ export default function Homepage_User() {
     <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
       <Navbar />
 
-      <div className="grid grid-cols-12 pt-20 p-5 content-start">
+      <div className="grid grid-cols-12 pt-20 content-start">
 {/* 
         <div className="bg-white flex justify-around items-center col-span-10 col-start-2 p-10 rounded-2xl shadow-md ">
 

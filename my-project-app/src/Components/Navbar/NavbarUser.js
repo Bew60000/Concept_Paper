@@ -28,24 +28,24 @@ const NavbarUser = () => {
               <img className="h-12 w-12" src={LogoIcon} alt="Your Logo" />
             </div>
 
-            <div className="hidden sm:flex sm:ml-6 items-center">
+            {/* <div className="hidden sm:flex sm:ml-6 items-center">
               <div className="flex space-x-4">
                 <a href="homepage_user" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
                 <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
                 <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services</a>
                 <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+          {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2">
             <button
               onClick={handleLogout}
               className="bg-gray-500 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-red-600"
             >
               Logout
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

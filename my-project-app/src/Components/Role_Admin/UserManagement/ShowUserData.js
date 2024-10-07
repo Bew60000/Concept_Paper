@@ -5,6 +5,8 @@ import axios from 'axios';
 import Navbar from '../../Navbar/NavbarAdmin';
 import Background from '../../../img/Background.svg';
 import UserStatistics from './UserStatistics';
+import { Icon } from 'semantic-ui-react';
+import NavbarAdminFunctions from '../../Navbar/NavbarAdminFunctions';
 
 function ShowUserData() {
     const BackgroundImage = {
@@ -64,15 +66,16 @@ function ShowUserData() {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = dataUser.slice(indexOfFirstItem, indexOfLastItem);
 
+
     const totalPages = Math.ceil(dataUser.length / itemsPerPage);
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
             <Navbar />
-            
+
 
             <div className="grid grid-cols-12 p-5 pt-20 content-start">
-                <div className=" col-span-7 col-start-2  ">
+                <div className=" col-span-8 col-start-2  ">
 
                     <div className='bg-white p-6 border-2 rounded-2xl'>
                         <h2 className='text-gray-700 pl-8'>สมาชิก</h2>
@@ -80,12 +83,14 @@ function ShowUserData() {
 
                     <div className='bg-white border-2 rounded-2xl px-10 py-8 mt-4' style={{ minHeight: '810px' }}>
                         <div className="flex justify-end gap-4 mb-5 ">
-                        
-                            <button
-                                onClick={handleAddUserClick}
-                                className="bg-gray-700 hover:bg-blue-700 text-white font-bold px-5 py-4 items-end rounded-xl"
-                            >
-                                เพิ่มสมาชิก
+
+                            <button onClick={handleAddUserClick} className="bg-gray-700 hover:bg-blue-700 text-white font-bold px-5 py-4 items-end rounded-xl">
+                                <div className="flex justify-start items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                    </svg>
+                                    เพิ่มสมาชิก
+                                </div>
                             </button>
 
                         </div>
@@ -118,8 +123,8 @@ function ShowUserData() {
                                 <div key={index} className="bg-gray-200 hover:bg-gray-100 p-2 rounded-xl w-full mb-4">
                                     <div className="grid grid-cols-12 gap-4 items-center">
 
-                                        <div className="col-span-3 text-center p-5">
-                                            <p className="text-gray-700 font-bold m-1">{indexOfFirstItem + index + 1}. {val.name} {val.lastname}</p>
+                                        <div className="col-span-3 text-center p-5 break-words">
+                                            <p className="text-gray-700 font-bold m-1">{indexOfFirstItem + index + 1}. {val.name}&nbsp;{val.lastname}</p>
                                             <p>{val.position}</p>
                                         </div>
 
@@ -133,6 +138,7 @@ function ShowUserData() {
                                                 onClick={() => openModal(val)}
                                                 className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
                                             >
+                                                <Icon name='eye' size='small' />
                                                 รายละเอียด
                                             </button>
 
@@ -174,7 +180,7 @@ function ShowUserData() {
 
                 </div>
 
-                <div className="col-span-3 col-start-9" style={{ minHeight: '810px' }}>
+                <div className="col-span-2 col-start-10">
                     <UserStatistics />
                 </div>
 
