@@ -152,7 +152,7 @@ app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
     }
 });
 
-
+// get info
 app.get('/test/get_info', async (req, res) => {
     try {
         const result = await pool.query(`select * from basic_infos`);
@@ -162,7 +162,7 @@ app.get('/test/get_info', async (req, res) => {
         res.status(500).send('Error retrieving section');
     }
 });
-
+// 
 // เพิ่มข้อมูลส่วนที่ 2  CourseAnalysisInformation
 app.post('/add_Course_Analysis_Information', async (req, res) => {
     // const input = req.body;
