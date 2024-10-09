@@ -24,6 +24,7 @@ const CourseAnalysisInformation = () => {
     const curriculum_id = location.state?.curriculum_id;
 
     const [formData, setFormData] = useState({
+        curriculum_id: curriculum_id,
         required_eq_id: [],
         principle_reasons: '',
         analysis_of_future_target: '',
@@ -59,8 +60,16 @@ const CourseAnalysisInformation = () => {
         try {
             const response = await axios.post('http://localhost:8080/add_Course_Analysis_Information', formData);
             console.log('Data successfully saved:', response.data);
-            alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
-            navigate('/homepage_user');
+            // alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
+
+            // const CurriculumId = response.data.curriculum_id;
+            console.log('Data saved with curriculum_id:', curriculum_id);
+
+            navigate('/student_admission', {
+                state: { curriculum_id: curriculum_id },
+            }, { replace: true });
+
+            // navigate('/student_admission');
         } catch (error) {
             console.error('Error saving data:', error);
             alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');

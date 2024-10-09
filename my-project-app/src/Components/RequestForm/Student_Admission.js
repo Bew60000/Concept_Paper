@@ -69,27 +69,32 @@ const StudentAdmission = () => {
     const handleSubmit = async () => {
         try {
             for (let form of formData) {
-                                if (!form.year || !form.year_offered || !form.count_students) {
+                if (!form.year || !form.year_offered || !form.count_students) {
                     alert('โปรดกรอกข้อมูลให้ครบถ้วน');
                     return;
                 }
-    
+
                 // Convert year_offered to number before sending
                 const response = await axios.post('http://localhost:8080/student_admissions_plan', {
                     curriculum_id: form.curriculum_id,
                     year: form.year,
-                    count_students: Number(form.count_students), 
+                    count_students: Number(form.count_students),
                     year_opened: Number(form.year_offered),
                 });
                 console.log('Data saved:', response.data);
+                console.log('Data saved with curriculum_id:', curriculum_id);
+
+                navigate('/management_information', {
+                    state: { curriculum_id: curriculum_id },
+                }, { replace: true });
             }
-            alert('บันทึกข้อมูลสำเร็จ!');
+            // alert('บันทึกข้อมูลสำเร็จ!');
         } catch (error) {
             console.error('There was an error!', error);
             alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
         }
     };
-    
+
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
             <Navbar />

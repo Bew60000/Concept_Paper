@@ -10,14 +10,15 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
+import axios from 'axios';
+
 
 //Dropdown
 const options = [
-    { key: 'm', text: 'อาจารย์', value: 'male' },
-    { key: 'f', text: 'ผศ.ดร', value: 'female' },
-    { key: 'o', text: 'ศ.ดร', value: 'other' },
-];
-
+    { key: 'A', text: 'นาย', value: 'นาย' },
+    { key: 'B', text: 'นาง', value: 'นาง' },
+    { key: 'C', text: 'นางสาว', value: 'นางสาว' },
+]
 //Part IV
 const ManagementInformation = () => {
     const BackgroundImage = {
@@ -28,14 +29,20 @@ const ManagementInformation = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const curriculum_id = location.state?.curriculum_id;
+
     const [forms, setForms] = useState([{
+        curriculum_id: curriculum_id,
         id: 1,
-        title: '',
-        firstName: '',
-        lastName: '',
-        qualification: '',
-        academicPosition: '',
-        academicWork: ''
+        teaching: '',
+        cost_control: '',
+        readiness: '',
+        teacher_perfix: '',
+        teacher_fname: '',
+        teacher_lname: '',
+        academic_ranks: '',
+        performance: '',
+        educational_qualifications: ''
     }]);
 
     const [formCount, setFormCount] = useState(1);
@@ -52,13 +59,17 @@ const ManagementInformation = () => {
         setForms(prevForms => [
             ...prevForms,
             {
+                curriculum_id: curriculum_id,
                 id: formCount + 1,
-                title: '',
-                firstName: '',
-                lastName: '',
-                qualification: '',
-                academicPosition: '',
-                academicWork: ''
+                teaching: '',
+                cost_control: '',
+                readiness: '',
+                teacher_perfix: '',
+                teacher_fname: '',
+                teacher_lname: '',
+                academic_ranks: '',
+                performance: '',
+                educational_qualifications: ''
             }
         ]);
         setFormCount(prevCount => prevCount + 1);
@@ -68,6 +79,47 @@ const ManagementInformation = () => {
         setForms(prevForms => prevForms.filter(form => form.id !== id));
     }, []);
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+
+            for (let form of forms) {
+                if (!form.teacher_perfix || !form.teacher_fname || !form.teacher_lname || !form.academic_ranks || !form.performance || !form.educational_qualifications
+                ) {
+                    alert('โปรดกรอกข้อมูลให้ครบถ้วน');
+                    return;
+                }
+
+                // const response1 = await axios.post('http://localhost:8080/submit', forms)
+                const response = await axios.post('http://localhost:8080/submit', {
+                    curriculum_id: curriculum_id,
+                    teaching: form.teaching,
+                    cost_control: form.cost_control,
+                    readiness: form.readiness,
+                    teacher_perfix: form.teacher_perfix,
+                    teacher_fname: form.teacher_fname,
+                    teacher_lname: form.teacher_lname,
+                    academic_ranks: form.academic_ranks,
+                    performance: form.performance,
+                    educational_qualifications: form.educational_qualifications
+                })
+                console.log('Success:', response.data);
+
+                console.log('Data saved with curriculum_id:', curriculum_id);
+
+                navigate('/teachers_information', {
+                    state: { curriculum_id: curriculum_id },
+                }, { replace: true });
+            }
+            // alert('บันทึกข้อมูลสำเร็จ!');
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle error (e.g., show an error message)
+        }
+    };
+
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
             <Navbar />
@@ -76,22 +128,34 @@ const ManagementInformation = () => {
                     <h1>ส่วนที่ 4 : รูปแบบการจัดการเรียนการสอนและการบริหารจัดการ</h1>
                     <hr />
                     <br />
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
 
                         <FormTextArea
                             fluid
                             label='รูปแบบของการจัดการเรียนการสอนที่มีการเรียนรู้จากประสบการณ์จริง'
                             placeholder='โปรดอธิบายรายละเอียด'
+                            name="teaching"
+                            value={forms.teaching}
+                            onChange={(e, { value }) => handleChange(1, 'teaching', value)}
+
                         />
                         <FormTextArea
                             fluid
                             label='หลักสูตรฯ มีการควบคุมต้นทุนของการศึกษาอย่างไร'
                             placeholder='โปรดอธิบายรายละเอียด'
+                            name="cost_control"
+                            value={forms.cost_control}
+                            onChange={(e, { value }) => handleChange(1, 'cost_control', value)}
+
                         />
                         <FormTextArea
                             fluid
                             label='ความพร้อมในการจัดการเรียนการสอน'
                             placeholder='โปรดอธิบายรายละเอียด'
+                            name="readiness"
+                            value={forms.readiness}
+                            onChange={(e, { value }) => handleChange(1, 'readiness', value)}
+
                         />
 
                         <br />
@@ -110,22 +174,22 @@ const ManagementInformation = () => {
                                         label='คำนำหน้า'
                                         options={options}
                                         placeholder='คำนำหน้า'
-                                        value={form.title}
-                                        onChange={(e, { value }) => handleChange(form.id, 'title', value)}
+                                        value={form.teacher_perfix}
+                                        onChange={(e, { value }) => handleChange(form.id, 'teacher_perfix', value)}
                                     />
                                     <FormInput
                                         fluid
                                         label='ชื่อ'
                                         placeholder='โปรดระบุชื่อ'
-                                        value={form.firstName}
-                                        onChange={(e) => handleChange(form.id, 'firstName', e.target.value)}
+                                        value={form.teacher_fname}
+                                        onChange={(e) => handleChange(form.id, 'teacher_fname', e.target.value)}
                                     />
                                     <FormInput
                                         fluid
                                         label='นามสกุล'
                                         placeholder='โปรดระบุนามสกุล'
-                                        value={form.lastName}
-                                        onChange={(e) => handleChange(form.id, 'lastName', e.target.value)}
+                                        value={form.teacher_lname}
+                                        onChange={(e) => handleChange(form.id, 'teacher_lname', e.target.value)}
                                     />
                                 </FormGroup>
 
@@ -133,8 +197,8 @@ const ManagementInformation = () => {
                                     fluid
                                     label='คุณวุฒิ'
                                     placeholder='โปรดระบุคุณวุฒิ'
-                                    value={form.qualification}
-                                    onChange={(e) => handleChange(form.id, 'qualification', e.target.value)}
+                                    value={form.educational_qualifications}
+                                    onChange={(e) => handleChange(form.id, 'educational_qualifications', e.target.value)}
                                 />
 
                                 <FormGroup widths='equal'>
@@ -142,8 +206,8 @@ const ManagementInformation = () => {
                                         fluid
                                         label='ตำแหน่งทางวิชาการ'
                                         placeholder='โปรดระบุตำแหน่งทางวิชาการ'
-                                        value={form.academicPosition}
-                                        onChange={(e) => handleChange(form.id, 'academicPosition', e.target.value)}
+                                        value={form.academic_ranks}
+                                        onChange={(e) => handleChange(form.id, 'academic_ranks', e.target.value)}
                                     />
                                 </FormGroup>
 
@@ -151,8 +215,8 @@ const ManagementInformation = () => {
                                     fluid
                                     label='ผลงานทางด้านวิชาการย้อนหลัง 3 ปี'
                                     placeholder='ผลงานทางด้านวิชาการ'
-                                    value={form.academicWork}
-                                    onChange={(e) => handleChange(form.id, 'academicWork', e.target.value)}
+                                    value={form.performance}
+                                    onChange={(e) => handleChange(form.id, 'performance', e.target.value)}
                                 />
 
                                 <FormButton
@@ -169,7 +233,8 @@ const ManagementInformation = () => {
                         ))}
                         <div className='flex justify-between gap-4'>
                             <FormButton type='button' onClick={addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
-                            <FormButton type='submit'>ยืนยัน</FormButton>
+                            {/* <FormButton type='submit' onClick={handleSubmit}>ยืนยัน</FormButton> */}
+                            <FormButton type='submit' >ยืนยัน</FormButton>
                         </div>
                     </Form>
                 </div>
