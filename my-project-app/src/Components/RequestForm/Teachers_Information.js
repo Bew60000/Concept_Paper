@@ -30,8 +30,11 @@ const TeachersInformation = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const curriculum_id = location.state?.curriculum_id;
 
     const [forms, setForms] = useState([{
+        curriculum_id: curriculum_id,
+
         id: 1,
         // title: '',
         // firstName: '',
@@ -62,6 +65,8 @@ const TeachersInformation = () => {
         setForms(prevForms => [
             ...prevForms,
             {
+                curriculum_id: curriculum_id,
+
                 id: formCount + 1,
                 // title: '',
                 // firstName: '',
@@ -100,6 +105,8 @@ const TeachersInformation = () => {
                 // Send the forms state to the backend API
                 // const response = await axios.post('http://localhost:8080/api/teachers', { forms });
                 const response = await axios.post('http://localhost:8080/api/teachers', {
+
+                    curriculum_id: curriculum_id,
                     teacher_perfix: form.teacher_perfix,
                     teacher_fname: form.teacher_fname,
                     teacher_lname: form.teacher_lname,
@@ -111,6 +118,8 @@ const TeachersInformation = () => {
 
             }
             alert('บันทึกข้อมูลสำเร็จ!');
+            navigate('/homepage_user');
+
             // Handle success (e.g., navigate to another page or show a success message)
         } catch (error) {
             console.error('Error submitting form:', error);

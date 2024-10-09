@@ -49,3 +49,29 @@ app.post('/submit', async (req, res) => {
         }
     });
 });
+
+
+
+// เพิ่มข้อมูลส่วนที่ 4 teaching_and_administration
+app.post('/teaching_and_administration', async (req, res) => {
+    // const input = req.body;
+
+    const result1 = { curriculum_id, teaching, cost_control, readiness } = req.body;
+
+
+    try {
+        await pool.query(` INSERT INTO teaching_and_administration(
+        curriculum_id, teaching, cost_control, readiness)
+        VALUES ($1, $2, $3, $4);`,
+            [
+                curriculum_id, teaching, cost_control, readiness
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+
+
+
+});

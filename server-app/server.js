@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    // password: '6410210573',
-    password: '10062545Aong.',
+    password: '6410210573',
+    // password: '10062545Aong.',
     port: 5432
 });
 
@@ -138,6 +138,7 @@ app.put('/update_basic_info/:curriculum_id', async (req, res) => {
         res.status(500).send('Error retrieving section');
     }
 });
+
 // ลบ ข้อมูลในตาราง
 app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
     const { curriculum_id } = req.params; //รับ params id 
@@ -155,7 +156,9 @@ app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
 // get info
 app.get('/test/get_info', async (req, res) => {
     try {
-        const result = await pool.query(`select * from basic_infos`);
+        const result = await pool.query(`select * from basic_infos
+join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
+join student_admission on basic_infos.curriculum_id = student_admission.curriculum_id`);
         res.json(result.rows);
     } catch (error) {
         console.error(error);
@@ -209,45 +212,129 @@ app.post('/student_admissions_plan', async (req, res) => {
 
 
 // เพิ่มข้อมูลส่วนที่ 4 teaching_and_administration
-app.post('/teaching_and_administration', async (req, res) => {
-    // const input = req.body;
 
-    const result1 = { curriculum_id, teaching, cost_control, readiness } = req.body;
-
-
-    try {
-        await pool.query(` INSERT INTO teaching_and_administration(
-        curriculum_id, teaching, cost_control, readiness)
-        VALUES ($1, $2, $3, $4);`,
-            [
-                curriculum_id, teaching, cost_control, readiness
-            ]);
-        res.status(201).send('Add successfull');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error adding authors');
-    }
+// API to handle form submission
+app.post('/submit', async (req, res) => {
+    const {
+        curriculum_id, teaching, cost_control, readiness, teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications, teacher_role
+    } = req.body;
 
 
+    const result = await pool.query('SELECT teacher_id FROM teacher ORDER BY teacher DESC LIMIT 1');
+    let lastId = result.rows[0]?.teacher_id || 'T0000';
 
+
+    let idNumber = parseInt(lastId.replace('T', ''), 10) + 1;
+    let newTeacherId = `T${idNumber.toString().padStart(4, '0')}`;
+
+
+    // Insert into the first table (for h1 section)
+    const query1 = `
+     INSERT INTO teaching_and_administration(
+	curriculum_id, teaching, cost_control, readiness,teacher_id)
+	VALUES ($1, $2, $3, $4 ,$5);
+    `;
+    const values1 = [curriculum_id, teaching, cost_control, readiness, newTeacherId];
+
+    // Insert into the second table (for h2 section)
+    const query2 = `
+      INSERT INTO teacher(
+	teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications)
+	VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `;
+
+    const values2 = [newTeacherId, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications];
+
+    let roleteacher = 'อาจารย์ผู้รับผิดชอบหลักสูตร'
+
+    const query3 = `INSERT INTO public.type_teacher(
+	teacher_role, curriculum_id, teacher_id)
+	VALUES ($1, $2, $3);`
+
+    const values3 = [roleteacher, curriculum_id, newTeacherId]
+
+    // Execute both queries
+    pool.query(query1, values1, (error, result1) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Error saving data to the teaching table');
+        } else {
+            pool.query(query2, values2, (error, result2) => {
+                if (error) {
+                    console.error(error);
+                    res.status(500).send('Error saving data to the responsibility table');
+                } else {
+                    // res.status(200).send('Data saved successfully to both tables');
+                    pool.query(query3, values3, (error, result3) => {
+                        if (error) {
+                            console.error(error);
+                            res.status(500).send('Error saving data to the responsibility table');
+                        } else {
+                            res.status(200).send('Data saved successfully to both tables');
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 
+
 // เพิ่มข้อมูลส่วนที่ 5 teacher
-app.post('/teacher', async (req, res) => {
+app.post('/api/teachers', async (req, res) => {
     // const input = req.body;
 
-    const { teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, education_qualifications, performance } = req.body;
-
+    const { curriculum_id, teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications } = req.body;
 
     try {
-        await pool.query(`INSERT INTO teacher(
-        teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, education_qualifications, performance)
-        VALUES ($1, $2, $3, $4, $5, $6, $7); `,
-            [
-                teacher_id, teacher_prefix, teacher_fname, teacher_lname, position_id, education_qualifications, performance
-            ]);
-        res.status(201).send('Add successfull');
+
+        const result = await pool.query('SELECT teacher_id FROM teacher ORDER BY teacher DESC LIMIT 1');
+        let lastId = result.rows[0]?.teacher_id || 'T0000';
+
+
+        let idNumber = parseInt(lastId.replace('T', ''), 10) + 1;
+        let newTeacherId = `T${idNumber.toString().padStart(4, '0')}`;
+
+        let role_teacher = 'อาจารย์ประจำหลักสูตร'
+
+        const query1 = `
+     INSERT INTO teacher(
+    teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications)
+    VALUES ($1, $2, $3, $4, $5, $6, $7);
+    `;
+        const values1 = [newTeacherId, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications];
+
+        const query2 = `INSERT INTO public.type_teacher(
+            teacher_role, curriculum_id, teacher_id)
+            VALUES ($1, $2, $3);`
+
+        const values2 = [role_teacher, curriculum_id, newTeacherId]
+
+        // Execute both queries
+        pool.query(query1, values1, (error, result1) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error saving data to the teaching table');
+            } else {
+                pool.query(query2, values2, (error, result2) => {
+                    if (error) {
+                        console.error(error);
+                        res.status(500).send('Error saving data to the responsibility table');
+                    } else {
+                        res.status(200).send('Data saved successfully to both tables');
+                    }
+                });
+            }
+        });
+
+        //     await pool.query(` INSERT INTO teacher(
+        // teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications)
+        // VALUES ($1, $2, $3, $4, $5, $6, $7); `,
+        //         [
+        //             newTeacherId, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications
+        //         ])
+        //     res.status(201).send('Add successfull');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error adding authors');
