@@ -28,6 +28,12 @@ const NavbarUser = () => {
               <img className="h-12 w-12" src={LogoIcon} alt="Your Logo" />
             </div>
 
+            {/* <a href='/homepage_user' >
+              <div className="flex-shrink-0">
+                <img className="h-12 w-12" src={LogoIcon} alt="Your Logo" />
+              </div>
+            </a> */}
+
             {/* <div className="hidden sm:flex sm:ml-6 items-center">
               <div className="flex space-x-4">
                 <a href="homepage_user" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
