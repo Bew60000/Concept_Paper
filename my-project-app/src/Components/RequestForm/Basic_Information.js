@@ -60,8 +60,8 @@ const Basic_Information = () => {
     campus: '',
     yearstarted: '',
     learningoutcome: '',
-    sent_by: username, 
-    sent_time: '', 
+    sent_by: username,
+    sent_time: '',
   });
 
   const handleChange = (e, { name, value }) => {
@@ -79,7 +79,7 @@ const Basic_Information = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();    
+    e.preventDefault();
 
     const requiredFields = ['faculty', 'campus', 'majorthai',
       'majoreng', 'degreename', 'affiliation', 'yearstarted',
@@ -239,12 +239,24 @@ const Basic_Information = () => {
             />
 
             <div className="flex justify-end gap-4">
-              <FormButton color='grey' type='button' onClick={() => navigate('/homepage_user')}>
-                ยกเลิก
-              </FormButton>
-              <FormButton type="submit">
-                ต่อไป
-              </FormButton>
+              <button className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" onClick={() => navigate('/homepage_user')}>
+                <div className="flex justify-start items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                  </svg>
+                  ยกเลิก
+                </div>
+              </button>
+
+              <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
+                <div className="flex justify-start items-center">
+                  ต่อไป
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </div>
+              </button>
+
             </div>
 
           </Form>

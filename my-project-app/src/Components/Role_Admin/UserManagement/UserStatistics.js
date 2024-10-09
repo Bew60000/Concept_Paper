@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
 
 import Navbar from '../../Navbar/NavbarAdmin';
 import NavbarAdminFunctions from '../../Navbar/NavbarAdminFunctions';
@@ -108,6 +109,19 @@ const UserStatistics = () => {
                 )}
 
             </div>
+
+            <Link to="/homepage_admin">
+                <div className='bg-white m-4 mr-0 rounded-xl p-6 text-gray-700 text-center hover:bg-blue-700 hover:text-white'>
+                    <div className="flex justify-center items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                            <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                        </svg>
+
+                        <p className="font-bold ">หน้าหลัก</p>
+                    </div>
+                </div>
+            </Link>
 
             {/* <div className="bg-white m-4 mt-0 p-8 border-2 rounded-2xl" style={{ minHeight: '200px' }}>
                 <p className='text-center text-gray-600'>จำนวนผู้คนทั้งหมดในระบบ</p>
