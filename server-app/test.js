@@ -75,3 +75,69 @@ app.post('/teaching_and_administration', async (req, res) => {
 
 
 });
+
+
+app.post('/submit', async (req, res) => {
+    const {
+        curriculum_id, teaching, cost_control, readiness, teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications, teacher_role
+    } = req.body;
+
+
+    const result = await pool.query('SELECT teacher_id FROM teacher ORDER BY teacher DESC LIMIT 1');
+    let lastId = result.rows[0]?.teacher_id || 'T0000';
+
+
+    let idNumber = parseInt(lastId.replace('T', ''), 10) + 1;
+    let newTeacherId = `T${idNumber.toString().padStart(4, '0')}`;
+
+
+    // Insert into the first table (for h1 section)
+    const query1 = `
+     INSERT INTO teaching_and_administration(
+	curriculum_id, teaching, cost_control, readiness,teacher_id)
+	VALUES ($1, $2, $3, $4 ,$5);
+    `;
+    const values1 = [curriculum_id, teaching, cost_control, readiness, newTeacherId];
+
+    // Insert into the second table (for h2 section)
+    const query2 = `
+      INSERT INTO teacher(
+	teacher_id, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications)
+	VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `;
+
+    const values2 = [newTeacherId, teacher_perfix, teacher_fname, teacher_lname, academic_ranks, performance, educational_qualifications];
+
+    let roleteacher = 'อาจารย์ผู้รับผิดชอบหลักสูตร'
+
+    const query3 = `INSERT INTO public.type_teacher(
+	teacher_role, curriculum_id, teacher_id)
+	VALUES ($1, $2, $3);`
+
+    const values3 = [roleteacher, curriculum_id, newTeacherId]
+
+    // Execute both queries
+    pool.query(query1, values1, (error, result1) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Error saving data to the teaching table');
+        } else {
+            pool.query(query2, values2, (error, result2) => {
+                if (error) {
+                    console.error(error);
+                    res.status(500).send('Error saving data to the responsibility table');
+                } else {
+                    // res.status(200).send('Data saved successfully to both tables');
+                    pool.query(query3, values3, (error, result3) => {
+                        if (error) {
+                            console.error(error);
+                            res.status(500).send('Error saving data to the responsibility table');
+                        } else {
+                            res.status(200).send('Data saved successfully to both tables');
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
