@@ -157,8 +157,8 @@ app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
 app.get('/test/get_info', async (req, res) => {
     try {
         const result = await pool.query(`select * from basic_infos
-join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
-join student_admission on basic_infos.curriculum_id = student_admission.curriculum_id`);
+            join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
+            join student_admission on basic_infos.curriculum_id = student_admission.curriculum_id`);
         res.json(result.rows);
     } catch (error) {
         console.error(error);
