@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    // password: '6410210573',
-    password: '10062545Aong.',
+    password: '6410210573',
+    // password: '10062545Aong.',
     port: 5432
 });
 
@@ -158,7 +158,7 @@ app.get('/test/get_info', async (req, res) => {
     try {
         const result = await pool.query(`select * from basic_infos
 join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
-join student_admission on basic_infos.curriculum_id = student_admission.curriculum_id`);
+`);
         res.json(result.rows);
     } catch (error) {
         console.error(error);
@@ -166,6 +166,8 @@ join student_admission on basic_infos.curriculum_id = student_admission.curricul
     }
 });
 // 
+
+
 // เพิ่มข้อมูลส่วนที่ 2  CourseAnalysisInformation
 app.post('/add_Course_Analysis_Information', async (req, res) => {
     // const input = req.body;

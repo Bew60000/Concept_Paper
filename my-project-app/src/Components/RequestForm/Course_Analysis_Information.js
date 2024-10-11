@@ -65,7 +65,7 @@ const CourseAnalysisInformation = () => {
             // const CurriculumId = response.data.curriculum_id;
             console.log('Data saved with curriculum_id:', curriculum_id);
 
-            navigate('/homepage_user', {
+            navigate('/student_admission', {
                 state: { curriculum_id: curriculum_id },
             }, { replace: true });
 
