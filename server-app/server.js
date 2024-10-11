@@ -153,21 +153,6 @@ app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
     }
 });
 
-// get info
-app.get('/test/get_info', async (req, res) => {
-    try {
-        const result = await pool.query(`select * from basic_infos 
-            join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
-`);
-        res.json(result.rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving section');
-    }
-});
-// 
-
-
 // เพิ่มข้อมูลส่วนที่ 2  CourseAnalysisInformation
 app.post('/add_Course_Analysis_Information', async (req, res) => {
     // const input = req.body;
@@ -249,19 +234,19 @@ app.post('/submit', async (req, res) => {
 
     let roleteacher = 'อาจารย์ผู้รับผิดชอบหลักสูตร'
 
-    const query3 = `INSERT INTO public.type_teacher(
+    const query3 = `INSERT INTO type_teacher(
 	teacher_role, curriculum_id, teacher_id)
 	VALUES ($1, $2, $3);`
 
     const values3 = [roleteacher, curriculum_id, newTeacherId]
 
     // Execute both queries
-    pool.query(query1, values1, (error, result1) => {
+    pool.query(query2, values2, (error, result1) => {
         if (error) {
             console.error(error);
             res.status(500).send('Error saving data to the teaching table');
         } else {
-            pool.query(query2, values2, (error, result2) => {
+            pool.query(query1, values1, (error, result2) => {
                 if (error) {
                     console.error(error);
                     res.status(500).send('Error saving data to the responsibility table');
@@ -483,7 +468,6 @@ app.put('/test/update', async (req, res) => {
     }
 });
 
-
 app.put('/test/update/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.id;
@@ -550,6 +534,84 @@ app.get('/get_faculty', async (req, res) => {
         res.status(500).send('Error retrieving section');
     }
 })
+
+// เรียกดูข้อมูล
+
+// get info
+app.get('/test/get_info', async (req, res) => {
+    try {
+        const result = await pool.query(`select * from basic_infos
+join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
+`);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+// get course_analysis_information
+app.get('/test/course_analysis_information/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select * from course_analysis_information where curriculum_id = $1   
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+// get นักศึกษาที่เป็นปี
+app.get('/test/student_admissions/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select * from student_admissions where curriculum_id = $1   
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+// get teacher
+app.get('/test/teacher/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select * from teacher 
+join type_teacher on teacher.teacher_id = type_teacher.teacher_id  
+            where curriculum_id = $1   
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+// get teaching_and_administration
+app.get('/test/teaching_and_administration/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select * from teaching_and_administration where curriculum_id = $1   
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+
+
+// 
 
 app.listen(8080, () =>
     console.log(`Example app Listening on port ${port}`)
