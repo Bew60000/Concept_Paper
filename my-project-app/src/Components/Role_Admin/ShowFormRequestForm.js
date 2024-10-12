@@ -6,11 +6,14 @@ import NavbarAdminFunctions from '../Navbar/NavbarAdminFunctions';
 
 function ShowFormRequestForm() {
     const [dataUser, setDataUser] = useState([]);
+    const [studentData, setStudentData] = useState([]);
+    const [teacherData, setTeacherData] = useState([]);
+    const [adminData, setAdminData] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
     const [sentByInfo, setSentByInfo] = useState([]); //สำหรับดึงข้อมูล username จากตาราง user
     const [isModalOpen, setIsModalOpen] = useState(false); // สถานะของ Modal
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
+    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const navigate = useNavigate();
     const modalRef = useRef(null); // ใช้เก็บ reference ของ Modal
@@ -35,16 +38,32 @@ function ShowFormRequestForm() {
         }
     }, []);
 
-    const openModal = (form) => {
-        setSelectedForm(form); // เก็บข้อมูลผู้ใช้ที่ถูกเลือก
-        setIsModalOpen(true); // เปิด Modal
+    const fetchAdditionalData = (curriculumId) => {
+        // ดึงข้อมูลจากตาราง student_admissions, teacher, และ teaching_and_administration โดยใช้ curriculum_id
+        Promise.all([
+            axios.get(`http://localhost:8080/test/student_admissions/${curriculumId}`),
+            axios.get(`http://localhost:8080/test/teacher/${curriculumId}`),
+            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
+        ])
+            .then(([studentRes, teacherRes, adminRes]) => {
+                setStudentData(studentRes.data);
+                setTeacherData(teacherRes.data);
+                setAdminData(adminRes.data);
+            })
+            .catch(err => console.error(err));
     };
 
-    // ฟังก์ชันปิด Modal
+    const openModal = (form) => {
+        setSelectedForm(form);
+        setIsModalOpen(true);
+        fetchAdditionalData(form.curriculum_id);
+    };
+
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedForm(null);
     };
+
 
     // เพิ่มการตรวจจับการคลิกภายนอก Modal
     useEffect(() => {
@@ -265,10 +284,39 @@ function ShowFormRequestForm() {
                                 </div>
 
                                 <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
-                                {/* Form Part II */}
+                                {/* Form Part III*/}
                                 <div className="text-start p-5 mt-8">
                                     <p className="text-xl font-bold text-gray-500">3.แผนการรับนักศึกษา</p>
+                                    {studentData.length > 0 && studentData.map((student, index) => (
+                                        <div key={index}>
+                                            <p>Year Opened: {student.year_opened}</p>
+                                            <p>Year: {student.year}</p>
+                                            <p>Count of Students: {student.count_students}</p>
+                                        </div>
+                                    ))}
                                 </div>
+
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part IV*/}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">4.รูปแบบการจัดการเรียนการสอนและการบริหารจัดการ</p>
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    <p className="m-1"><strong>4.1 รูปแบบของการจัดการเรียนการสอนที่มีการเรียนรู้จากประสบการณ์จริง :</strong></p>
+                                    <p className="m-1 mt-2">{selectedForm.teaching}</p>
+                                </div>
+
+                                <div className="mt-8 pr-5 pl-5">
+                                    <p className="m-1"><strong>4.2หลักสูตรฯ มีการควบคุมต้นทุนของการจัดการเรียนการสอนของการจัดการศึกษาอย่างไรบ้าง :</strong></p>
+                                    <p className="m-1 mt-2">{selectedForm.cost_control}</p>
+                                </div>
+
+                                <div className="mt-8 pr-5 pl-5">
+                                    <p className="m-1"><strong>4.3 ความพร้อมในการจัดการเรียนการสอน</strong> (ทรัพยากรการเรียนรู้ ศักยภาพของบุคลากร คู่ความร่วมมือ งบประมาณสนับสนุนจากภายนอกมหาวิทยาลัย รวมถึงวามเชื่อมโยงกับสิ่งที่คณะมีอยู่) : </p>
+                                    <p className="m-1 mt-2">{selectedForm.readiness}</p>
+                                </div>
+
 
                                 {/* Button */}
                                 <div className="gap-4 flex justify-center items-center mt-5">
