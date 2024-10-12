@@ -34,17 +34,20 @@ const CourseAnalysisInformation = () => {
 
     const handleCheckboxChange = (e, { name, checked }) => {
         setFormData(prevState => {
-            const newRequiredEqId = checked
-                // ถ้า checkbox ถูกเลือก ให้เพิ่มเข้า array
-                ? [...prevState.required_eq_id, name]
-                // ถ้า checkbox ถูกยกเลิก ให้เอาออกจาก array
-                : prevState.required_eq_id.filter(item => item !== name); // ถ้า checkbox ถูกยกเลิก ให้เอาออกจาก array
+            let newRequiredEqIdArray = checked
+                ? [...prevState.required_eq_id.split(','), name] // เพิ่มค่าลงใน array หาก checkbox ถูกเลือก
+                : prevState.required_eq_id.split(',').filter(item => item !== name); // เอาออกจาก array หากยกเลิกการเลือก
+    
+            // แปลง array ให้กลายเป็น string โดยใช้คอมมาในการคั่น
+            let newRequiredEqIdString = newRequiredEqIdArray.join(',');
+    
             return {
                 ...prevState,
-                required_eq_id: newRequiredEqId,
+                required_eq_id: newRequiredEqIdString, // เก็บค่าที่ถูกเลือกเป็น string
             };
         });
     };
+    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

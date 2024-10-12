@@ -245,7 +245,10 @@ function ShowFormRequestForm() {
                                 </div>
 
                                 <div className="mt-8 pr-5 pl-5">
-                                    <p className="m-1"><strong>2.2 กลุ่มเป้าหมายของหลักสูตร :</strong> "{selectedForm.required_eq_id}"</p>
+                                    <div className='flex'>
+                                        <p className="m-1"><strong>2.2 กลุ่มเป้าหมายของหลักสูตร หลักสูตรเปิดรับผู้สำเร็จการศึกษาระดับ :</strong></p>
+                                        <p className='text-blue-700 font-bold'>"{selectedForm.required_eq_id}"</p>
+                                    </div>
                                     <p className="m-1"><strong>ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว <br />และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต :</strong></p>
                                     <p className="m-1 mt-2">{selectedForm.analysis_of_future_target}</p>
                                 </div>
@@ -259,6 +262,12 @@ function ShowFormRequestForm() {
                                     <p className="m-1"><strong>2.4 หลักสูตรดังกล่าวมีความใกล้เคียงกับหลักสูตรอื่นอย่างไร</strong> กรณีที่มีความคล้ายคลึงกับหลักสูตรอื่น ให้ระบุถึง<strong>"จุดเด่นของหลักสูตร"</strong>และการดำเนินการที่จะ
                                         <strong>"เเข่งขัน"</strong>กับหลักสูตรอื่นที่ใกล้เคียง: </p>
                                     <p className="m-1 mt-2">{selectedForm.high_lights}</p>
+                                </div>
+
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part II */}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">3.แผนการรับนักศึกษา</p>
                                 </div>
 
                                 {/* Button */}
