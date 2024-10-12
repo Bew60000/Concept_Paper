@@ -37,17 +37,17 @@ const CourseAnalysisInformation = () => {
             let newRequiredEqIdArray = checked
                 ? [...prevState.required_eq_id.split(','), name] // เพิ่มค่าลงใน array หาก checkbox ถูกเลือก
                 : prevState.required_eq_id.split(',').filter(item => item !== name); // เอาออกจาก array หากยกเลิกการเลือก
-    
+
             // แปลง array ให้กลายเป็น string โดยใช้คอมมาในการคั่น
             let newRequiredEqIdString = newRequiredEqIdArray.join(',');
-    
+
             return {
                 ...prevState,
                 required_eq_id: newRequiredEqIdString, // เก็บค่าที่ถูกเลือกเป็น string
             };
         });
     };
-    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -65,14 +65,12 @@ const CourseAnalysisInformation = () => {
             console.log('Data successfully saved:', response.data);
             // alert('ข้อมูลถูกบันทึกเรียบร้อยแล้ว');
 
-            // const CurriculumId = response.data.curriculum_id;
             console.log('Data saved with curriculum_id:', curriculum_id);
 
             navigate('/student_admission', {
                 state: { curriculum_id: curriculum_id },
             }, { replace: true });
 
-            // navigate('/student_admission');
         } catch (error) {
             console.error('Error saving data:', error);
             alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
@@ -109,7 +107,7 @@ const CourseAnalysisInformation = () => {
                                     key={group.key}
                                     label={group.label}
                                     name={group.key}
-                                    checked={formData.required_eq_id.includes(group.key)} // ตรวจสอบว่าถูกเลือกหรือไม่
+                                    checked={formData.required_eq_id.includes(group.key)}
                                     onChange={handleCheckboxChange}
                                 />
                             ))}
