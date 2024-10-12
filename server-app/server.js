@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    // password: '6410210573',
-    password: '10062545Aong.',
+    password: '6410210573',
+    // password: '10062545Aong.',
     port: 5432
 });
 
@@ -182,7 +182,7 @@ app.post('/student_admissions_plan', async (req, res) => {
 
 
     try {
-        await pool.query(`INSERT INTO student_admission(
+        await pool.query(`INSERT INTO student_admissions(
 	curriculum_id, year, count_students, year_opened)
 	VALUES ($1, $2, $3, $4);`,
             [
@@ -218,10 +218,10 @@ app.post('/submit', async (req, res) => {
     // Insert into the first table (for h1 section)
     const query1 = `
      INSERT INTO teaching_and_administration(
-	curriculum_id, teaching, cost_control, readiness,teacher_id)
-	VALUES ($1, $2, $3, $4 ,$5);
+	curriculum_id, teaching, cost_control, readiness)
+	VALUES ($1, $2, $3, $4 );
     `;
-    const values1 = [curriculum_id, teaching, cost_control, readiness, newTeacherId];
+    const values1 = [curriculum_id, teaching, cost_control, readiness];
 
     // Insert into the second table (for h2 section)
     const query2 = `
@@ -449,8 +449,6 @@ app.put('/update_user/:id', async (req, res) => {
     }
 });
 
-
-
 app.put('/test/update', async (req, res) => {
 
     const { id, name } = req.body;
@@ -542,6 +540,21 @@ app.get('/test/get_info', async (req, res) => {
     try {
         const result = await pool.query(`select * from basic_infos
 join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id  
+`);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+// get info 1,2,4ส่วน1
+app.get('/test/get_data_info_analysis_teaching', async (req, res) => {
+    try {
+        const result = await pool.query(`select * from basic_infos
+join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
+join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id   
 `);
         res.json(result.rows);
     } catch (error) {

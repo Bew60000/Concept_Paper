@@ -32,22 +32,34 @@ const CourseAnalysisInformation = () => {
         high_lights: '',
     });
 
+    // const handleCheckboxChange = (e, { name, checked }) => {
+    //     setFormData(prevState => {
+    //         let newRequiredEqIdArray = checked
+    //             ? [...prevState.required_eq_id.split(','), name] // เพิ่มค่าลงใน array หาก checkbox ถูกเลือก
+    //             : prevState.required_eq_id.split(',').filter(item => item !== name); // เอาออกจาก array หากยกเลิกการเลือก
+
+    //         // แปลง array ให้กลายเป็น string โดยใช้คอมมาในการคั่น
+    //         let newRequiredEqIdString = newRequiredEqIdArray.join(',');
+
+    //         return {
+    //             ...prevState,
+    //             required_eq_id: newRequiredEqIdString, // เก็บค่าที่ถูกเลือกเป็น string
+    //         };
+    //     });
+    // };
+
     const handleCheckboxChange = (e, { name, checked }) => {
         setFormData(prevState => {
             let newRequiredEqIdArray = checked
-                ? [...prevState.required_eq_id.split(','), name] // เพิ่มค่าลงใน array หาก checkbox ถูกเลือก
-                : prevState.required_eq_id.split(',').filter(item => item !== name); // เอาออกจาก array หากยกเลิกการเลือก
-
-            // แปลง array ให้กลายเป็น string โดยใช้คอมมาในการคั่น
-            let newRequiredEqIdString = newRequiredEqIdArray.join(',');
+                ? [...prevState.required_eq_id, name]
+                : prevState.required_eq_id.filter(item => item !== name);
 
             return {
                 ...prevState,
-                required_eq_id: newRequiredEqIdString, // เก็บค่าที่ถูกเลือกเป็น string
+                required_eq_id: newRequiredEqIdArray,
             };
         });
     };
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
