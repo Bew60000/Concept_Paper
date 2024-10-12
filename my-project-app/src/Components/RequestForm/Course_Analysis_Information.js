@@ -12,7 +12,6 @@ import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
 
 const CourseAnalysisInformation = () => {
-
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,
         backgroundSize: 'cover',
@@ -25,7 +24,7 @@ const CourseAnalysisInformation = () => {
 
     const [formData, setFormData] = useState({
         curriculum_id: curriculum_id,
-        required_eq_id: [],
+        required_eq_id: '', // เปลี่ยนเป็น string แทน array
         principle_reasons: '',
         analysis_of_future_target: '',
         cooperation: '',
@@ -34,20 +33,26 @@ const CourseAnalysisInformation = () => {
 
     const handleCheckboxChange = (e, { name, checked }) => {
         setFormData(prevState => {
-            let newRequiredEqIdArray = checked
-                ? [...prevState.required_eq_id.split(','), name] // เพิ่มค่าลงใน array หาก checkbox ถูกเลือก
-                : prevState.required_eq_id.split(',').filter(item => item !== name); // เอาออกจาก array หากยกเลิกการเลือก
-
-            // แปลง array ให้กลายเป็น string โดยใช้คอมมาในการคั่น
-            let newRequiredEqIdString = newRequiredEqIdArray.join(',');
+            let newRequiredEqIdString = prevState.required_eq_id;
+            if (checked) {
+                // เพิ่มชื่อถ้าหากถูกเลือก
+                newRequiredEqIdString = newRequiredEqIdString
+                    ? `${newRequiredEqIdString},${name}` // เพิ่มเครื่องหมายจุลภาค
+                    : name; // เริ่มต้นด้วยชื่อ
+            } else {
+                // ลบชื่อถ้าหากถูกยกเลิกเลือก
+                newRequiredEqIdString = newRequiredEqIdString
+                    .split(',') // แยกเป็น array
+                    .filter(item => item !== name) // กรองออกชื่อที่ไม่ต้องการ
+                    .join(','); // รวมกลับเป็น string
+            }
 
             return {
                 ...prevState,
-                required_eq_id: newRequiredEqIdString, // เก็บค่าที่ถูกเลือกเป็น string
+                required_eq_id: newRequiredEqIdString, // เก็บเป็น string
             };
         });
     };
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -107,7 +112,7 @@ const CourseAnalysisInformation = () => {
                                     key={group.key}
                                     label={group.label}
                                     name={group.key}
-                                    checked={formData.required_eq_id.includes(group.key)}
+                                    checked={formData.required_eq_id.split(',').includes(group.key)} // แปลง string เป็น array สำหรับตรวจสอบ
                                     onChange={handleCheckboxChange}
                                 />
                             ))}
@@ -153,3 +158,4 @@ const CourseAnalysisInformation = () => {
 };
 
 export default CourseAnalysisInformation;
+

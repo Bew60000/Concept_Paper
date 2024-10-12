@@ -182,7 +182,7 @@ app.post('/student_admissions_plan', async (req, res) => {
 
 
     try {
-        await pool.query(`INSERT INTO student_admission(
+        await pool.query(`INSERT INTO student_admissions(
 	curriculum_id, year, count_students, year_opened)
 	VALUES ($1, $2, $3, $4);`,
             [
