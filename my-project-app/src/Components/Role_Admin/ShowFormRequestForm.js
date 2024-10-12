@@ -287,13 +287,24 @@ function ShowFormRequestForm() {
                                 {/* Form Part III*/}
                                 <div className="text-start p-5 mt-8">
                                     <p className="text-xl font-bold text-gray-500">3.แผนการรับนักศึกษา</p>
-                                    {studentData.length > 0 && studentData.map((student, index) => (
-                                        <div key={index}>
-                                            <p>Year Opened: {student.year_opened}</p>
-                                            <p>Year: {student.year}</p>
-                                            <p>Count of Students: {student.count_students}</p>
+                                    {studentData.length > 0 && Object.entries(studentData.reduce((groupedData, student) => {
+                                        // จัดกลุ่มตามปีการศึกษา
+                                        if (!groupedData[student.year_opened]) {
+                                            groupedData[student.year_opened] = [];
+                                        }
+                                        groupedData[student.year_opened].push(student);
+                                        return groupedData;
+                                    }, {})).map(([yearOpened, students], index) => (
+                                        <div key={index} className="mt-5 p-2 mb-5">
+                                            <p className='font-bold mb-1'>• ปีการศึกษา {yearOpened}</p>
+                                            {students.map((student, idx) => (
+                                                <div key={idx}>
+                                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;ชั้นปีที่ {student.year} จำนวนนักศึกษาที่เปิดรับ: {student.count_students}</p>
+                                                </div>
+                                            ))}
                                         </div>
                                     ))}
+
                                 </div>
 
                                 <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
