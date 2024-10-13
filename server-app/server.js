@@ -251,12 +251,12 @@ app.post('/add_teacher_instructor', async (req, res) => {
     const values3 = [roleteacher, curriculum_id, newTeacherId]
 
     // Execute both queries
-    pool.query(query2, values2, (error, result1) => {
+    pool.query(query3, values3, (error, result1) => {
         if (error) {
             console.error(error);
             res.status(500).send('Error saving data to the teaching table');
         } else {
-            pool.query(query3, values3, (error, result2) => {
+            pool.query(query2, values2, (error, result2) => {
                 if (error) {
                     console.error(error);
                     res.status(500).send('Error saving data to the responsibility table');
@@ -302,12 +302,12 @@ app.post('/api/teachers', async (req, res) => {
         const values2 = [role_teacher, curriculum_id, newTeacherId]
 
         // Execute both queries
-        pool.query(query1, values1, (error, result1) => {
+        pool.query(query2, values2, (error, result1) => {
             if (error) {
                 console.error(error);
                 res.status(500).send('Error saving data to the teaching table');
             } else {
-                pool.query(query2, values2, (error, result2) => {
+                pool.query(query1, values1, (error, result2) => {
                     if (error) {
                         console.error(error);
                         res.status(500).send('Error saving data to the responsibility table');
