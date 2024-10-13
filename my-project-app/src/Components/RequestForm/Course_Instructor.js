@@ -19,9 +19,8 @@ const options = [
     { key: 'B', text: 'นาง', value: 'นาง' },
     { key: 'C', text: 'นางสาว', value: 'นางสาว' },
 ]
-
-//Part V
-const TeachersInformation = () => {
+//Part IV
+const Course_Instructor = () => {
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,
         backgroundSize: 'cover',
@@ -34,15 +33,7 @@ const TeachersInformation = () => {
 
     const [forms, setForms] = useState([{
         curriculum_id: curriculum_id,
-
-        id: 1,
-        // title: '',
-        // firstName: '',
-        // lastName: '',
-        // qualification: '',
-        // academicPosition: '',
-        // academicWork: ''
-
+        id: 1,        
         teacher_perfix: '',
         teacher_fname: '',
         teacher_lname: '',
@@ -66,22 +57,13 @@ const TeachersInformation = () => {
             ...prevForms,
             {
                 curriculum_id: curriculum_id,
-
-                id: formCount + 1,
-                // title: '',
-                // firstName: '',
-                // lastName: '',
-                // qualification: '',
-                // academicPosition: '',
-                // academicWork: ''
-
+                id: formCount + 1,               
                 teacher_perfix: '',
                 teacher_fname: '',
                 teacher_lname: '',
                 academic_ranks: '',
                 performance: '',
                 educational_qualifications: ''
-
             }
         ]);
         setFormCount(prevCount => prevCount + 1);
@@ -97,15 +79,13 @@ const TeachersInformation = () => {
         try {
 
             for (let form of forms) {
-                if (!form.teacher_perfix || !form.teacher_fname || !form.teacher_lname || !form.academic_ranks || !form.performance || !form.educational_qualifications) {
+                if (!form.teacher_perfix || !form.teacher_fname || !form.teacher_lname || !form.academic_ranks || !form.performance || !form.educational_qualifications
+                ) {
                     alert('โปรดกรอกข้อมูลให้ครบถ้วน');
                     return;
                 }
 
-                // Send the forms state to the backend API
-                // const response = await axios.post('http://localhost:8080/api/teachers', { forms });
-                const response = await axios.post('http://localhost:8080/api/teachers', {
-
+                const response = await axios.post('http://localhost:8080/submit', {
                     curriculum_id: curriculum_id,
                     teacher_perfix: form.teacher_perfix,
                     teacher_fname: form.teacher_fname,
@@ -113,14 +93,17 @@ const TeachersInformation = () => {
                     academic_ranks: form.academic_ranks,
                     performance: form.performance,
                     educational_qualifications: form.educational_qualifications
-                });
+                })
                 console.log('Success:', response.data);
 
-            }
-            alert('บันทึกข้อมูลสำเร็จ!');
-            navigate('/homepage_user');
+                console.log('Data saved with curriculum_id:', curriculum_id);
 
-            // Handle success (e.g., navigate to another page or show a success message)
+                navigate('/teachers_information', {
+                    state: { curriculum_id: curriculum_id },
+                }, { replace: true });
+            }
+            // alert('บันทึกข้อมูลสำเร็จ!');
+
         } catch (error) {
             console.error('Error submitting form:', error);
             // Handle error (e.g., show an error message)
@@ -132,12 +115,12 @@ const TeachersInformation = () => {
             <Navbar />
             <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5 pt-20">
                 <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
+                    <h1>ส่วนที่ 5 : อาจารย์ผู้รับผิดชอบหลักสูตร</h1>
+                    <hr />
+                    <br />
                     <Form onSubmit={handleSubmit}>
-                        <h1>ส่วนที่ 6 : อาจารย์ประจำหลักสูตร</h1>
-                        <hr />
-                        <br />
 
-                        {forms.map((form, index) => (
+                        {forms.map((form) => (
                             <div key={form.id}>
                                 <FormGroup widths='equal'>
                                     <hr />
@@ -192,21 +175,22 @@ const TeachersInformation = () => {
                                     onChange={(e) => handleChange(form.id, 'performance', e.target.value)}
                                 />
 
-                                <div className='flex justify-end gap-4'>
-                                    <FormButton type='button' onClick={() => removeForm(form.id)}>ลบข้อมูล</FormButton>
-                                </div>
-
+                                <FormButton
+                                    className='flex justify-end gap-4'
+                                    type='button'
+                                    onClick={() => removeForm(form.id)}
+                                >
+                                    ลบข้อมูล
+                                </FormButton>
                                 <br />
                                 <hr />
                                 <br />
                             </div>
                         ))}
-
                         <div className='flex justify-between gap-4'>
-                            <FormButton type='button' onClick={addForm}>เพิ่มอาจารย์</FormButton>
+                            <FormButton type='button' onClick={addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
                             {/* <FormButton type='submit' onClick={handleSubmit}>ยืนยัน</FormButton> */}
-                            <FormButton type='submit'>ยืนยัน</FormButton>
-
+                            <FormButton type='submit' >ยืนยัน</FormButton>
                         </div>
                     </Form>
                 </div>
@@ -215,4 +199,4 @@ const TeachersInformation = () => {
     );
 };
 
-export default TeachersInformation;
+export default Course_Instructor;

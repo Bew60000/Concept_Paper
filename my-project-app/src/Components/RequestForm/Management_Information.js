@@ -80,42 +80,48 @@ const ManagementInformation = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-
-            for (let form of forms) {
-                if (!form.teacher_perfix || !form.teacher_fname || !form.teacher_lname || !form.academic_ranks || !form.performance || !form.educational_qualifications
-                ) {
-                    alert('โปรดกรอกข้อมูลให้ครบถ้วน');
-                    return;
-                }
-
-                // const response1 = await axios.post('http://localhost:8080/submit', forms)
-                const response = await axios.post('http://localhost:8080/submit', {
-                    curriculum_id: curriculum_id,
-                    teaching: form.teaching,
-                    cost_control: form.cost_control,
-                    readiness: form.readiness,
-                    teacher_perfix: form.teacher_perfix,
-                    teacher_fname: form.teacher_fname,
-                    teacher_lname: form.teacher_lname,
-                    academic_ranks: form.academic_ranks,
-                    performance: form.performance,
-                    educational_qualifications: form.educational_qualifications
-                })
-                console.log('Success:', response.data);
-
-                console.log('Data saved with curriculum_id:', curriculum_id);
-
-                navigate('/teachers_information', {
-                    state: { curriculum_id: curriculum_id },
-                }, { replace: true });
-            }
-            // alert('บันทึกข้อมูลสำเร็จ!');
-
+            // ส่งข้อมูลส่วนแรก (teaching, cost_control, readiness) แค่ 1 ครั้ง
+            const firstPartResponse = await axios.post('http://localhost:8080/submit', {
+                curriculum_id: curriculum_id,
+                teaching: forms[0].teaching,
+                cost_control: forms[0].cost_control,
+                readiness: forms[0].readiness,
+            });
+    
+            console.log('ส่งข้อมูลส่วนแรกสำเร็จ:', firstPartResponse.data);
+    
+            // // วนลูปเฉพาะข้อมูลของอาจารย์และส่งข้อมูลทีละแถว
+            // for (let i = 1; i < forms.length; i++) {
+            //     const form = forms[i];
+    
+            //     // ตรวจสอบข้อมูลอาจารย์ที่ครบถ้วนเท่านั้น
+            //     if (form.teacher_perfix && form.teacher_fname && form.teacher_lname &&
+            //         form.academic_ranks && form.performance && form.educational_qualifications) {
+    
+            //         const teacherResponse = await axios.post('http://localhost:8080/submit', {
+            //             curriculum_id: curriculum_id,
+            //             teacher_perfix: form.teacher_perfix,
+            //             teacher_fname: form.teacher_fname,
+            //             teacher_lname: form.teacher_lname,
+            //             academic_ranks: form.academic_ranks,
+            //             performance: form.performance,
+            //             educational_qualifications: form.educational_qualifications,
+            //         });
+    
+            //         console.log('ส่งข้อมูลของอาจารย์สำเร็จ:', teacherResponse.data);
+            //     }
+            // }
+    
+            // เมื่อส่งข้อมูลเสร็จแล้ว นำไปหน้าใหม่
+            navigate('/course_instructor', {
+                state: { curriculum_id: curriculum_id },
+            }, { replace: true });
+    
         } catch (error) {
-            console.error('Error submitting form:', error);
-            // Handle error (e.g., show an error message)
+            console.error('เกิดข้อผิดพลาดในการส่งข้อมูล:', error);
         }
     };
+    
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
@@ -157,7 +163,7 @@ const ManagementInformation = () => {
 
                         <br />
 
-                        <h2>ส่วนที่ 4.1 : ผู้รับผิดชอบหลักสูตร</h2>
+                        {/* <h2>ส่วนที่ 4.1 : ผู้รับผิดชอบหลักสูตร</h2>
                         <hr />
                         <br />
 
@@ -227,9 +233,9 @@ const ManagementInformation = () => {
                                 <hr />
                                 <br />
                             </div>
-                        ))}
-                        <div className='flex justify-between gap-4'>
-                            <FormButton type='button' onClick={addForm}>เพิ่มผู้รับผิดชอบ</FormButton>
+                        ))} */}
+                        <div className='flex justify-end gap-4'>
+                            {/* <FormButton type='button' onClick={addForm}>เพิ่มผู้รับผิดชอบ</FormButton> */}
                             {/* <FormButton type='submit' onClick={handleSubmit}>ยืนยัน</FormButton> */}
                             <FormButton type='submit' >ยืนยัน</FormButton>
                         </div>

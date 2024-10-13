@@ -6,9 +6,14 @@ import NavbarAdminFunctions from '../Navbar/NavbarAdminFunctions';
 
 function ShowFormRequestForm() {
     const [dataUser, setDataUser] = useState([]);
+
+    //บันทึกข้อมูลส่วนที่ 3
     const [studentData, setStudentData] = useState([]);
+
+    //บันทึกข้อมูลส่วนที่ 4
     const [teacherData, setTeacherData] = useState([]);
     const [adminData, setAdminData] = useState([]);
+
     const [userInfo, setUserInfo] = useState(null);
     const [sentByInfo, setSentByInfo] = useState([]); //สำหรับดึงข้อมูล username จากตาราง user
     const [isModalOpen, setIsModalOpen] = useState(false); // สถานะของ Modal
@@ -48,7 +53,7 @@ function ShowFormRequestForm() {
             .then(([studentRes, teacherRes, adminRes]) => {
                 setStudentData(studentRes.data);
                 setTeacherData(teacherRes.data);
-                setAdminData(adminRes.data);
+                // setAdminData(adminRes.data);
             })
             .catch(err => console.error(err));
     };
@@ -319,7 +324,7 @@ function ShowFormRequestForm() {
                                 </div>
 
                                 <div className="mt-8 pr-5 pl-5">
-                                    <p className="m-1"><strong>4.2หลักสูตรฯ มีการควบคุมต้นทุนของการจัดการเรียนการสอนของการจัดการศึกษาอย่างไรบ้าง :</strong></p>
+                                    <p className="m-1"><strong>4.2 หลักสูตรฯ มีการควบคุมต้นทุนของการจัดการเรียนการสอนของการจัดการศึกษาอย่างไรบ้าง :</strong></p>
                                     <p className="m-1 mt-2">{selectedForm.cost_control}</p>
                                 </div>
 
@@ -328,6 +333,61 @@ function ShowFormRequestForm() {
                                     <p className="m-1 mt-2">{selectedForm.readiness}</p>
                                 </div>
 
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part V*/}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">5. อาจารย์ผู้รับผิดชอบหลักสูตร และอาจารย์ประจำหลักสูตร</p>
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    {teacherData.length > 0 && (
+                                        <div className="mt-8">
+                                            <p className="m-1 mb-5"><strong>5.1 อาจารย์ผู้รับผิดชอบหลักสูตร</strong></p>
+                                            <div className='pl-5'>
+                                                {teacherData
+                                                    .filter(teacher => teacher.teacher_role === 'อาจารย์ผู้รับผิดชอบหลักสูตร')
+                                                    .map((teacher, index) => (
+                                                        <div key={index}>
+                                                            <p className="m-1 mt-5 text-lg font-bold text-blue-700">
+                                                                {`${index + 1}. ${teacher.teacher_perfix} ${teacher.teacher_fname} ${teacher.teacher_lname}`}
+                                                            </p>
+                                                            <p className="m-1 mt-2"><strong>ตำแหน่งทางวิชาการ :</strong> {teacher.academic_ranks}</p>
+                                                            <p className="m-1 mt-2"><strong>คุณวุฒิ :</strong></p>
+                                                            <p className="m-1 mt-2">{teacher.educational_qualifications}</p>
+                                                            <p className="m-1 mt-2"><strong>ผลงานทางด้านวิชาการย้อนหลัง 3 ปี :</strong></p>
+                                                            <p className="m-1 mt-2 pb-8">{teacher.performance}</p>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    {teacherData.length > 0 && (
+                                        <div className="mt-8">
+                                            <p className="m-1 mb-5"><strong>5.2 อาจารย์ประจำหลักสูตร</strong></p>
+                                            <div className='pl-5'>
+                                                {teacherData
+                                                    .filter(teacher => teacher.teacher_role === 'อาจารย์ประจำหลักสูตร')
+                                                    .map((teacher, index) => (
+                                                        <div key={index}>
+                                                            <p className="text-lg font-bold text-blue-700">
+                                                                {`${index + 1}. ${teacher.teacher_perfix} ${teacher.teacher_fname} ${teacher.teacher_lname}`}
+                                                            </p>
+                                                            <p className="m-1"><strong>ตำแหน่งทางวิชาการ :</strong> {teacher.academic_ranks}</p>
+                                                            <p className="m-1 mt-2"><strong>คุณวุฒิ :</strong></p>
+                                                            <p className="m-1 mt-2">{teacher.educational_qualifications}</p>
+                                                            <p className="m-1 mt-2"><strong>ผลงานทางด้านวิชาการย้อนหลัง 3 ปี :</strong></p>
+                                                            <p className="m-1 mt-2 pb-8">{teacher.performance}</p>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
 
                                 {/* Button */}
                                 <div className="gap-4 flex justify-center items-center mt-5">

@@ -10,6 +10,7 @@ import Course_Analysis_Information from './Components/RequestForm/Course_Analysi
 import Management_Information from './Components/RequestForm/Management_Information';
 import Student_Admission from './Components/RequestForm/Student_Admission';
 import Teachers_Information from './Components/RequestForm/Teachers_Information';
+import Course_Instructor from './Components/RequestForm/Course_Instructor';
 
 import Homepage_Admin from './Components/Role_Admin/Homepage_Admin';
 import Homepage_User from './Components/Role_User/Homepage_User';
@@ -40,6 +41,7 @@ function App() {
         <Course_Analysis_Information />
         <Student_Admission />
         <Management_Information />
+        <Course_Instructor />
         <Teachers_Information />
       </div>
 
