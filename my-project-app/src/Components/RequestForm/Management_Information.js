@@ -81,23 +81,23 @@ const ManagementInformation = () => {
         e.preventDefault();
         try {
             // ส่งข้อมูลส่วนแรก (teaching, cost_control, readiness) แค่ 1 ครั้ง
-            const firstPartResponse = await axios.post('http://localhost:8080/submit', {
+            const firstPartResponse = await axios.post('http://localhost:8080/add_teaching_and_administration', {
                 curriculum_id: curriculum_id,
                 teaching: forms[0].teaching,
                 cost_control: forms[0].cost_control,
                 readiness: forms[0].readiness,
             });
-    
+
             console.log('ส่งข้อมูลส่วนแรกสำเร็จ:', firstPartResponse.data);
-    
+
             // // วนลูปเฉพาะข้อมูลของอาจารย์และส่งข้อมูลทีละแถว
             // for (let i = 1; i < forms.length; i++) {
             //     const form = forms[i];
-    
+
             //     // ตรวจสอบข้อมูลอาจารย์ที่ครบถ้วนเท่านั้น
             //     if (form.teacher_perfix && form.teacher_fname && form.teacher_lname &&
             //         form.academic_ranks && form.performance && form.educational_qualifications) {
-    
+
             //         const teacherResponse = await axios.post('http://localhost:8080/submit', {
             //             curriculum_id: curriculum_id,
             //             teacher_perfix: form.teacher_perfix,
@@ -107,21 +107,21 @@ const ManagementInformation = () => {
             //             performance: form.performance,
             //             educational_qualifications: form.educational_qualifications,
             //         });
-    
+
             //         console.log('ส่งข้อมูลของอาจารย์สำเร็จ:', teacherResponse.data);
             //     }
             // }
-    
+
             // เมื่อส่งข้อมูลเสร็จแล้ว นำไปหน้าใหม่
             navigate('/course_instructor', {
                 state: { curriculum_id: curriculum_id },
             }, { replace: true });
-    
+
         } catch (error) {
             console.error('เกิดข้อผิดพลาดในการส่งข้อมูล:', error);
         }
     };
-    
+
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>

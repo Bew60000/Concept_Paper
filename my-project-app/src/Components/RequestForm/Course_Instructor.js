@@ -33,7 +33,7 @@ const Course_Instructor = () => {
 
     const [forms, setForms] = useState([{
         curriculum_id: curriculum_id,
-        id: 1,        
+        id: 1,
         teacher_perfix: '',
         teacher_fname: '',
         teacher_lname: '',
@@ -57,7 +57,7 @@ const Course_Instructor = () => {
             ...prevForms,
             {
                 curriculum_id: curriculum_id,
-                id: formCount + 1,               
+                id: formCount + 1,
                 teacher_perfix: '',
                 teacher_fname: '',
                 teacher_lname: '',
@@ -85,7 +85,7 @@ const Course_Instructor = () => {
                     return;
                 }
 
-                const response = await axios.post('http://localhost:8080/submit', {
+                const response = await axios.post('http://localhost:8080/add_teacher_instructor', {
                     curriculum_id: curriculum_id,
                     teacher_perfix: form.teacher_perfix,
                     teacher_fname: form.teacher_fname,
