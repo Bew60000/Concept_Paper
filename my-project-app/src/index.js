@@ -18,6 +18,7 @@ import Course_Analysis_Information from './Components/RequestForm/Course_Analysi
 import Management_Information from './Components/RequestForm/Management_Information';
 import Student_Admission from './Components/RequestForm/Student_Admission';
 import Teachers_Information from './Components/RequestForm/Teachers_Information';
+import Course_Instructor from './Components/RequestForm/Course_Instructor';
 
 //Role_Admin : Usermanagement
 import AddUser_Form from './Components/Role_Admin/UserManagement/AddUser_Form';
@@ -59,6 +60,7 @@ root.render(
         <Route path="/student_admission" element={<Student_Admission />} />
         <Route path="/management_information" element={<Management_Information />} />
         <Route path="/teachers_information" element={<Teachers_Information />} />
+        <Route path='/course_instructor' element={<Course_Instructor />} />
 
 
         <Route path="/edit_form" element={<UpdateForm />} />

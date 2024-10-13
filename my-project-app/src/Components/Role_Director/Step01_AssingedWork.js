@@ -12,7 +12,7 @@ function Step01_AssingedWork01_AssingedWork() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/test/get_info')
+        axios.get('http://localhost:8080/test/get_data_info_analysis_teaching')
             .then(res => setDataUser(res.data))
             .catch(err => console.error(err));
     }, []);

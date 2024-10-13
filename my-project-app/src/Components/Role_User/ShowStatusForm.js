@@ -13,7 +13,7 @@ function ShowStatusForm() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
     useEffect(() => {
-        axios.get('http://localhost:8080/test/get_info')
+        axios.get('http://localhost:8080/test/get_data_info_analysis_teaching')
             .then(res => {
                 console.log("ข้อมูลที่ได้รับจากเซิร์ฟเวอร์: ", res.data);
                 setDataUser(res.data);
