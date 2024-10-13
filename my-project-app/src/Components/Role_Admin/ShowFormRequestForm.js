@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import NavbarAdminFunctions from '../Navbar/NavbarAdminFunctions';
@@ -97,6 +97,20 @@ function ShowFormRequestForm() {
         return sentByInfo.find(user => user.username === username);
     };
 
+    const UpdateStatus = (curriculum_id, newStatus) => {
+        axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
+            .then(response => {
+                console.log('Status updated successfully:', response.data);
+                // หลังจากอัปเดตสถานะสำเร็จ ให้เรียกข้อมูลใหม่เพื่ออัปเดต UI
+                setDataUser(prevData => prevData.map(info =>
+                    info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
+                ));
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+            });
+    };
+
     return (
         <div className="grid grid-cols-12 p-5 pt-0 content-start">
             <div className='col-start-2 col-span-8'>
@@ -148,7 +162,7 @@ function ShowFormRequestForm() {
                                         </div>
                                         <div className="col-span-2 text-center">
                                             <p className="text-gray-700 m-1">สถานะ</p>
-                                            <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
+                                            <p className="text-blue-600 font-bold">"{info.status}"</p>
                                         </div>
                                     </div>
 
@@ -156,7 +170,8 @@ function ShowFormRequestForm() {
 
                                     <div className="flex justify-end items-center mt-2">
 
-                                        <button className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                        <button onClick={() => UpdateStatus(info.curriculum_id, 'ปฏิเสธการตอบรับ')}
+                                            className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                             <div className="flex justify-start items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -165,7 +180,8 @@ function ShowFormRequestForm() {
                                             </div>
                                         </button>
 
-                                        <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                        <button onClick={() => UpdateStatus(info.curriculum_id, 'ตอบรับคำขอ')}
+                                            className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                             <div className="flex justify-start items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -391,7 +407,8 @@ function ShowFormRequestForm() {
 
                                 {/* Button */}
                                 <div className="gap-4 flex justify-center items-center mt-5">
-                                    <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                    <button onClick={() => UpdateStatus(selectedForm.curriculum_id, 'ตอบรับคำขอ')}
+                                        className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                         <div className="flex justify-start items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

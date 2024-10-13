@@ -91,7 +91,8 @@ function ShowStatusForm() {
 
                                     <div className="col-span-2 text-center">
                                         <p className="text-gray-700 m-1">สถานะ</p>
-                                        <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
+                                        {/* <p className="text-blue-600 font-bold">"รอการตอบรับ"</p> */}
+                                        <p className="text-blue-600 font-bold">"{info.status}"</p>
                                     </div>
 
                                 </div>

@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    // password: '6410210573',
-    password: '10062545Aong.',
+    password: '6410210573',
+    // password: '10062545Aong.',
     port: 5432
 });
 
@@ -56,7 +56,8 @@ app.post('/add_basic_info', async (req, res) => {
         yearstarted,
         learningoutcome,
         sent_by,
-        sent_time
+        sent_time,
+        status
 
 
     } = req.body;
@@ -70,6 +71,9 @@ app.post('/add_basic_info', async (req, res) => {
 
         let idNumber = parseInt(lastId.replace('C', ''), 10) + 1;
         let newCurriculumId = `C${idNumber.toString().padStart(4, '0')}`;
+
+
+        let status_curr = 'รอการตอบรับ'
 
         // nature	additionalInfo	faculty	campus	majorthai	majoreng	degreename	affiliation	yearstarted	learningoutcome
         await pool.query(`INSERT INTO basic_infos(
@@ -85,11 +89,12 @@ app.post('/add_basic_info', async (req, res) => {
             yearstarted, 
             learningoutcome,
             sent_by,
-            sent_time
+            sent_time,
+            status
             )
-	        VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11,$12,$13);`,
+	        VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11,$12,$13,$14);`,
             [
-                newCurriculumId, nature, additionalinfo, majorthai, majoreng, faculty, degreename, affiliation, campus, yearstarted, learningoutcome, sent_by, sent_time
+                newCurriculumId, nature, additionalinfo, majorthai, majoreng, faculty, degreename, affiliation, campus, yearstarted, learningoutcome, sent_by, sent_time, status_curr
             ]);
 
         res.status(201).json({ curriculum_id: newCurriculumId });
@@ -152,6 +157,32 @@ app.delete('/deletebasic_info/:curriculum_id', async (req, res) => {
         res.status(500).send('Error Delete');
     }
 });
+
+
+// update Status
+app.put('/update_Status/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    // const id = req.id;
+    const {
+        status } = req.body;
+
+    try {
+        await pool.query(`UPDATE basic_infos
+	SET status = $1
+	WHERE curriculum_id = $2 RETURNING *`,
+            [
+                status, curriculum_id]);
+        // res.json(result.rows);
+
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+
 
 // เพิ่มข้อมูลส่วนที่ 2  CourseAnalysisInformation
 app.post('/add_Course_Analysis_Information', async (req, res) => {
@@ -251,12 +282,12 @@ app.post('/add_teacher_instructor', async (req, res) => {
     const values3 = [roleteacher, curriculum_id, newTeacherId]
 
     // Execute both queries
-    pool.query(query2, values2, (error, result1) => {
+    pool.query(query3, values3, (error, result1) => {
         if (error) {
             console.error(error);
             res.status(500).send('Error saving data to the teaching table');
         } else {
-            pool.query(query3, values3, (error, result2) => {
+            pool.query(query2, values2, (error, result2) => {
                 if (error) {
                     console.error(error);
                     res.status(500).send('Error saving data to the responsibility table');
@@ -302,12 +333,12 @@ app.post('/api/teachers', async (req, res) => {
         const values2 = [role_teacher, curriculum_id, newTeacherId]
 
         // Execute both queries
-        pool.query(query1, values1, (error, result1) => {
+        pool.query(query2, values2, (error, result1) => {
             if (error) {
                 console.error(error);
                 res.status(500).send('Error saving data to the teaching table');
             } else {
-                pool.query(query2, values2, (error, result2) => {
+                pool.query(query1, values1, (error, result2) => {
                     if (error) {
                         console.error(error);
                         res.status(500).send('Error saving data to the responsibility table');
