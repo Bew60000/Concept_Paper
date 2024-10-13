@@ -61,9 +61,6 @@ const ManagementInformation = () => {
             {
                 curriculum_id: curriculum_id,
                 id: formCount + 1,
-                teaching: '',
-                cost_control: '',
-                readiness: '',
                 teacher_perfix: '',
                 teacher_fname: '',
                 teacher_lname: '',
