@@ -24,7 +24,13 @@ import Course_Instructor from './Components/RequestForm/Course_Instructor';
 import AddUser_Form from './Components/Role_Admin/UserManagement/AddUser_Form';
 import ShowUserData from './Components/Role_Admin/UserManagement/ShowUserData';
 import UpdateUser from './Components/Role_Admin/UserManagement/Update_user';
-import UserStatistics from './Components/Role_Admin/UserManagement/UserStatistics';
+
+//Admin : State02 Assign_work
+import ShowDetailAssign_work from './Components/Role_Admin/State_Status/State02_Assign_work.js/ShowDetailAssign_work';
+//Admin : State03 Make_assessment
+import ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/ShowDetailMake_assessment';
+//Admin : State07 Rejected_request
+import ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/ShowDeTailRejected_request'
 
 //Test All App
 import AllForm from './App';
@@ -52,7 +58,7 @@ root.render(
         <Route path="homepage_admin" element={<Homepage_Admin />} />
 
         <Route path="/show_user_data" element={<ShowUserData />} />
-        <Route path="/userstatistics" element={<UserStatistics />} />
+        
         <Route path="/add_user" element={<AddUser_Form />} />
 
         <Route path="/basic_information" element={<Basic_Information />} />
@@ -62,7 +68,12 @@ root.render(
         <Route path="/teachers_information" element={<Teachers_Information />} />
         <Route path='/course_instructor' element={<Course_Instructor />} />
 
+        <Route path='/showdetailassign_work' element={<ShowDetailAssign_work />} />
 
+        <Route path='/showdetailmake_assessment' element={<ShowDetailMake_assessment />} />
+
+        <Route path='/showdetailrejected_request' element={<ShowDeTailRejected_request />} />
+        
         <Route path="/edit_form" element={<UpdateForm />} />
 
         <Route path="/All" element={<AllForm />} />

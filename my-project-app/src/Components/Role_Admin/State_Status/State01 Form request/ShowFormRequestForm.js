@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-import NavbarAdminFunctions from '../Navbar/NavbarAdminFunctions';
+import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
 
 function ShowFormRequestForm() {
     const [dataUser, setDataUser] = useState([]);
@@ -24,23 +24,44 @@ function ShowFormRequestForm() {
     const modalRef = useRef(null); // ใช้เก็บ reference ของ Modal
 
 
-    useEffect(() => {
-        // Table form
-        axios.get('http://localhost:8080/test/get_data_info_analysis_teaching')
-            .then(res => setDataUser(res.data))
-            .catch(err => console.error(err));
+    // useEffect(() => {
+    //     // Table form
+    //     axios.get('http://localhost:8080/test/get_data_info_analysis_teaching')
+    //         .then(res => setDataUser(res.data))
+    //         .catch(err => console.error(err));
 
-        // Table users all
-        axios.get('http://localhost:8080/getinfo_user/all')
-            .then(res => setSentByInfo(res.data))
-            .catch(err => console.error(err));
-    }, []);
+    //     // Table users all
+    //     axios.get('http://localhost:8080/getinfo_user/all')
+    //         .then(res => setSentByInfo(res.data))
+    //         .catch(err => console.error(err));
+    // }, []);
 
     useEffect(() => {
         const loggedInUser = localStorage.getItem('loggedInUser');
         if (loggedInUser) {
             setUserInfo(JSON.parse(loggedInUser));
         }
+    }, []);
+
+    useEffect(() => {
+        const fetchForms = async () => {
+            try {
+                // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
+                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
+                // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
+                // const awaitingForms = response.data.filter(form => form.status === 'ปฏิเสธการตอบรับ');
+                const awaitingForms = response.data.filter(form => form.status === 'รอการตอบรับ');
+                setDataUser(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+            } catch (error) {
+                console.error('Error fetching forms:', error);
+            }
+        };
+        fetchForms();
+
+        // Table users all
+        axios.get('http://localhost:8080/getinfo_user/all')
+            .then(res => setSentByInfo(res.data))
+            .catch(err => console.error(err));
     }, []);
 
     const fetchAdditionalData = (curriculumId) => {
@@ -68,7 +89,6 @@ function ShowFormRequestForm() {
         setIsModalOpen(false);
         setSelectedForm(null);
     };
-
 
     // เพิ่มการตรวจจับการคลิกภายนอก Modal
     useEffect(() => {
@@ -105,6 +125,7 @@ function ShowFormRequestForm() {
                 setDataUser(prevData => prevData.map(info =>
                     info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
                 ));
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error updating status:', error);
@@ -115,7 +136,10 @@ function ShowFormRequestForm() {
         <div className="grid grid-cols-12 p-5 pt-0 content-start">
             <div className='col-start-2 col-span-8'>
                 <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
-                    <h2 className='text-start text-gray-700'>คำขอเปิดหลักสูตร</h2>
+
+                    <h2 className='text-start text-gray-700 mb-0'>คำขอเปิดหลักสูตร</h2>
+                    <p className='text-gray-500 mt-0 font-bold'>(รอการตอบรับ)</p>
+
                     <hr className='mb-5' />
 
                     <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
@@ -180,7 +204,7 @@ function ShowFormRequestForm() {
                                             </div>
                                         </button>
 
-                                        <button onClick={() => UpdateStatus(info.curriculum_id, 'ตอบรับคำขอ')}
+                                        <button onClick={() => UpdateStatus(info.curriculum_id, 'กำลังดำเนินการประเมิน')}
                                             className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                             <div className="flex justify-start items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">

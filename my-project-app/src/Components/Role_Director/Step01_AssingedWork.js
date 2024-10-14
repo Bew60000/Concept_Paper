@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import NavbarDirectorFunctions from '../Navbar/NavbarDirectorFunctions';
 
+//('http://localhost:8080/test/get_data_info_analysis_teaching')
+
 function Step01_AssingedWork01_AssingedWork() {
     const [dataUser, setDataUser] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
@@ -12,9 +14,20 @@ function Step01_AssingedWork01_AssingedWork() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/test/get_data_info_analysis_teaching')
-            .then(res => setDataUser(res.data))
-            .catch(err => console.error(err));
+        const fetchForms = async () => {
+            try {
+                // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
+                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
+
+                // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
+                const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
+                setDataUser(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+            } catch (error) {
+                console.error('Error fetching forms:', error);
+            }
+        };
+
+        fetchForms();
     }, []);
 
     useEffect(() => {
@@ -67,7 +80,7 @@ function Step01_AssingedWork01_AssingedWork() {
                                 </div>
                                 <div className="col-span-3 text-center">
                                     <p className="text-gray-700 m-1">สถานะ</p>
-                                    <p className="text-blue-600 font-bold">"รอการตอบรับ"</p>
+                                    <p className="text-blue-600 font-bold">"{info.status}"</p>
                                 </div>
                             </div>
 
