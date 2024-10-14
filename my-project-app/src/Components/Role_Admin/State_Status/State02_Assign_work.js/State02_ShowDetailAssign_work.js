@@ -4,7 +4,7 @@ import axios from 'axios';
 import Background from '../../../../img/Background.svg';
 import Navbar from '../../../Navbar/NavbarAdmin';
 import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
-import ModalDetailState02 from './State02_ModalDetailForm';
+import ModalDetailForm from './State02_ModalDetailForm';
 
 function State02_ShowDetailAssign_work() {
     const BackgroundImage = {
@@ -214,7 +214,7 @@ function State02_ShowDetailAssign_work() {
                 </div>
                 <NavbarAdminFunctions />
 
-                <ModalDetailState02
+                <ModalDetailForm
                     isOpen={isModalOpen}
                     closeModal={closeModal}
                     selectedForm={selectedForm}

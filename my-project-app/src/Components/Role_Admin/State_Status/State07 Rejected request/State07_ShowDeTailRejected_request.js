@@ -4,9 +4,9 @@ import axios from 'axios';
 import Background from '../../../../img/Background.svg';
 import Navbar from '../../../Navbar/NavbarAdmin';
 import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
-import ModalDetailState03 from './State03_ModalDetailForm';
+import ModalDetailForm from './State07_ModalDetailForm';
 
-function State03_ShowDetailMake_assessment() {
+function State07_ShowDeTailRejected_request() {
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,
         backgroundSize: 'cover',
@@ -29,7 +29,7 @@ function State03_ShowDetailMake_assessment() {
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
                 const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
                 // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"                
-                const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
+                const awaitingForms = response.data.filter(form => form.status === 'ปฏิเสธการตอบรับ');
                 setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
             } catch (error) {
                 console.error('Error fetching forms:', error);
@@ -99,8 +99,8 @@ function State03_ShowDetailMake_assessment() {
                 <div className='col-start-2 col-span-8'>
                     <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
 
-                        <h2 className='text-start text-gray-700 mb-0'>อยู่ระหว่างการประเมินผล</h2>
-                        <p className='text-gray-500 mt-0 font-bold'>(ประเมินผลส่วนบุคคล)</p>
+                        <h2 className='text-start text-gray-700 mb-0'>คำขอที่โดนปฎิเสธ</h2>
+                        <p className='text-gray-500 mt-0 font-bold'>(ไม่ผ่านเกณฑ์)</p>
 
                         <hr className='mb-5' />
 
@@ -143,35 +143,15 @@ function State03_ShowDetailMake_assessment() {
                                             </div>
                                             <div className="col-span-2 text-center">
                                                 <p className="text-gray-700 m-1">สถานะ</p>
-                                                <p className="text-blue-600 font-bold">"{info.status}"</p>
+                                                <p className="text-blue-600 font-bold text-red-600">"{info.status}"</p>
                                             </div>
                                         </div>
 
                                         <hr className='border-white m-5 mt-4' />
 
-                                        <div className="flex justify-end items-center mt-2">
+                                        <div className="flex justify-end items-center mt-2">                                            
 
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'ปฏิเสธการตอบรับ')}
-                                                className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
-                                                <div className="flex justify-start items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                    ปฏิเสธการตอบรับ
-                                                </div>
-                                            </button>
-
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'กำลังดำเนินการสรุปผล')}
-                                                className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
-                                                <div className="flex justify-start items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                    สรุปการประเมิน
-                                                </div>
-                                            </button>
-
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'กำลังดำเนินการประเมิน')}
+                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'รอการตอบรับ')}
                                                 className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -214,7 +194,7 @@ function State03_ShowDetailMake_assessment() {
                 </div>
                 <NavbarAdminFunctions />
 
-                <ModalDetailState03
+                <ModalDetailForm
                     isOpen={isModalOpen}
                     closeModal={closeModal}
                     selectedForm={selectedForm}
@@ -230,4 +210,4 @@ function State03_ShowDetailMake_assessment() {
     );
 }
 
-export default State03_ShowDetailMake_assessment;
+export default State07_ShowDeTailRejected_request;

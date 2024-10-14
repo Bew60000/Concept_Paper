@@ -31,7 +31,7 @@ import Assign_woke from './Components/Role_Admin/State_Status/State02_Assign_wor
 //Admin : State03 Make_assessment
 import ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/State03_ShowDetailMake_assessment';
 //Admin : State07 Rejected_request
-import ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/ShowDeTailRejected_request'
+import ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/State07_ShowDeTailRejected_request'
 
 //Test All App
 import AllForm from './App';
