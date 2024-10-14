@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import ModalDetailState01 from './ModalDetailState01';
+
 import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
 
 function ShowFormRequestForm() {
-    const [dataForm, setDataForm] = useState([]);
+    const [dataUser, setDataUser] = useState([]);
     const [studentData, setStudentData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
     const [sentByInfo, setSentByInfo] = useState([]); //สำหรับดึงข้อมูล username จากตาราง user
@@ -13,16 +13,16 @@ function ShowFormRequestForm() {
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
-    const navigate = useNavigate();   
+    const modalRef = useRef(null); // ใช้เก็บ reference ของ Modal
 
     useEffect(() => {
         const fetchForms = async () => {
             try {
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
                 const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
-                // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"                
+                // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
                 const awaitingForms = response.data.filter(form => form.status === 'รอการตอบรับ');
-                setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+                setDataUser(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
             } catch (error) {
                 console.error('Error fetching forms:', error);
             }
@@ -60,8 +60,11 @@ function ShowFormRequestForm() {
         setSelectedForm(null);
     };
 
-    const totalPages = Math.ceil(dataForm.length / itemsPerPage);
-    const currentData = dataForm.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    // เพิ่มการตรวจจับการคลิกภายนอก Modal
+    
+
+    const totalPages = Math.ceil(dataUser.length / itemsPerPage);
+    const currentData = dataUser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     // function find username for sent_by
     const findUserByUsername = (username) => {
@@ -73,7 +76,7 @@ function ShowFormRequestForm() {
             .then(response => {
                 console.log('Status updated successfully:', response.data);
                 // หลังจากอัปเดตสถานะสำเร็จ ให้เรียกข้อมูลใหม่เพื่ออัปเดต UI
-                setDataForm(prevData => prevData.map(info =>
+                setDataUser(prevData => prevData.map(info =>
                     info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
                 ));
                 window.location.reload();
@@ -119,8 +122,7 @@ function ShowFormRequestForm() {
                             return (
                                 <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4">
                                     <div className="grid grid-cols-12 gap-4 items-center">
-                                        <div className="col-span-2 text-center">
-
+                                        <div className="col-span-2 text-center">                                           
                                             <p className="text-gray-700">{info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                                         </div>
                                         <div className="col-span-3 text-center">
@@ -177,7 +179,6 @@ function ShowFormRequestForm() {
                         })
                     )}
 
-
                     {/* แสดงเลขหน้าสำหรับการ pagination */}
                     <div className="flex justify-center mt-4 space-x-2">
                         {[...Array(totalPages)].map((_, pageIndex) => (
@@ -194,16 +195,142 @@ function ShowFormRequestForm() {
             </div>
             <NavbarAdminFunctions />
 
-            <ModalDetailState01
-                isOpen={isModalOpen}
-                closeModal={closeModal}
-                selectedForm={selectedForm}
-                studentData={studentData}
-                teacherData={teacherData}
-                findUserByUsername={findUserByUsername}
-                UpdateStatus={UpdateStatus}
-            />
 
+            {/* Modal for Imformation User */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div ref={modalRef} className="bg-white p-6 rounded-lg w-7/12 rounded-full max-h-[650px] overflow-y-auto mt-16">
+                        {selectedForm && (
+                            <div className='text-gray-700'>
+
+                                <div className="grid grid-cols-12 gab-1 items-center">
+                                    <div className="col-span-12 text-start p-5">
+                                        <h2 className="font-bold m-0"> หลักสูตร{selectedForm.majorthai}</h2>
+                                        <p className='text-gray-500 font-bold m-0'>"{selectedForm.majoreng}"</p>
+                                    </div>
+                                </div>
+
+                                <hr className='border-gray-300 w-11/12 mx-auto' />
+                                {/* Sent by */}
+                                <p className=" text-start p-5 pb-0">
+                                    <strong>ผู้ยื่นคำขอ:</strong>&nbsp;
+                                    {findUserByUsername(selectedForm.sent_by)?.name || 'ไม่พบข้อมูลผู้ยื่น'}&nbsp;
+                                    {findUserByUsername(selectedForm.sent_by)?.lastname || 'ไม่พบข้อมูลผู้ยื่น'}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
+                                {/* Form Part I */}
+                                <div className="text-start p-5 pt-2">
+                                    <p className="text-xl font-bold text-gray-500">1.ข้อมูลเบื้องต้น</p>
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    <p className="m-1"><strong>คณะ :</strong> {selectedForm.faculty}</p>
+                                    <p className="m-1"><strong>วิทยาเขต :</strong>{selectedForm.campus}</p>
+                                    <p className="m-1"><strong>สังกัด:</strong>&nbsp;{selectedForm.affiliation}</p>
+                                </div>                               
+
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part II */}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">2.ข้อมูลการวิเคราะห์หลักสูตร</p>
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    <p className="m-1"><strong>2.1 หลักการและเหตุผลในการขอเปิดหลักสูตร :</strong></p>
+                                    <p className="m-1 mt-2">{selectedForm.principle_reasons}</p>
+                                </div>                                
+
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part III*/}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">3.แผนการรับนักศึกษา</p>
+                                    {studentData.length > 0 && Object.entries(studentData.reduce((groupedData, student) => {
+                                        // จัดกลุ่มตามปีการศึกษา
+                                        if (!groupedData[student.year_opened]) {
+                                            groupedData[student.year_opened] = [];
+                                        }
+                                        groupedData[student.year_opened].push(student);
+                                        return groupedData;
+                                    }, {})).map(([yearOpened, students], index) => (
+                                        <div key={index} className="mt-5 p-2 mb-5">
+                                            <p className='font-bold mb-1'>• ปีการศึกษา {yearOpened}</p>
+                                            {students.map((student, idx) => (
+                                                <div key={idx}>
+                                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;ชั้นปีที่ {student.year} จำนวนนักศึกษาที่เปิดรับ: {student.count_students}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+
+                                </div>
+
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part IV*/}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">4.รูปแบบการจัดการเรียนการสอนและการบริหารจัดการ</p>
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    <p className="m-1"><strong>4.1 รูปแบบของการจัดการเรียนการสอนที่มีการเรียนรู้จากประสบการณ์จริง :</strong></p>
+                                    <p className="m-1 mt-2">{selectedForm.teaching}</p>
+                                </div>
+                                
+                                <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
+                                {/* Form Part V*/}
+                                <div className="text-start p-5 mt-8">
+                                    <p className="text-xl font-bold text-gray-500">5. อาจารย์ผู้รับผิดชอบหลักสูตร และอาจารย์ประจำหลักสูตร</p>
+                                </div>
+
+                                <div className="pr-5 pl-5">
+                                    {teacherData.length > 0 && (
+                                        <div className="mt-8">
+                                            <p className="m-1 mb-5"><strong>5.1 อาจารย์ผู้รับผิดชอบหลักสูตร</strong></p>
+                                            <div className='pl-5'>
+                                                {teacherData
+                                                    .filter(teacher => teacher.teacher_role === 'อาจารย์ผู้รับผิดชอบหลักสูตร')
+                                                    .map((teacher, index) => (
+                                                        <div key={index}>
+                                                            <p className="m-1 mt-5 text-lg font-bold text-blue-700">
+                                                                {`${index + 1}. ${teacher.teacher_perfix} ${teacher.teacher_fname} ${teacher.teacher_lname}`}
+                                                            </p>
+                                                            <p className="m-1 mt-2"><strong>ตำแหน่งทางวิชาการ :</strong> {teacher.academic_ranks}</p>
+                                                                                                                    </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="pr-5 pl-5">
+                                    {teacherData.length > 0 && (
+                                        <div className="mt-8">
+                                            <p className="m-1 mb-5"><strong>5.2 อาจารย์ประจำหลักสูตร</strong></p>
+                                            <div className='pl-5'>
+                                                {teacherData
+                                                    .filter(teacher => teacher.teacher_role === 'อาจารย์ประจำหลักสูตร')
+                                                    .map((teacher, index) => (
+                                                        <div key={index}>
+                                                            <p className="text-lg font-bold text-blue-700">
+                                                                {`${index + 1}. ${teacher.teacher_perfix} ${teacher.teacher_fname} ${teacher.teacher_lname}`}
+                                                            </p>
+                                                            <p className="m-1"><strong>ตำแหน่งทางวิชาการ :</strong> {teacher.academic_ranks}</p>
+                                                                                                                   </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>                               
+
+
+                            </div>
+
+
+                        )}
+                    </div>
+                </div>
+            )
+            }
         </div>
     );
 }

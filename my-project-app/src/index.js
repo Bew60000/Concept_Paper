@@ -27,6 +27,7 @@ import UpdateUser from './Components/Role_Admin/UserManagement/Update_user';
 
 //Admin : State02 Assign_work
 import ShowDetailAssign_work from './Components/Role_Admin/State_Status/State02_Assign_work.js/ShowDetailAssign_work';
+import Assign_woke from './Components/Role_Admin/State_Status/State02_Assign_work.js/Assign_woke';
 //Admin : State03 Make_assessment
 import ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/ShowDetailMake_assessment';
 //Admin : State07 Rejected_request
@@ -67,9 +68,10 @@ root.render(
         <Route path="/management_information" element={<Management_Information />} />
         <Route path="/teachers_information" element={<Teachers_Information />} />
         <Route path='/course_instructor' element={<Course_Instructor />} />
-
+        
         <Route path='/showdetailassign_work' element={<ShowDetailAssign_work />} />
-
+        <Route path='/assign_woke' element={<Assign_woke />} />
+        
         <Route path='/showdetailmake_assessment' element={<ShowDetailMake_assessment />} />
 
         <Route path='/showdetailrejected_request' element={<ShowDeTailRejected_request />} />
