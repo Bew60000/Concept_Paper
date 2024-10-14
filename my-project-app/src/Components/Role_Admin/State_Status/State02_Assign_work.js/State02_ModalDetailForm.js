@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const Modal = ({ isOpen, closeModal, selectedForm, studentData, teacherData, findUserByUsername, UpdateStatus }) => {
+const State02_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData, teacherData, findUserByUsername, UpdateStatus }) => {
     const modalRef = useRef(null);
 
     // เพิ่มการปิด modal เมื่อคลิกนอก modal
@@ -200,13 +200,13 @@ const Modal = ({ isOpen, closeModal, selectedForm, studentData, teacherData, fin
 
                         {/* Button */}
                         <div className="gap-4 flex justify-center items-center mt-5">
-                            <button onClick={() => UpdateStatus(selectedForm.curriculum_id, 'กำลังดำเนินการประเมิน')}
+                            <button onClick={() => UpdateStatus(selectedForm.curriculum_id, 'อยู่ระหว่างการประเมินผล')}
                                 className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                 <div className="flex justify-start items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
-                                    ตอบรับคำขอ
+                                    มอบหมายงาน
                                 </div>
                             </button>
 
@@ -230,4 +230,4 @@ const Modal = ({ isOpen, closeModal, selectedForm, studentData, teacherData, fin
     );
 };
 
-export default Modal;
+export default State02_ModalDetailForm;

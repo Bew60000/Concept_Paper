@@ -26,10 +26,10 @@ import ShowUserData from './Components/Role_Admin/UserManagement/ShowUserData';
 import UpdateUser from './Components/Role_Admin/UserManagement/Update_user';
 
 //Admin : State02 Assign_work
-import ShowDetailAssign_work from './Components/Role_Admin/State_Status/State02_Assign_work.js/ShowDetailAssign_work';
+import ShowDetailAssign_work from './Components/Role_Admin/State_Status/State02_Assign_work.js/State02_ShowDetailAssign_work';
 import Assign_woke from './Components/Role_Admin/State_Status/State02_Assign_work.js/Assign_woke';
 //Admin : State03 Make_assessment
-import ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/ShowDetailMake_assessment';
+import ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/State03_ShowDetailMake_assessment';
 //Admin : State07 Rejected_request
 import ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/ShowDeTailRejected_request'
 

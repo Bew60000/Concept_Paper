@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import ModalDetailState01 from './ModalDetailState01';
+import ModalDetailState01 from './State01_ModalDetailForm';
 import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
 
-function ShowFormRequestForm() {
+function State01_ShowFormRequestForm() {
     const [dataForm, setDataForm] = useState([]);
     const [studentData, setStudentData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
@@ -208,4 +208,4 @@ function ShowFormRequestForm() {
     );
 }
 
-export default ShowFormRequestForm;
+export default State01_ShowFormRequestForm;
