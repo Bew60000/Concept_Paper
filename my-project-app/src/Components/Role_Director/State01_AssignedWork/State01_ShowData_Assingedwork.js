@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Step01_ModalDetailForm from './State01_ModalDetailForm';
+import State01_Assignedwork from './State01_Assignedwork';
+import NavbarDirectorFunctions from '../../Navbar/NavbarDirectorFunctions';
 
-import NavbarDirectorFunctions from '../Navbar/NavbarDirectorFunctions';
-
-//('http://localhost:8080/test/get_data_info_analysis_teaching')
-
-function Step01_AssingedWork01_AssingedWork() {
-    const [dataUser, setDataUser] = useState([]);
+function State01_ShowData_Assingedwork() {
+    const [dataForm, setDataForm] = useState([]);
+    const [studentData, setStudentData] = useState([]);
+    const [teacherData, setTeacherData] = useState([]);
+    const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
+    const [selectedFormAssigned, setSelectedFormAssigned] = useState(null); // ข้อมูล Form ที่เลือก
     const [userInfo, setUserInfo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isModalOpen, setisModalOpen] = useState(false);
+    const [isAssignedWord, setisAssignedWord] = useState(false);
     const itemsPerPage = 4;
     const navigate = useNavigate();
 
@@ -21,7 +26,7 @@ function Step01_AssingedWork01_AssingedWork() {
 
                 // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
                 const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
-                setDataUser(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+                setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
             } catch (error) {
                 console.error('Error fetching forms:', error);
             }
@@ -37,8 +42,44 @@ function Step01_AssingedWork01_AssingedWork() {
         }
     }, []);
 
-    const totalPages = Math.ceil(dataUser.length / itemsPerPage);
-    const currentData = dataUser.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const fetchAdditionalData = (curriculumId) => {
+        // ดึงข้อมูลจากตาราง student_admissions, teacher, และ teaching_and_administration โดยใช้ curriculum_id
+        Promise.all([
+            axios.get(`http://localhost:8080/test/student_admissions/${curriculumId}`),
+            axios.get(`http://localhost:8080/test/teacher/${curriculumId}`),
+            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
+        ])
+            .then(([studentRes, teacherRes, adminRes]) => {
+                setStudentData(studentRes.data);
+                setTeacherData(teacherRes.data);
+            })
+            .catch(err => console.error(err));
+    };
+
+    const openAssignedword = (form) => {
+        setSelectedFormAssigned(form);
+        setisAssignedWord(true);
+        fetchAdditionalData(form.curriculum_id);
+    };
+
+    const closeAssignedword = () => {
+        setisAssignedWord(false);
+        setSelectedFormAssigned(null);
+    }; 
+
+    const openModal = (form) => {
+        setSelectedForm(form);
+        setisModalOpen(true);
+        fetchAdditionalData(form.curriculum_id);
+    };
+
+    const closeModal = () => {
+        setisModalOpen(false);
+        setSelectedForm(null);
+    }; 
+
+    const totalPages = Math.ceil(dataForm.length / itemsPerPage);
+    const currentData = dataForm.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div className="grid grid-cols-12 p-5 pt-0 content-start">
@@ -87,7 +128,7 @@ function Step01_AssingedWork01_AssingedWork() {
                             <hr className='border-white m-5 mt-4' />
 
                             <div className="flex justify-end items-center mt-2">
-                                <button className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                     <div className="flex justify-start items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -97,7 +138,7 @@ function Step01_AssingedWork01_AssingedWork() {
                                     </div>
                                 </button>
 
-                                <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                <button onClick={() => openAssignedword(info)} className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                     <div className="flex justify-start items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
@@ -127,8 +168,26 @@ function Step01_AssingedWork01_AssingedWork() {
 
             <NavbarDirectorFunctions />
 
+            <Step01_ModalDetailForm
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                selectedForm={selectedForm}
+                studentData={studentData}
+                teacherData={teacherData}
+            // UpdateStatus={UpdateStatus}
+            />
+
+            <State01_Assignedwork
+                isOpen={isAssignedWord}
+                closeModal={closeAssignedword}
+                selectedForm={selectedFormAssigned}
+                studentData={studentData}
+                teacherData={teacherData}
+            // UpdateStatus={UpdateStatus}
+            />
+
         </div>
     );
 }
 
-export default Step01_AssingedWork01_AssingedWork;
+export default State01_ShowData_Assingedwork;

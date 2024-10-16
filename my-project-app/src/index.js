@@ -33,6 +33,9 @@ import ShowDetailMake_assessment from './Components/Role_Admin/State_Status/Stat
 //Admin : State07 Rejected_request
 import ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/State07_ShowDeTailRejected_request'
 
+// Director : State01
+import State01_Assignedwork from './Components/Role_Director/State01_AssignedWork/State01_Assignedwork';
+
 //Test All App
 import AllForm from './App';
 
@@ -75,6 +78,8 @@ root.render(
         <Route path='/showdetailmake_assessment' element={<ShowDetailMake_assessment />} />
 
         <Route path='/showdetailrejected_request' element={<ShowDeTailRejected_request />} />
+
+        <Route path='/state01_assignedwork' element={<State01_Assignedwork />} />
         
         <Route path="/edit_form" element={<UpdateForm />} />
 

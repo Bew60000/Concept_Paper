@@ -1,7 +1,7 @@
 import React from 'react'
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarDirector';
-import Step01_AssingedWork from './Step01_AssingedWork';
+import Step01_ShowData_Assingedwork from './State01_AssignedWork/State01_ShowData_Assingedwork';
 
 export default function Homepage_Director() {
 
@@ -23,7 +23,7 @@ export default function Homepage_Director() {
       </div> */}
 
       <div className='pt-20'>
-        <Step01_AssingedWork />
+        <Step01_ShowData_Assingedwork />
       </div>
 
     </div>
