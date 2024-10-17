@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    // password: '6410210573',
-    password: '10062545Aong.',
+    password: '6410210573',
+    // password: '10062545Aong.',
     port: 5432
 });
 
@@ -230,7 +230,6 @@ app.post('/student_admissions_plan', async (req, res) => {
 
 
 // เพิ่มข้อมูลส่วนที่ 4 teaching_and_administration
-
 app.post('/add_teaching_and_administration', async (req, res) => {
     // const input = req.body;
 
@@ -648,6 +647,121 @@ app.get('/test/teaching_and_administration/:curriculum_id', async (req, res) => 
     try {
         const result = await pool.query(`select * from teaching_and_administration where curriculum_id = $1   
 ` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+
+// การประเมิน  
+
+// เพิ่มการประเมินส่วน1
+app.post('/evaluation_score', async (req, res) => {
+    // const input = req.body;
+
+    const { curriculum_id, aspect_1, aspect_2, aspect_3, aspect_4, aspect_5, evaluato_id, evaluate_id } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO evaluation_score(
+	 curriculum_id,evaluato_id,aspect_1,aspect_2, aspect_3, aspect_4, aspect_5)
+	VALUES ($1,$2,$3);`,
+            [
+                curriculum_id, evaluato_id, aspect_1, aspect_2, aspect_3, aspect_4, aspect_5
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+
+// เพิ่มข้อมูลส่วนที่ 5 evaluation_score
+app.post('/api/evaluation_score', async (req, res) => {
+    // const input = req.body;
+
+    const { curriculum_id, aspect_1, aspect_2, aspect_3, aspect_4, aspect_5, evaluato_id, evaluate_id, report01, report02, report03, report04, report05 } = req.body;
+
+    try {
+
+        const result = await pool.query('SELECT evaluate_id FROM evaluation_score ORDER BY evaluate_id DESC LIMIT 1');
+        let lastId = result.rows[0]?.evaluate_id || 'E0000';
+
+
+        let idNumber = parseInt(lastId.replace('E', ''), 10) + 1;
+        let evaluateid = `E${idNumber.toString().padStart(4, '0')}`;
+
+
+        const query1 = `
+    INSERT INTO evaluation_score(
+	 curriculum_id,aspect_1,aspect_2, aspect_3, aspect_4, aspect_5,evaluate_id,evaluato_id)
+	VALUES ($1,$2,$3,$4,$5,$6,$7,$8);
+    `;
+        const values1 = [curriculum_id, aspect_1, aspect_2, aspect_3, aspect_4, aspect_5, evaluateid, evaluato_id];
+
+        const query2 = `INSERT INTO report_for_each_side(
+	evaluate_id, report01, report02, report03, report04, report05,evaluato_id)
+	VALUES ($1, $2, $3, $4, $5, $6,$7);`
+
+        const values2 = [evaluateid, report01, report02, report03, report04, report05, evaluato_id]
+
+
+        const query3 = `INSERT INTO evaluate(
+	curriculum_id, evaluate_id,evaluato_id)
+	VALUES ($1, $2,$3);`
+
+        const values3 = [curriculum_id, evaluateid, evaluato_id]
+        // Execute both queries
+        pool.query(query3, values3, (error, result1) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error saving data to the teaching table');
+            } else {
+                pool.query(query1, values1, (error, result2) => {
+                    if (error) {
+                        console.error(error);
+                        res.status(500).send('Error saving data to the responsibility table');
+                    } else {
+                        // res.status(200).send('Data saved successfully to both tables');
+                        pool.query(query2, values2, (error, result2) => {
+                            if (error) {
+                                console.error(error);
+                                res.status(500).send('Error saving data to the responsibility table');
+                            } else {
+                                res.status(200).send('Data saved successfully to both tables');
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+
+});
+
+
+//
+
+
+// get รายละเอียดการประเมิน
+app.get('/evaluate_data', async (req, res) => {
+    // const { evaluation_aspect } = req.params;
+    try {
+        const result = await pool.query(`SELECT evaluation_aspect, evaluation_level, detailed_evaluation
+	FROM evaluate_data    
+` ,
+            // [evaluation_aspect]
+        );
         res.json(result.rows);
     } catch (error) {
         console.error(error);
