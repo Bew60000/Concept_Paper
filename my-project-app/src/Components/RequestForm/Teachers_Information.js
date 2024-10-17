@@ -189,6 +189,7 @@ const TeachersInformation = () => {
                                     label='ผลงานทางด้านวิชาการย้อนหลัง 3 ปี'
                                     placeholder='ผลงานทางด้านวิชาการ'
                                     value={form.performance}
+                                    style={{ minHeight: '150px' }}
                                     onChange={(e) => handleChange(form.id, 'performance', e.target.value)}
                                 />
 
@@ -202,12 +203,26 @@ const TeachersInformation = () => {
                             </div>
                         ))}
 
-                        <div className='flex justify-between gap-4'>
-                            <FormButton type='button' onClick={addForm}>เพิ่มอาจารย์</FormButton>
-                            {/* <FormButton type='submit' onClick={handleSubmit}>ยืนยัน</FormButton> */}
-                            <FormButton type='submit'>ยืนยัน</FormButton>
+                        <div className="flex justify-between gap-4">
+                            <button className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" onClick={addForm}>
+                                <div className="flex justify-start items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 mr-2">
+                                        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+                                    </svg>
+                                    เพิ่มอาจารย์ประจำหลักสูตร
+                                </div>
+                            </button>
 
+                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
+                                <div className="flex justify-start items-center">
+                                    ยืนยันการส่งคำขอ
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </div>
+                            </button>
                         </div>
+
                     </Form>
                 </div>
             </div>

@@ -2,13 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarUser';
-
-//Icon image
-import Icon_SentRequest from './Icon_img/SentRequest.svg';
-import Icon_Search from './Icon_img/Search.svg';
-import Icon_Status from './Icon_img/Status.svg';
-
-import ShowStatusForm from './ShowStatusForm';
+import State01_ShowStatusForm from './State01 StatusForm/State01_ShowStatusForm';
 
 export default function Homepage_User() {
 
@@ -56,7 +50,7 @@ export default function Homepage_User() {
 
       </div>
 
-      <ShowStatusForm />
+      <State01_ShowStatusForm />
 
     </div>
   )

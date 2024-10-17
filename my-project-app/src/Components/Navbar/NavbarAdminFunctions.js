@@ -135,14 +135,16 @@ const NavbarAdminFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
-                    <div className="flex justify-start ml-4 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <p>คำขอที่ยกเลิก</p>
+                <Link to='/showdetailcanceled_request'>
+                    <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
+                        <div className="flex justify-start ml-4 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <p>คำขอที่ยกเลิก</p>
+                        </div>
                     </div>
-                </div>
+                </Link>
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
@@ -157,7 +159,7 @@ const NavbarAdminFunctions = () => {
                     </div>
                 </Link>
 
-                
+
             </div>
 
             <div className='bg-white m-4 mr-0 rounded-xl p-6 text-gray-700 text-center hover:bg-red-800 hover:text-white' onClick={handleLogout}>

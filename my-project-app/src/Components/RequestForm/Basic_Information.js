@@ -235,6 +235,7 @@ const Basic_Information = () => {
               placeholder="โปรดอธิบายรายละเอียด"
               name="learningoutcome"
               value={formData.learningoutcome}
+              style={{ minHeight: '150px' }}
               onChange={handleChange}
             />
 

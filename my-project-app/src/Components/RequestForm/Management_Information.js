@@ -89,30 +89,6 @@ const ManagementInformation = () => {
             });
 
             console.log('ส่งข้อมูลส่วนแรกสำเร็จ:', firstPartResponse.data);
-
-            // // วนลูปเฉพาะข้อมูลของอาจารย์และส่งข้อมูลทีละแถว
-            // for (let i = 1; i < forms.length; i++) {
-            //     const form = forms[i];
-
-            //     // ตรวจสอบข้อมูลอาจารย์ที่ครบถ้วนเท่านั้น
-            //     if (form.teacher_perfix && form.teacher_fname && form.teacher_lname &&
-            //         form.academic_ranks && form.performance && form.educational_qualifications) {
-
-            //         const teacherResponse = await axios.post('http://localhost:8080/submit', {
-            //             curriculum_id: curriculum_id,
-            //             teacher_perfix: form.teacher_perfix,
-            //             teacher_fname: form.teacher_fname,
-            //             teacher_lname: form.teacher_lname,
-            //             academic_ranks: form.academic_ranks,
-            //             performance: form.performance,
-            //             educational_qualifications: form.educational_qualifications,
-            //         });
-
-            //         console.log('ส่งข้อมูลของอาจารย์สำเร็จ:', teacherResponse.data);
-            //     }
-            // }
-
-            // เมื่อส่งข้อมูลเสร็จแล้ว นำไปหน้าใหม่
             navigate('/course_instructor', {
                 state: { curriculum_id: curriculum_id },
             }, { replace: true });
@@ -138,6 +114,7 @@ const ManagementInformation = () => {
                             label='รูปแบบของการจัดการเรียนการสอนที่มีการเรียนรู้จากประสบการณ์จริง'
                             placeholder='โปรดอธิบายรายละเอียด'
                             name="teaching"
+                            style={{ minHeight: '100px' }}
                             value={forms.teaching}
                             onChange={(e, { value }) => handleChange(1, 'teaching', value)}
 
@@ -147,6 +124,7 @@ const ManagementInformation = () => {
                             label='หลักสูตรฯ มีการควบคุมต้นทุนของการศึกษาอย่างไร'
                             placeholder='โปรดอธิบายรายละเอียด'
                             name="cost_control"
+                            style={{ minHeight: '100px' }}
                             value={forms.cost_control}
                             onChange={(e, { value }) => handleChange(1, 'cost_control', value)}
 
@@ -156,88 +134,31 @@ const ManagementInformation = () => {
                             label='ความพร้อมในการจัดการเรียนการสอน'
                             placeholder='โปรดอธิบายรายละเอียด'
                             name="readiness"
+                            style={{ minHeight: '100px' }}
                             value={forms.readiness}
                             onChange={(e, { value }) => handleChange(1, 'readiness', value)}
 
                         />
 
                         <br />
+                        <div className="flex justify-end gap-4">
+                            <button className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" onClick={() => navigate('/homepage_user')}>
+                                <div className="flex justify-start items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                                    </svg>
+                                    ยกเลิก
+                                </div>
+                            </button>
 
-                        {/* <h2>ส่วนที่ 4.1 : ผู้รับผิดชอบหลักสูตร</h2>
-                        <hr />
-                        <br />
-
-                        {forms.map((form) => (
-                            <div key={form.id}>
-                                <FormGroup widths='equal'>
-                                    <hr />
-                                    <br />
-                                    <FormSelect
-                                        fluid
-                                        label='คำนำหน้า'
-                                        options={options}
-                                        placeholder='คำนำหน้า'
-                                        value={form.teacher_perfix}
-                                        onChange={(e, { value }) => handleChange(form.id, 'teacher_perfix', value)}
-                                    />
-                                    <FormInput
-                                        fluid
-                                        label='ชื่อ'
-                                        placeholder='โปรดระบุชื่อ'
-                                        value={form.teacher_fname}
-                                        onChange={(e) => handleChange(form.id, 'teacher_fname', e.target.value)}
-                                    />
-                                    <FormInput
-                                        fluid
-                                        label='นามสกุล'
-                                        placeholder='โปรดระบุนามสกุล'
-                                        value={form.teacher_lname}
-                                        onChange={(e) => handleChange(form.id, 'teacher_lname', e.target.value)}
-                                    />
-                                </FormGroup>
-
-                                <FormTextArea
-                                    fluid
-                                    label='คุณวุฒิ'
-                                    placeholder='โปรดระบุคุณวุฒิ'
-                                    value={form.educational_qualifications}
-                                    onChange={(e) => handleChange(form.id, 'educational_qualifications', e.target.value)}
-                                />
-
-                                <FormGroup widths='equal'>
-                                    <FormInput
-                                        fluid
-                                        label='ตำแหน่งทางวิชาการ'
-                                        placeholder='โปรดระบุตำแหน่งทางวิชาการ'
-                                        value={form.academic_ranks}
-                                        onChange={(e) => handleChange(form.id, 'academic_ranks', e.target.value)}
-                                    />
-                                </FormGroup>
-
-                                <FormTextArea
-                                    fluid
-                                    label='ผลงานทางด้านวิชาการย้อนหลัง 3 ปี'
-                                    placeholder='ผลงานทางด้านวิชาการ'
-                                    value={form.performance}
-                                    onChange={(e) => handleChange(form.id, 'performance', e.target.value)}
-                                />
-
-                                <FormButton
-                                    className='flex justify-end gap-4'
-                                    type='button'
-                                    onClick={() => removeForm(form.id)}
-                                >
-                                    ลบข้อมูล
-                                </FormButton>
-                                <br />
-                                <hr />
-                                <br />
-                            </div>
-                        ))} */}
-                        <div className='flex justify-end gap-4'>
-                            {/* <FormButton type='button' onClick={addForm}>เพิ่มผู้รับผิดชอบ</FormButton> */}
-                            {/* <FormButton type='submit' onClick={handleSubmit}>ยืนยัน</FormButton> */}
-                            <FormButton type='submit' >ยืนยัน</FormButton>
+                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
+                                <div className="flex justify-start items-center">
+                                    ต่อไป
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </div>
+                            </button>
                         </div>
                     </Form>
                 </div>

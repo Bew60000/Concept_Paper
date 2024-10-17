@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import NavbarUser from '../Navbar/NavbarUser';
-import NavbarUserFunctions from '../Navbar/NavbarUserFunctions';
+import NavbarUserFunctions from '../../Navbar/NavbarUserFunctions';
+import ModalDetailForm from './State01_ModalDetailForm';
 
-function ShowStatusForm() {
-    const [dataUser, setDataUser] = useState([]);
+function State01_ShowStatusForm() {
+    const [dataForm, setDataForm] = useState([]);
+    const [studentData, setStudentData] = useState([]);
+    const [teacherData, setTeacherData] = useState([]);
+    const [sentByInfo, setSentByInfo] = useState([]); //สำหรับดึงข้อมูล username จากตาราง user
+    const [isModalOpen, setIsModalOpen] = useState(false); // สถานะของ Modal
+    const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const navigate = useNavigate();
@@ -16,7 +21,7 @@ function ShowStatusForm() {
         axios.get('http://localhost:8080/test/get_data_info_analysis_teaching')
             .then(res => {
                 console.log("ข้อมูลที่ได้รับจากเซิร์ฟเวอร์: ", res.data);
-                setDataUser(res.data);
+                setDataForm(res.data);
             })
             .catch(err => console.error(err));
 
@@ -27,7 +32,7 @@ function ShowStatusForm() {
         axios.delete(`http://localhost:8080/deletebasic_info/${info.curriculum_id}`)
             .then(() => {
                 // ลบข้อมูลจาก state หลังจากลบจากฐานข้อมูลเสร็จแล้ว
-                setDataUser(prevData => prevData.filter(user => user.curriculum_id !== info.curriculum_id));
+                setDataForm(prevData => prevData.filter(user => user.curriculum_id !== info.curriculum_id));
             })
             .catch(err => console.error(err));
     };
@@ -37,7 +42,87 @@ function ShowStatusForm() {
         navigate('/edit_form', { state: { info } });
     };
 
-    const filteredData = dataUser.filter(info => info.sent_by === loggedInUser.username);
+    useEffect(() => {
+        // const fetchForms = async () => {
+        //     try {
+        //         // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
+        //         const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
+        //         // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"                
+        //         const awaitingForms = response.data.filter(form => form.status === 'ยกเลิกคำขอ');
+        //         setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+        //     } catch (error) {
+        //         console.error('Error fetching forms:', error);
+        //     }
+        // };
+        // fetchForms();
+
+        const fetchForms = async () => {
+            try {
+                // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
+                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
+                // กรองฟอร์มที่มีสถานะไม่เท่ากับ "ยกเลิก", "ปฏิเสธ", และ "เสร็จสิ้น"
+                const awaitingForms = response.data.filter(
+                    form => form.status !== 'ยกเลิกคำขอ' && form.status !== 'ปฏิเสธการตอบรับ' && form.status !== 'ประเมินผลเสร็จสิ้น'
+                );
+                setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+            } catch (error) {
+                console.error('Error fetching forms:', error);
+            }
+        };
+        fetchForms();
+
+        // Table users all
+        axios.get('http://localhost:8080/getinfo_user/all')
+            .then(res => setSentByInfo(res.data))
+            .catch(err => console.error(err));
+    }, []);
+
+    const fetchAdditionalData = (curriculumId) => {
+        // ดึงข้อมูลจากตาราง student_admissions, teacher, และ teaching_and_administration โดยใช้ curriculum_id
+        Promise.all([
+            axios.get(`http://localhost:8080/test/student_admissions/${curriculumId}`),
+            axios.get(`http://localhost:8080/test/teacher/${curriculumId}`),
+            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
+        ])
+            .then(([studentRes, teacherRes, adminRes]) => {
+                setStudentData(studentRes.data);
+                setTeacherData(teacherRes.data);
+            })
+            .catch(err => console.error(err));
+    };
+
+    const openModal = (form) => {
+        setSelectedForm(form);
+        setIsModalOpen(true);
+        fetchAdditionalData(form.curriculum_id);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedForm(null);
+    };
+
+    // function find username for sent_by
+    const findUserByUsername = (username) => {
+        return sentByInfo.find(user => user.username === username);
+    };
+
+    const UpdateStatus = (curriculum_id, newStatus) => {
+        axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
+            .then(response => {
+                console.log('Status updated successfully:', response.data);
+                // หลังจากอัปเดตสถานะสำเร็จ ให้เรียกข้อมูลใหม่เพื่ออัปเดต UI
+                setDataForm(prevData => prevData.map(info =>
+                    info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
+                ));
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+            });
+    };
+
+    const filteredData = dataForm.filter(info => info.sent_by === loggedInUser.username);
 
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const currentData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -109,6 +194,16 @@ function ShowStatusForm() {
                                         </div>
                                     </button>
 
+                                    <button onClick={() => UpdateStatus(info.curriculum_id, 'ยกเลิกคำขอ')}
+                                        className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                        <div className="flex justify-start items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            ยกเลิกคำขอ
+                                        </div>
+                                    </button>
+
                                     <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2" onClick={() => editRequest(info)}>
                                         <div className="flex justify-start items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -120,7 +215,7 @@ function ShowStatusForm() {
 
 
 
-                                    <button className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                    <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                         <div className="flex justify-start items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -152,8 +247,18 @@ function ShowStatusForm() {
 
             <NavbarUserFunctions />
 
+            <ModalDetailForm
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                selectedForm={selectedForm}
+                studentData={studentData}
+                teacherData={teacherData}
+                findUserByUsername={findUserByUsername}
+                UpdateStatus={UpdateStatus}
+            />
+
         </div>
     );
 }
 
-export default ShowStatusForm;
+export default State01_ShowStatusForm;
