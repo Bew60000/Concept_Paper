@@ -679,7 +679,32 @@ app.post('/evaluation_score', async (req, res) => {
     }
 });
 
+// มอบหมายงาน
 
+app.post('/add_evaluate', async (req, res) => {
+    // const input = req.body;
+
+    const { curriculum_id, evaluato_id, evaluator_position } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO evaluate(
+	curriculum_id, evaluato_id, evaluator_position)
+	VALUES ($1, $2, $3);`,
+            [
+                curriculum_id, evaluato_id, evaluator_position
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+
+
+// 
 
 // เพิ่มข้อมูลส่วนที่ 5 evaluation_score
 app.post('/api/evaluation_score', async (req, res) => {
@@ -711,13 +736,13 @@ app.post('/api/evaluation_score', async (req, res) => {
         const values2 = [evaluateid, report01, report02, report03, report04, report05, evaluato_id]
 
 
-        const query3 = `INSERT INTO evaluate(
-	curriculum_id, evaluate_id,evaluato_id)
-	VALUES ($1, $2,$3);`
+        //     const query3 = `INSERT INTO evaluate(
+        // curriculum_id, evaluate_id,evaluato_id)
+        // VALUES ($1, $2,$3);`
 
-        const values3 = [curriculum_id, evaluateid, evaluato_id]
+        //     const values3 = [curriculum_id, evaluateid, evaluato_id]
         // Execute both queries
-        pool.query(query3, values3, (error, result1) => {
+        pool.query(query2, values2, (error, result1) => {
             if (error) {
                 console.error(error);
                 res.status(500).send('Error saving data to the teaching table');
@@ -727,16 +752,16 @@ app.post('/api/evaluation_score', async (req, res) => {
                         console.error(error);
                         res.status(500).send('Error saving data to the responsibility table');
                     } else {
-                        // res.status(200).send('Data saved successfully to both tables');
-                        pool.query(query2, values2, (error, result2) => {
-                            if (error) {
-                                console.error(error);
-                                res.status(500).send('Error saving data to the responsibility table');
-                            } else {
-                                res.status(200).send('Data saved successfully to both tables');
+                        res.status(200).send('Data saved successfully to both tables');
+                        // pool.query(query, values2, (error, result2) => {
+                        //     if (error) {
+                        //         console.error(error);
+                        //         res.status(500).send('Error saving data to the responsibility table');
+                        //     } else {
+                        //         res.status(200).send('Data saved successfully to both tables');
 
-                            }
-                        });
+                        //     }
+                        // });
                     }
                 });
             }
@@ -748,6 +773,29 @@ app.post('/api/evaluation_score', async (req, res) => {
     }
 
 });
+
+// // update evaluate
+// app.put('/update/:username', async (req, res) => {
+//     const { username } = req.params;
+//     // const id = req.id;
+//     const {
+//         evaluate_id } = req.body;
+
+//     try {
+//         await pool.query(`UPDATE evaluate
+// 	SET evaluate_id = $1
+// 	WHERE username = $2 `,
+//             [
+//                 evaluate_id, username]);
+//         // res.json(result.rows);
+
+//         res.status(201).send('update successfull');
+//         console.log();
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error retrieving section');
+//     }
+// });
 
 
 //

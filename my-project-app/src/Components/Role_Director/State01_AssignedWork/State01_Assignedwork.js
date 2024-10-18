@@ -74,6 +74,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
     axios.post('http://localhost:8080/api/evaluation_score', dataToSubmit)
       .then(response => {
+        window.location.reload();
         console.log('Data submitted successfully:', response.data);
         window.location.reload();
       })
@@ -153,7 +154,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
               </span>
               <Tooltip
                 anchorId="Aspect01"
-                place="left"
+                place="top"
                 style={{ whiteSpace: 'pre-line' }}
                 content={groupedEvaluations['Aspect01']?.map(
                   (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
@@ -275,7 +276,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 anchorId="Aspect02"
                 place="left"
                 style={{ whiteSpace: 'pre-line' }}
-                content={groupedEvaluations['Aspect01']?.map(
+                content={groupedEvaluations['Aspect02']?.map(
                   (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
                 ).join('\n')}
               />
@@ -385,7 +386,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 anchorId="Aspect03"
                 place="left"
                 style={{ whiteSpace: 'pre-line' }}
-                content={groupedEvaluations['Aspect01']?.map(
+                content={groupedEvaluations['Aspect03']?.map(
                   (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
                 ).join('\n')}
               />
@@ -492,7 +493,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 anchorId="Aspect04"
                 place="left"
                 style={{ whiteSpace: 'pre-line' }}
-                content={groupedEvaluations['Aspect01']?.map(
+                content={groupedEvaluations['Aspect04']?.map(
                   (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
                 ).join('\n')}
               />
@@ -637,9 +638,9 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
               </span>
               <Tooltip
                 anchorId="Aspect05"
-                place="left"
+                place="top"
                 style={{ whiteSpace: 'pre-line' }}
-                content={groupedEvaluations['Aspect01']?.map(
+                content={groupedEvaluations['Aspect05']?.map(
                   (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
                 ).join('\n')}
               />
