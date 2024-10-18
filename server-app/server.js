@@ -819,6 +819,27 @@ app.get('/evaluate_data', async (req, res) => {
 // ประเมินมีhint
 
 
+// getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง
+app.get('/test/evaluate/:evaluato_id', async (req, res) => {
+    const { evaluato_id } = req.params;
+    try {
+        const result = await pool.query(`select * from evaluate 
+join basic_infos on basic_infos.curriculum_id = evaluate.curriculum_id 
+join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
+join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id 
+where evaluato_id = $1   
+` , [evaluato_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+// select * from evaluate 
+// join basic_infos on basic_infos.curriculum_id = evaluate.curriculum_id 
+// where evaluato_id = 'D001'
 
 // 
 

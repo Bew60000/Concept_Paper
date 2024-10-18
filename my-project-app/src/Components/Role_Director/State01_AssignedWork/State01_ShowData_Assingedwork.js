@@ -18,11 +18,24 @@ const State01_ShowData_Assingedwork = () => {
     const itemsPerPage = 4;
     const navigate = useNavigate();
 
+
+
+    // Check if the user is logged in
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    let username = ''; // Initial empty username
+    if (loggedInUser) {
+        const user = JSON.parse(loggedInUser); // Convert JSON string to object
+        username = user.username; // Get username from the logged-in user
+    }
+
+    console.log('Data submitted successfully:', username);
+
+
     useEffect(() => {
         const fetchForms = async () => {
             try {
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
-                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
+                const response = await axios.get(`http://localhost:8080/test/evaluate/${username}`);
 
                 // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
                 const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
