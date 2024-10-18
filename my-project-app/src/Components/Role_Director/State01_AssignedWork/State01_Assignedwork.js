@@ -6,6 +6,8 @@ import {
   Form,
 } from 'semantic-ui-react';
 import axios from 'axios';
+import { Tooltip } from 'react-tooltip'; // ใช้ Tooltip จาก react-tooltip
+import 'react-tooltip/dist/react-tooltip.css'; // นำเข้าการตั้งค่า CSS ของ Tooltip
 
 const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, teacherData, UpdateStatus }) => {
   const modalRef = useRef(null);
@@ -21,6 +23,25 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
     report04: '',    // ตัวแปร 2
     report05: '',    // ตัวแปร 2
   });
+
+
+  const [groupedEvaluations, setGroupedEvaluations] = useState({});
+  useEffect(() => {
+    axios.get('http://localhost:8080/evaluate_data')
+      .then(response => {
+        const groupedData = response.data.reduce((acc, item) => {
+          if (!acc[item.evaluation_aspect]) {
+            acc[item.evaluation_aspect] = [];
+          }
+          acc[item.evaluation_aspect].push(item);
+          return acc;
+        }, {});
+        setGroupedEvaluations(groupedData);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
 
   // Check if the user is logged in
@@ -123,6 +144,21 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
             <div className="text-start p-5 pt-8 pb-0">
               <p className="text-2xl font-bold text-blue-800">เกณฑ์การประเมินด้านที่ 1 : กลุ่มผู้เรียนเป้าหมาย</p>
+              {/* Tooltip hint สำหรับ aspect_1 */}
+              <span
+                id="Aspect01"
+                style={{ cursor: 'pointer', color: 'blue' }}
+              >
+                Hint?
+              </span>
+              <Tooltip
+                anchorId="Aspect01"
+                place="left"
+                style={{ whiteSpace: 'pre-line' }}
+                content={groupedEvaluations['Aspect01']?.map(
+                  (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
+                ).join('\n')}
+              />
             </div>
 
             <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
@@ -130,7 +166,11 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
             {/* ประเมินด้านที่ 1 */}
             <Form >
               <FormGroup className="flex items-center space-x-3 p-12 pt-8 pb-0">
+
                 <label>ลักษณะของหลักสูตร</label>
+
+
+
                 <FormRadio
                   fluid
                   label="ระดับการประเมิน 1"
@@ -173,6 +213,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                   onChange={handleChange}
                 />
 
+
               </FormGroup>
 
               <FormTextArea className="p-10  pt-0"
@@ -190,6 +231,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
             <div className="text-start p-5 pt-8 pb-0">
               <p className="text-2xl font-bold text-blue-800">การประเมินด้านที่ 2 : ความเหมาะสมและความทันสมัยของหลักสูตร</p>
+
             </div>
             {/* Form Part II */}
             <div className='mx-8'>
@@ -223,6 +265,20 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
             <div className="text-start p-5 pt-8 pb-0">
               <p className="text-2xl font-bold text-blue-800">เกณฑ์การประเมินด้านที่ 2 : ความเหมาะสมและความทันสมัยของหลักสูตร</p>
+              <span
+                id="Aspect02"
+              // style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+              >
+                Hint?
+              </span>
+              <Tooltip
+                anchorId="Aspect02"
+                place="left"
+                style={{ whiteSpace: 'pre-line' }}
+                content={groupedEvaluations['Aspect01']?.map(
+                  (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
+                ).join('\n')}
+              />
             </div>
 
             <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
@@ -319,6 +375,20 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
             <div className="text-start p-5 pt-8 pb-0">
               <p className="text-2xl font-bold text-blue-800">เกณฑ์การประเมินด้านที่ 3 : ความเชื่อมโยงกับหลักสูตรที่มีอยู่ในมหาวิทยาลัย</p>
+              <span
+                id="Aspect03"
+              // style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+              >
+                Hint?
+              </span>
+              <Tooltip
+                anchorId="Aspect03"
+                place="left"
+                style={{ whiteSpace: 'pre-line' }}
+                content={groupedEvaluations['Aspect01']?.map(
+                  (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
+                ).join('\n')}
+              />
             </div>
 
             <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
@@ -412,6 +482,20 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
             <div className="text-start p-5 pt-8 pb-0">
               <p className="text-2xl font-bold text-blue-800">เกณฑ์การประเมินด้านที่ 4 : ความร่วมมือกับองค์กรภาครัฐ เอกชน และสถาบันการศึกษาต่างประเทศ</p>
+              <span
+                id="Aspect04"
+              // style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+              >
+                Hint?
+              </span>
+              <Tooltip
+                anchorId="Aspect04"
+                place="left"
+                style={{ whiteSpace: 'pre-line' }}
+                content={groupedEvaluations['Aspect01']?.map(
+                  (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
+                ).join('\n')}
+              />
             </div>
 
             <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
@@ -545,6 +629,20 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
             <div className="text-start p-5 pt-8 pb-0">
               <p className="text-2xl font-bold text-blue-800">เกณฑ์การประเมินด้านที่ 5 : ประโยชน์ต่อสังคมและประเทศ
               </p>
+              <span
+                id="Aspect05"
+              // style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+              >
+                Hint?
+              </span>
+              <Tooltip
+                anchorId="Aspect05"
+                place="left"
+                style={{ whiteSpace: 'pre-line' }}
+                content={groupedEvaluations['Aspect01']?.map(
+                  (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
+                ).join('\n')}
+              />
             </div>
 
             <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />

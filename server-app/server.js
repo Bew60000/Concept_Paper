@@ -768,7 +768,7 @@ app.get('/evaluate_data', async (req, res) => {
         res.status(500).send('Error retrieving section');
     }
 });
-// 
+// ประเมินมีhint
 
 
 
