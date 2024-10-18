@@ -65,8 +65,6 @@ const State01_ShowData_Assingedwork = () => {
 
     };
 
-
-
     const closeAssignedword = () => {
         setisAssignedWork(false);
         setSelectedFormAssigned(null);
