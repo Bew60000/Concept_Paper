@@ -14,7 +14,7 @@ function State01_ShowData_Assingedwork() {
     const [userInfo, setUserInfo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setisModalOpen] = useState(false);
-    const [isAssignedWord, setisAssignedWord] = useState(false);
+    const [isAssignedWork, setisAssignedWork] = useState(false);
     const itemsPerPage = 4;
     const navigate = useNavigate();
 
@@ -58,12 +58,12 @@ function State01_ShowData_Assingedwork() {
 
     const openAssignedword = (form) => {
         setSelectedFormAssigned(form);
-        setisAssignedWord(true);
+        setisAssignedWork(true);
         fetchAdditionalData(form.curriculum_id);
     };
 
     const closeAssignedword = () => {
-        setisAssignedWord(false);
+        setisAssignedWork(false);
         setSelectedFormAssigned(null);
     }; 
 
@@ -178,7 +178,7 @@ function State01_ShowData_Assingedwork() {
             />
 
             <State01_Assignedwork
-                isOpen={isAssignedWord}
+                isOpen={isAssignedWork}
                 closeModal={closeAssignedword}
                 selectedForm={selectedFormAssigned}
                 studentData={studentData}

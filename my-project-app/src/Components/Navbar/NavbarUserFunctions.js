@@ -108,7 +108,7 @@ const NavbarUserFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <Link to='/showdetailcanceledform'>
+                <Link to='/user/showdetailcanceledform'>
                     <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
                         <div className="flex justify-start ml-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -121,25 +121,29 @@ const NavbarUserFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
-                    <div className="flex justify-start ml-4 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <p>คำขอที่โดนยกเลิก</p>
+                <Link to='/user/showdetailrejectrequest'>
+                    <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
+                        <div className="flex justify-start ml-4 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <p>คำขอที่โดนปฎิเสธ</p>
+                        </div>
                     </div>
-                </div>
-
+                </Link>
+                
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
-                    <div className="flex justify-start ml-4 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
-                        </svg>
-                        <p>ประเมินเสร็จสิ้น</p>
+                <Link to='/user/showdetailfinishedform'>
+                    <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
+                        <div className="flex justify-start ml-4 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+                            </svg>
+                            <p>ประเมินเสร็จสิ้น</p>
+                        </div>
                     </div>
-                </div>
+                </Link>
 
             </div>
 

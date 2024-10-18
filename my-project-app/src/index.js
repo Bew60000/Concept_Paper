@@ -26,28 +26,22 @@ import ShowUserData from './Components/Role_Admin/UserManagement/ShowUserData';
 import UpdateUser from './Components/Role_Admin/UserManagement/Update_user';
 
 //Admin
-// State02 Assign_work
-import State02_ShowDetailAssign_work from './Components/Role_Admin/State_Status/State02_Assign_work.js/State02_ShowDetailAssign_work';
-import Assign_woke from './Components/Role_Admin/State_Status/State02_Assign_work.js/Assign_woke';
-// State03 Make_assessment
-import State03_ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/State03_ShowDetailMake_assessment';
-// State06_ShowDetailCanceled_request
-import State06_ShowDetailCanceled_request from './Components/Role_Admin/State_Status/State06 Canceled request/State06_ShowDetailCanceled_request';
-// State07 Rejected_request
-import State07_ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/State07_ShowDeTailRejected_request'
+import State02_ShowDetailAssign_work from './Components/Role_Admin/State_Status/State02 Assign work.js/State02_ShowDetailAssign_work'; // State02_ShowDetailAssign_work
+import Assign_woke from './Components/Role_Admin/State_Status/State02 Assign work.js/State02_Assign_work';
+import State03_ShowDetailMake_assessment from './Components/Role_Admin/State_Status/State03 Make assessment/State03_ShowDetailMake_assessment'; // State03 Make_assessment
+
+import State06_ShowDetailCanceled_request from './Components/Role_Admin/State_Status/State06 Canceled request/State06_ShowDetailCanceled_request'; // State06_ShowDetailCanceled_request
+import State07_ShowDeTailRejected_request from './Components/Role_Admin/State_Status/State07 Rejected request/State07_ShowDeTailRejected_request'; // State07 Rejected_request
 
 // Director
-// State01
-import State01_Assignedwork from './Components/Role_Director/State01_AssignedWork/State01_Assignedwork';
+import State01_Assignedwork from './Components/Role_Director/State01_AssignedWork/State01_Assignedwork'; //State01_Assignedwork
 
 //User
-//State02 ShowDetailCanceledForm
-import State02_ShowDetailCanceledForm from './Components/Role_User/State02 Canceled requset/State02_ShowDetailCanceledForm';
+import State02_ShowDetailCanceledForm from './Components/Role_User/State02 Canceled requset/State02_ShowDetailCanceledForm';//State02 ShowDetailCanceledForm
+import State03_ShowDetailRejectRequest from './Components/Role_User/State03 Rejected requset/State03_ShowDetailRejectRequest'; //State03_ShowDetailRejectRequest
+import State04_ShowDetailFinishedForm from './Components/Role_User/State04 Finished requset/State04_ShowDetailFinishedForm'; //State04_ShowDetailFinishedForm
 
-//Test All App
 import AllForm from './App';
-
-//Role_User
 import UpdateForm from './Components/Role_User/UpdateForm';
 
 import {
@@ -81,16 +75,17 @@ root.render(
         <Route path='/course_instructor' element={<Course_Instructor />} />
 
         
-        <Route path='/showdetailcanceledform' element={<State02_ShowDetailCanceledForm />} />
-        {/* <Route path='/showdetailmake_assessment' element={<State03_ShowDetailMake_assessment />} /> */}
+        <Route path='/user/showdetailcanceledform' element={<State02_ShowDetailCanceledForm />} />
+        <Route path='/user/showdetailrejectrequest' element={<State03_ShowDetailRejectRequest />} />
+        <Route path='/user/showdetailfinishedform' element={<State04_ShowDetailFinishedForm />} />
         
-        <Route path='/showdetailassign_work' element={<State02_ShowDetailAssign_work />} />
-        <Route path='/assign_woke' element={<Assign_woke />} />
+        <Route path='/admin/2/showdetailassign_work' element={<State02_ShowDetailAssign_work />} />
+        <Route path='/admin/assign_woke' element={<Assign_woke />} />
         
-        <Route path='/showdetailmake_assessment' element={<State03_ShowDetailMake_assessment />} />
-        {/* <Route path='/showdetailmake_assessment' element={<State03_ShowDetailMake_assessment />} /> */}
-        <Route path='/showdetailcanceled_request' element={<State06_ShowDetailCanceled_request />} />        
-        <Route path='/showdetailrejected_request' element={<State07_ShowDeTailRejected_request />} />
+        <Route path='/admin/3/showdetailmake_assessment' element={<State03_ShowDetailMake_assessment />} />
+       
+        <Route path='/admin/6/showdetailcanceled_request' element={<State06_ShowDetailCanceled_request />} />        
+        <Route path='/admin/7/showdetailrejected_request' element={<State07_ShowDeTailRejected_request />} />
 
         <Route path='/state01_assignedwork' element={<State01_Assignedwork />} />
         

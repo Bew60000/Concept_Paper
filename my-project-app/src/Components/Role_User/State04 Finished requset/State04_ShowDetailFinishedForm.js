@@ -4,9 +4,9 @@ import axios from 'axios';
 import Background from '../../../img/Background.svg';
 import Navbar from '../../Navbar/NavbarUser';
 import NavbarAdminFunctions from '../../Navbar/NavbarUserFunctions';
-import ModalDetailForm from './State02_ModalDetailForm';
+import ModalDetailForm from './State04_ModalDetailForm';
 
-function State02_ShowDetailCanceledForm() {
+function State04_ShowDetailFinishedForm() {
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,
         backgroundSize: 'cover',
@@ -27,9 +27,8 @@ function State02_ShowDetailCanceledForm() {
         const fetchForms = async () => {
             try {
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
-                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
-                // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"                
-                const awaitingForms = response.data.filter(form => form.status === 'ยกเลิกคำขอ');
+                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');                               
+                const awaitingForms = response.data.filter(form => form.status === 'ประเมินผลเสร็จสิ้น');
                 setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
             } catch (error) {
                 console.error('Error fetching forms:', error);
@@ -75,6 +74,7 @@ function State02_ShowDetailCanceledForm() {
     const findUserByUsername = (username) => {
         return sentByInfo.find(user => user.username === username);
     };
+   
     return (
 
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
@@ -84,8 +84,8 @@ function State02_ShowDetailCanceledForm() {
                 <div className='col-start-2 col-span-8'>
                     <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
 
-                        <h2 className='text-start text-gray-700 mb-0'>คำขอที่ยกเลิก</h2>
-                        <p className='text-gray-500 mt-0 font-bold'>(ทางผู้ส่งเป็นผู้กดยกเลิก)</p>
+                        <h2 className='text-start text-gray-700 mb-0'>ประเมินผลเสร็จสิ้น</h2>
+                        <p className='text-gray-500 mt-0 font-bold'>(เสร็จสิ้นการประเมินผล)</p>
 
                         <hr className='mb-5' />
 
@@ -135,6 +135,7 @@ function State02_ShowDetailCanceledForm() {
                                         <hr className='border-white m-5 mt-4' />
 
                                         <div className="flex justify-end items-center mt-2">
+
                                             <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -174,7 +175,7 @@ function State02_ShowDetailCanceledForm() {
                     selectedForm={selectedForm}
                     studentData={studentData}
                     teacherData={teacherData}
-                    findUserByUsername={findUserByUsername}
+                    findUserByUsername={findUserByUsername}                    
                 />
 
             </div>
@@ -183,4 +184,4 @@ function State02_ShowDetailCanceledForm() {
     );
 }
 
-export default State02_ShowDetailCanceledForm;
+export default State04_ShowDetailFinishedForm;

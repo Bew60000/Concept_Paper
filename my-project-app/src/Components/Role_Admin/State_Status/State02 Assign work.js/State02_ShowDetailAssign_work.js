@@ -4,6 +4,7 @@ import axios from 'axios';
 import Background from '../../../../img/Background.svg';
 import Navbar from '../../../Navbar/NavbarAdmin';
 import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
+import State02_Assign_work from './State02_Assign_work';
 import ModalDetailForm from './State02_ModalDetailForm';
 
 function State02_ShowDetailAssign_work() {
@@ -19,6 +20,8 @@ function State02_ShowDetailAssign_work() {
     const [sentByInfo, setSentByInfo] = useState([]); //สำหรับดึงข้อมูล username จากตาราง user
     const [isModalOpen, setIsModalOpen] = useState(false); // สถานะของ Modal
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
+    const [selectedFormAssigned, setSelectedFormAssigned] = useState(null); // ข้อมูล Form ที่เลือก
+    const [isAssignedWork, setisAssignedWork] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const navigate = useNavigate();
@@ -66,6 +69,17 @@ function State02_ShowDetailAssign_work() {
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedForm(null);
+    };
+
+    const openAssignedword = (form) => {
+        setSelectedFormAssigned(form);
+        setisAssignedWork(true);
+        fetchAdditionalData(form.curriculum_id);
+    };
+
+    const closeAssignedword = () => {
+        setisAssignedWork(false);
+        setSelectedFormAssigned(null);
     };
 
     const totalPages = Math.ceil(dataForm.length / itemsPerPage);
@@ -167,6 +181,16 @@ function State02_ShowDetailAssign_work() {
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
+                                                    เลื่อน Status
+                                                </div>
+                                            </button>
+
+                                            <button onClick={() => openAssignedword(info)}
+                                                className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                                <div className="flex justify-start items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
                                                     มอบหมายงาน
                                                 </div>
                                             </button>
@@ -221,7 +245,15 @@ function State02_ShowDetailAssign_work() {
                     studentData={studentData}
                     teacherData={teacherData}
                     findUserByUsername={findUserByUsername}
-                    UpdateStatus={UpdateStatus}
+                />
+
+                <State02_Assign_work
+                    isOpen={isAssignedWork}
+                    closeModal={closeAssignedword}
+                    selectedForm={selectedFormAssigned}
+                    studentData={studentData}
+                    teacherData={teacherData}
+                // UpdateStatus={UpdateStatus}
                 />
 
             </div>

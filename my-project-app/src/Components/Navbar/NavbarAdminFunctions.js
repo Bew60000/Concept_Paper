@@ -87,7 +87,7 @@ const NavbarAdminFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <Link to="/showdetailassign_work">
+                <Link to="/admin/2/showdetailassign_work">
                     <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
                         <div className="flex justify-start ml-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -100,7 +100,7 @@ const NavbarAdminFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <Link to='/showdetailmake_assessment'>
+                <Link to='/admin/3/showdetailmake_assessment'>
                     <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
                         <div className="flex justify-start ml-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -135,7 +135,7 @@ const NavbarAdminFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <Link to='/showdetailcanceled_request'>
+                <Link to='/admin/6/showdetailcanceled_request'>
                     <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
                         <div className="flex justify-start ml-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -148,7 +148,7 @@ const NavbarAdminFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <Link to='/showdetailrejected_request'>
+                <Link to='/admin/7/showdetailrejected_request'>
                     <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
                         <div className="flex justify-start ml-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
