@@ -5,12 +5,12 @@ import Step01_ModalDetailForm from './State01_ModalDetailForm';
 import State01_Assignedwork from './State01_Assignedwork';
 import NavbarDirectorFunctions from '../../Navbar/NavbarDirectorFunctions';
 
-function State01_ShowData_Assingedwork() {
+const State01_ShowData_Assingedwork = () => {
     const [dataForm, setDataForm] = useState([]);
     const [studentData, setStudentData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
-    const [selectedFormAssigned, setSelectedFormAssigned] = useState(null); // ข้อมูล Form ที่เลือก
+    const [selectedFormAssigned, setSelectedFormAssigned] = useState({}); // ข้อมูล Form ที่เลือก
     const [userInfo, setUserInfo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setisModalOpen] = useState(false);
@@ -60,12 +60,17 @@ function State01_ShowData_Assingedwork() {
         setSelectedFormAssigned(form);
         setisAssignedWork(true);
         fetchAdditionalData(form.curriculum_id);
+
+        // console.log('Data saved with curriculum_id:', form.curriculum_id);
+
     };
+
+
 
     const closeAssignedword = () => {
         setisAssignedWork(false);
         setSelectedFormAssigned(null);
-    }; 
+    };
 
     const openModal = (form) => {
         setSelectedForm(form);
@@ -76,7 +81,7 @@ function State01_ShowData_Assingedwork() {
     const closeModal = () => {
         setisModalOpen(false);
         setSelectedForm(null);
-    }; 
+    };
 
     const totalPages = Math.ceil(dataForm.length / itemsPerPage);
     const currentData = dataForm.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -185,6 +190,8 @@ function State01_ShowData_Assingedwork() {
                 teacherData={teacherData}
             // UpdateStatus={UpdateStatus}
             />
+
+
 
         </div>
     );
