@@ -13,7 +13,7 @@ function State01_ShowFormRequestForm() {
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
-    const navigate = useNavigate();   
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchForms = async () => {
@@ -66,6 +66,16 @@ function State01_ShowFormRequestForm() {
     // function find username for sent_by
     const findUserByUsername = (username) => {
         return sentByInfo.find(user => user.username === username);
+    };
+
+    const UpdateRejectdate = (curriculum_id) => {
+        axios.put(`http://localhost:8080/test/update_date_cancel`, { curriculum_id })
+            .then(response => {
+                console.log('date updated successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+            });
     };
 
     const UpdateStatus = (curriculum_id, newStatus) => {
