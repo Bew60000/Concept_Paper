@@ -689,8 +689,8 @@ app.post('/add_evaluate', async (req, res) => {
 
     try {
         await pool.query(`INSERT INTO evaluate(
-	curriculum_id, evaluato_id, evaluator_position)
-	VALUES ($1, $2, $3);`,
+	curriculum_id, evaluato_id, evaluator_position,date_assign)
+	VALUES ($1, $2, $3, now());`,
             [
                 curriculum_id, evaluato_id, evaluator_position
             ]);
@@ -836,6 +836,48 @@ where evaluato_id = $1
     }
 });
 // 
+
+
+app.put('/test/update_evaluate_status', async (req, res) => {
+
+    const { status_evaluate, evaluato_id, curriculum_id } = req.body;
+    // const id = req.id;
+    // const name = req.name;
+
+    try {
+        await pool.query(`UPDATE evaluate
+      SET status_evaluate = $1 , time_evaluate = Now()
+      WHERE evaluato_id = $2 AND curriculum_id = $3;`,
+            [status_evaluate, evaluato_id, curriculum_id]);
+        // res.json(result.rows);
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+
+
+
+// // getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง
+// app.get('/test/evaluate/:evaluato_id', async (req, res) => {
+//     const { evaluato_id } = req.params;
+//     try {
+//         const result = await pool.query(`select * from evaluate 
+// join basic_infos on basic_infos.curriculum_id = evaluate.curriculum_id 
+// join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
+// join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id 
+// where evaluato_id = $1   
+// ` , [evaluato_id]);
+//         res.json(result.rows);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error retrieving section');
+//     }
+// });
+// // 
 
 // select * from evaluate 
 // join basic_infos on basic_infos.curriculum_id = evaluate.curriculum_id 

@@ -25,6 +25,17 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
   });
 
 
+
+  const UpdateEvaluateStatus = (status_evaluate, evaluato_id, curriculum_id) => {
+    axios.put('http://localhost:8080/test/update_evaluate_status', { status_evaluate, evaluato_id, curriculum_id })
+      .then(response => {
+        console.log('Evaluate status updated successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating evaluate status:', error);
+      });
+  };
+
   const [groupedEvaluations, setGroupedEvaluations] = useState({});
   useEffect(() => {
     axios.get('http://localhost:8080/evaluate_data')
@@ -74,8 +85,9 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
     axios.post('http://localhost:8080/api/evaluation_score', dataToSubmit)
       .then(response => {
-        window.location.reload();
+        // window.location.reload();
         console.log('Data submitted successfully:', response.data);
+        UpdateEvaluateStatus('เสร็จสิ้น', username, selectedForm.curriculum_id)
         window.location.reload();
       })
       .catch(error => {
