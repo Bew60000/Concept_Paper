@@ -14,7 +14,6 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
   useEffect(() => {
     axios.get('http://localhost:8080/getinfo_user/all')
       .then(res => {
-        // กรองข้อมูลตามเงื่อนไข
         const filteredData = res.data.filter(user =>
           user.position === 'Director' && user.campus !== selectedForm.campus
         );
@@ -26,15 +25,7 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = dataUser.slice(indexOfFirstItem, indexOfLastItem);
-
   const totalPages = Math.ceil(dataUser.length / itemsPerPage);
-
-  // const handleRoleChange = (e, { name, value }) => {
-  //   setSelectedRoles(prevRoles => ({
-  //     ...prevRoles,
-  //     [name]: value
-  //   }));
-  // };
 
   const handleRoleChange = (userId, role) => {
     setSelectedRoles(prevRoles => ({
@@ -47,10 +38,6 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
     axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
       .then(response => {
         console.log('Status updated successfully:', response.data);
-        // หลังจากอัปเดตสถานะสำเร็จ ให้เรียกข้อมูลใหม่เพื่ออัปเดต UI
-        // setDataForm(prevData => prevData.map(info =>
-        //   selectedForm.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
-        // ));
         window.location.reload();
       })
       .catch(error => {
@@ -60,9 +47,6 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
-    // Prepare the data for each selected evaluator with their role
     const requests = Object.entries(selectedRoles).map(([userId, role]) => {
       return axios.post('http://localhost:8080/add_evaluate', {
         curriculum_id: selectedForm.curriculum_id,
@@ -81,33 +65,11 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-
-  //   const dataToSubmit = {
-  //     ...selectedRoles,
-  //     curriculum_id: selectedForm.curriculum_id,
-  //     evaluato_id: dataUser.username // Add curriculum_id to the submitted data
-  //   };
-
-  //   axios.post('http://localhost:8080/add_evaluate', dataToSubmit)
-  //     .then(response => {
-  //       console.log('Data submitted successfully:', response.data);
-  //       window.location.reload();
-  //     })
-  //     .catch(error => {
-  //       console.error('Error submitting data:', error);
-  //     });
-  // };
-
-
-
   if (!isOpen || !selectedForm) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
-      <div className="bg-white p-12 pt-6 rounded-lg w-11/12 rounded-full min-h-[650px] max-h-[650px]  mt-16">
+      <div className="bg-white p-12 pt-6 rounded-lg w-11/12 rounded-full min-h-[680px] max-h-[680px]  mt-16">
         {selectedForm && (
           <div className='text-gray-700 px-12'>
 
@@ -116,8 +78,6 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
                 <h2 className="font-bold m-0 text-blue-900"> การเลือกคณะกรรมการประเมินผล</h2>
               </div>
             </div>
-
-            {/* <hr className='border-gray-300 w-11/12 mx-auto' />\ */}
 
             <div className='mx-12'>
               <div className="bg-gray-100 p-6 rounded-xl w-full mb-4">
@@ -169,19 +129,14 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
                       <p className="m-1"><strong>โทรศัพท์ :</strong> {director.phone}</p>
                       <p className="m-1"><strong>Email :</strong> {director.email}</p>
                     </div>
-                    {/* <div className="col-span-3 text-start">
-                      <p className="m-1">หัวหน้ากรรมการ คณะกรรมการ</p>
-                    </div> */}
 
                     <div className="col-span-4 text-start">
                       <label>
                         <input
                           type="radio"
                           name={`role-${director.username}`}
-                          // name="evaluator_position"
                           value="หัวหน้าคณะกรรมการ"
                           checked={selectedRoles[director.username] === 'หัวหน้าคณะกรรมการ'}
-                          // checked={selectedRoles[director.id] === 'หัวหน้าคณะกรรมการ'}
                           onChange={() => handleRoleChange(director.username, 'หัวหน้าคณะกรรมการ')}
                         />
                         หัวหน้าคณะกรรมการ
@@ -191,9 +146,7 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
                         <input
                           type="radio"
                           name={`role-${director.username}`}
-                          // name="evaluator_position"
                           value="คณะกรรมการ"
-                          // checked={selectedRoles[director.id] === 'คณะกรรมการ'}
                           checked={selectedRoles[director.username] === 'คณะกรรมการ'}
                           onChange={() => handleRoleChange(director.username, 'คณะกรรมการ')}
                         />

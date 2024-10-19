@@ -165,6 +165,14 @@ function State02_ShowDetailAssign_work() {
 
                                         <div className="flex justify-end items-center mt-2">
 
+                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'รอการตอบรับ')}
+                                                className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                                <div className="flex justify-start items-center">
+
+                                                    ย้อนกลับ Status
+                                                </div>
+                                            </button>
+
                                             <button onClick={() => UpdateStatus(info.curriculum_id, 'ปฏิเสธการตอบรับ')}
                                                 className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
@@ -175,16 +183,6 @@ function State02_ShowDetailAssign_work() {
                                                 </div>
                                             </button>
 
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'อยู่ระหว่างการประเมินผล')}
-                                                className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
-                                                <div className="flex justify-start items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                    เลื่อน Status
-                                                </div>
-                                            </button>
-
                                             <button onClick={() => openAssignedword(info)}
                                                 className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
@@ -192,16 +190,6 @@ function State02_ShowDetailAssign_work() {
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
                                                     มอบหมายงาน
-                                                </div>
-                                            </button>
-
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'รอการตอบรับ')}
-                                                className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
-                                                <div className="flex justify-start items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                    ย้อนกลับ Status
                                                 </div>
                                             </button>
 
