@@ -100,7 +100,7 @@ function State03_ShowDetailMake_assessment() {
                     <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
 
                         <h2 className='text-start text-gray-700 mb-0'>อยู่ระหว่างการประเมินผล</h2>
-                        <p className='text-gray-500 mt-0 font-bold'>(ประเมินผลส่วนบุคคล)</p>
+                        <p className='text-gray-500 mt-0 font-bold'>(ประเมินผลและสรุปผลการประเมิน)</p>
 
                         <hr className='mb-5' />
 
@@ -151,7 +151,7 @@ function State03_ShowDetailMake_assessment() {
 
                                         <div className="flex justify-end items-center mt-2">
 
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'ปฏิเสธการตอบรับ')}
+                                            {/* <button onClick={() => UpdateStatus(info.curriculum_id, 'ปฏิเสธการตอบรับ')}
                                                 className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -159,9 +159,9 @@ function State03_ShowDetailMake_assessment() {
                                                     </svg>
                                                     ปฏิเสธการตอบรับ
                                                 </div>
-                                            </button>
+                                            </button> */}
 
-                                            <button onClick={() => UpdateStatus(info.curriculum_id, 'กำลังดำเนินการสรุปผล')}
+                                            {/* <button onClick={() => UpdateStatus(info.curriculum_id, 'กำลังดำเนินการสรุปผล')}
                                                 className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -169,7 +169,7 @@ function State03_ShowDetailMake_assessment() {
                                                     </svg>
                                                     สรุปการประเมิน
                                                 </div>
-                                            </button>
+                                            </button> */}
 
                                             <button onClick={() => UpdateStatus(info.curriculum_id, 'กำลังดำเนินการประเมิน')}
                                                 className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">

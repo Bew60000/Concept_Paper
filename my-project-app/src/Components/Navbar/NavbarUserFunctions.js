@@ -131,7 +131,7 @@ const NavbarUserFunctions = () => {
                         </div>
                     </div>
                 </Link>
-                
+
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
                 <Link to='/user/showdetailfinishedform'>
@@ -147,12 +147,13 @@ const NavbarUserFunctions = () => {
 
             </div>
 
-            <div className='bg-white m-4 mr-0 rounded-xl p-6 text-gray-700 text-center hover:bg-red-800 hover:text-white' onClick={handleLogout}>
-                <div className="flex justify-center items-center space-x-2">
-                    <p className="font-bold ">ออกจากระบบ</p>
+            <Link to='/'>
+                <div className='bg-white m-4 mr-0 rounded-xl p-6 text-gray-700 text-center hover:bg-red-800 hover:text-white' onClick={handleLogout}>
+                    <div className="flex justify-center items-center space-x-2">
+                        <p className="font-bold ">ออกจากระบบ</p>
+                    </div>
                 </div>
-            </div>
-
+            </Link>
 
             {/* <div className='bg-white rounded-xl ml-4 p-0 text-gray-700 text-center '>
 
