@@ -1012,19 +1012,9 @@ where evaluate.curriculum_id = '$1'
 // SELECT * FROM public.evaluate where evaluato_id = 'D004' and status_evaluate = 'เสร็จสิ้น'
 
 
-// getประเมินที่เสร็จสิ้นแล้วของเฉพาะของคนๆนั้น
-app.get('/test/evaluate', async (req, res) => {
-    const { evaluato_id, status_evaluate } = req.body;
-    try {
-        const result = await pool.query(`SELECT * FROM public.evaluate where evaluato_id = '$1' and status_evaluate = '$2'  
-` , [evaluato_id, status_evaluate]);
-        res.json(result.rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving section');
-    }
-});
-// 
+// // getประเมินที่เสร็จสิ้นแล้วของเฉพาะของคนๆนั้น
+
+// // 
 
 
 // // getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง

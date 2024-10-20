@@ -33,13 +33,17 @@ const State01_ShowData_Assingedwork = () => {
 
     useEffect(() => {
         const fetchForms = async () => {
+            const status_evaluate = 'ประเมินผลเสร็จสิ้น';
+
             try {
-                // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
+                // // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
                 const response = await axios.get(`http://localhost:8080/test/evaluate/${username}`);
 
-                // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
+                // // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
                 const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
+                // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
                 setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
+
             } catch (error) {
                 console.error('Error fetching forms:', error);
             }
@@ -48,6 +52,7 @@ const State01_ShowData_Assingedwork = () => {
         fetchForms();
     }, []);
 
+    console.log(dataForm);
     useEffect(() => {
         const loggedInUser = localStorage.getItem('loggedInUser');
         if (loggedInUser) {

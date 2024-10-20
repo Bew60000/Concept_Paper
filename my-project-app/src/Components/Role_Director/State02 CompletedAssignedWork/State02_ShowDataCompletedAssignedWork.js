@@ -37,7 +37,7 @@ const State01_ShowData_Assingedwork = () => {
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
                 const response = await axios.get(`http://localhost:8080/test/evaluate/${username}`);
 
-                const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
+                const awaitingForms = response.data.filter(form => form.status_evaluate === 'ประเมินผลเสร็จสิ้น');
                 setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
             } catch (error) {
                 console.error('Error fetching forms:', error);
