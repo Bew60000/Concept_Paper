@@ -45,6 +45,16 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
       });
   };
 
+  const UpdateEvaluateStatus = (status_evaluate, evaluato_id, curriculum_id) => {
+    axios.put('http://localhost:8080/test/update_evaluate_status', { status_evaluate, evaluato_id, curriculum_id })
+      .then(response => {
+        console.log('Evaluate status updated successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating evaluate status:', error);
+      });
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const requests = Object.entries(selectedRoles).map(([userId, role]) => {
@@ -52,6 +62,7 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
         curriculum_id: selectedForm.curriculum_id,
         evaluato_id: userId,
         evaluator_position: role,
+        status_evaluate: 'รอการประเมิน'
       });
     });
 
@@ -59,6 +70,7 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
       await Promise.all(requests);
       console.log('All data submitted successfully');
       UpdateStatus(selectedForm.curriculum_id, 'อยู่ระหว่างการประเมินผล')
+      // UpdateEvaluateStatus('รอการประเมิน', selectedRoles.userId, selectedForm.curriculum_id)
       window.location.reload();
     } catch (error) {
       console.error('Error submitting data:', error);

@@ -684,15 +684,15 @@ app.post('/evaluation_score', async (req, res) => {
 app.post('/add_evaluate', async (req, res) => {
     // const input = req.body;
 
-    const { curriculum_id, evaluato_id, evaluator_position } = req.body;
+    const { curriculum_id, evaluato_id, evaluator_position, status_evaluate } = req.body;
 
 
     try {
         await pool.query(`INSERT INTO evaluate(
-	curriculum_id, evaluato_id, evaluator_position,date_assign)
-	VALUES ($1, $2, $3, now());`,
+	curriculum_id, evaluato_id, evaluator_position,status_evaluate,date_assign)
+	VALUES ($1, $2, $3, $4 ,now());`,
             [
-                curriculum_id, evaluato_id, evaluator_position
+                curriculum_id, evaluato_id, evaluator_position, status_evaluate
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {
@@ -950,7 +950,7 @@ app.post('/Report_reject', async (req, res) => {
 // where evaluate.curriculum_id = 'C0001' 
 
 // getคะแนนการประเมินของฟอร์มนั้นๆ กรอง curriculum_id แสดงข้อมูลคะเเนนการประเมินฟอร์มนั้นๆ เฉพาะประธานแต่ยังไม่ทำตัวเชื่อมที
-app.get('/test/evaluation_score/:curriculum_id', async (req, res) => {
+app.get('/test/evaluation_score_report/:curriculum_id', async (req, res) => {
     const { curriculum_id } = req.params;
     try {
         const result = await pool.query(`select evaluation_score.* , report_for_each_side.* from evaluation_score
@@ -973,19 +973,7 @@ where evaluate.curriculum_id = '$1'
 // 	FROM evaluate 
 
 // getall evaluate ไว้ดูใครหัวหน้า แล้วทำเงื่อนไขกับ getคะแนนการประเมินของฟอร์มนั้นๆ
-app.get('/test/evaluate', async (req, res) => {
-    // const { evaluato_id } = req.params;
-    try {
-        const result = await pool.query(` select * from evaluate `);
-        res.json(result.rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving section');
-    }
-});
 // 
-
-
 
 // select user_info.* , evaluate.curriculum_id , evaluate.evaluator_position from user_info
 // join evaluate on user_info.username = evaluate.evaluato_id 
@@ -1013,7 +1001,6 @@ where evaluate.curriculum_id = '$1'
 
 
 // // getประเมินที่เสร็จสิ้นแล้วของเฉพาะของคนๆนั้น
-
 // // 
 
 

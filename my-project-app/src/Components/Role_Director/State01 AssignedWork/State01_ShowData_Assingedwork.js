@@ -40,7 +40,7 @@ const State01_ShowData_Assingedwork = () => {
                 const response = await axios.get(`http://localhost:8080/test/evaluate/${username}`);
 
                 // // กรองเฉพาะฟอร์มที่มีสถานะ "ปฏิเสธการตอบรับ"
-                const awaitingForms = response.data.filter(form => form.status === 'อยู่ระหว่างการประเมินผล');
+                const awaitingForms = response.data.filter(form => form.status_evaluate === 'รอการประเมิน');
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
                 setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
 
@@ -112,7 +112,7 @@ const State01_ShowData_Assingedwork = () => {
 
                     <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-6-5">
                         <div className="col-span-2 text-center">
-                            <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
+                            <p className="text-lg font-bold m-1">วันที่มอยหมาย</p>
                         </div>
                         <div className="col-span-3 text-center">
                             <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
@@ -138,7 +138,7 @@ const State01_ShowData_Assingedwork = () => {
                                     <div className="grid grid-cols-12 gap-4 items-center">
                                         <div className="col-span-2 text-center">
 
-                                            <p className="text-gray-700">{info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
+                                            <p className="text-gray-700">{info.date_assign ? new Date(info.date_assign).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                                         </div>
                                         <div className="col-span-3 text-center">
                                             <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>
@@ -150,7 +150,7 @@ const State01_ShowData_Assingedwork = () => {
                                         </div>
                                         <div className="col-span-2 text-center">
                                             <p className="text-gray-700 m-1">สถานะ</p>
-                                            <p className="text-blue-600 font-bold">"{info.status}"</p>
+                                            <p className="text-blue-600 font-bold">"{info.status_evaluate}"</p>
                                         </div>
                                     </div>
 
