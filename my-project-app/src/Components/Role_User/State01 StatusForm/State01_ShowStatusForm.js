@@ -93,6 +93,16 @@ function State01_ShowStatusForm() {
         return sentByInfo.find(user => user.username === username);
     };
 
+    const Updatecancel = (curriculum_id) => {
+        axios.put(`http://localhost:8080/test/update_date_cancel`, { curriculum_id })
+            .then(response => {
+                console.log('date updated successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+            });
+    };
+
     const UpdateStatus = (curriculum_id, newStatus) => {
         axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
             .then(response => {
@@ -101,6 +111,7 @@ function State01_ShowStatusForm() {
                 setDataForm(prevData => prevData.map(info =>
                     info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
                 ));
+                Updatecancel(curriculum_id)
                 window.location.reload();
             })
             .catch(error => {

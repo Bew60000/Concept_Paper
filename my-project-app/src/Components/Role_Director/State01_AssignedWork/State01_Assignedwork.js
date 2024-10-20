@@ -12,17 +12,30 @@ import 'react-tooltip/dist/react-tooltip.css'; // นำเข้าการต
 const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, teacherData, UpdateStatus }) => {
   const modalRef = useRef(null);
   const [assignData, setAssignData] = useState({
-    aspect_1: '', //ตัวแปร 1
-    aspect_2: '', //ตัวแปร 1
-    aspect_3: '', //ตัวแปร 1
-    aspect_4: '', //ตัวแปร 1
-    aspect_5: '', //ตัวแปร 1
-    report01: '',    // ตัวแปร 2
-    report02: '',    // ตัวแปร 2
-    report03: '',    // ตัวแปร 2
-    report04: '',    // ตัวแปร 2
-    report05: '',    // ตัวแปร 2
+    aspect_1: '',
+    aspect_2: '',
+    aspect_3: '',
+    aspect_4: '',
+    aspect_5: '',
+    report01: '',
+    report02: '',
+    report03: '',
+    report04: '',
+    report05: '',
   });
+
+
+
+  const UpdateEvaluateStatus = (status_evaluate, evaluato_id, curriculum_id) => {
+    axios.put('http://localhost:8080/test/update_evaluate_status', { status_evaluate, evaluato_id, curriculum_id })
+      .then(response => {
+        console.log('Evaluate status updated successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating evaluate status:', error);
+      });
+  };
+
   const [groupedEvaluations, setGroupedEvaluations] = useState({});
 
   useEffect(() => {
@@ -73,8 +86,9 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
 
     axios.post('http://localhost:8080/api/evaluation_score', dataToSubmit)
       .then(response => {
-        window.location.reload();
+        // window.location.reload();
         console.log('Data submitted successfully:', response.data);
+        UpdateEvaluateStatus('เสร็จสิ้น', username, selectedForm.curriculum_id)
         window.location.reload();
       })
       .catch(error => {

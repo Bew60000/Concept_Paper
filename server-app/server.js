@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    // password: '6410210573',
-    password: '10062545Aong.',
+    password: '6410210573',
+    // password: '10062545Aong.',
     port: 5432
 });
 
@@ -689,8 +689,8 @@ app.post('/add_evaluate', async (req, res) => {
 
     try {
         await pool.query(`INSERT INTO evaluate(
-	curriculum_id, evaluato_id, evaluator_position)
-	VALUES ($1, $2, $3);`,
+	curriculum_id, evaluato_id, evaluator_position,date_assign)
+	VALUES ($1, $2, $3, now());`,
             [
                 curriculum_id, evaluato_id, evaluator_position
             ]);
@@ -836,6 +836,175 @@ where evaluato_id = $1
     }
 });
 // 
+
+
+app.put('/test/update_evaluate_status', async (req, res) => {
+
+    const { status_evaluate, evaluato_id, curriculum_id } = req.body;
+    // const id = req.id;
+    // const name = req.name;
+
+    try {
+        await pool.query(`UPDATE evaluate
+      SET status_evaluate = $1 , time_evaluate = Now()
+      WHERE evaluato_id = $2 AND curriculum_id = $3;`,
+            [status_evaluate, evaluato_id, curriculum_id]);
+        // res.json(result.rows);
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+
+app.put('/test/update_date_cancel', async (req, res) => {
+
+    const { curriculum_id } = req.body;
+    // const id = req.id;
+    // const name = req.name;
+
+    try {
+        await pool.query(`UPDATE basic_infos
+      SET  date_cancel_request = Now()
+      WHERE  curriculum_id = $1;`,
+            [curriculum_id]);
+        // res.json(result.rows);
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+app.put('/test/update_date_reject', async (req, res) => {
+
+    const { curriculum_id } = req.body;
+    // const id = req.id;
+    // const name = req.name;
+
+    try {
+        await pool.query(`UPDATE basic_infos
+      SET  date_cancel_request = Now()
+      WHERE  curriculum_id = $1;`,
+            [curriculum_id]);
+        // res.json(result.rows);
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+
+
+app.post('/Report_reject', async (req, res) => {
+    // const input = req.body;
+
+    const { curriculum_id, report_reject } = req.body;
+
+
+    try {
+        await pool.query(`INSERT report_reject(
+	curriculum_id, report_reject, time_reject)
+	VALUES ($1, $2, now());`,
+            [
+                curriculum_id, report_reject
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+// select evaluation_score.* , report_for_each_side.* from evaluation_score
+// join evaluate on evaluate.curriculum_id = evaluation_score.curriculum_id 
+// and evaluate.evaluato_id = evaluation_score.evaluato_id
+// join report_for_each_side on report_for_each_side.evaluato_id = evaluation_score.evaluato_id
+// where evaluate.curriculum_id = 'C0001' 
+
+// getคะแนนการประเมินของฟอร์มนั้นๆ กรอง curriculum_id แสดงข้อมูลคะเเนนการประเมินฟอร์มนั้นๆ เฉพาะประธานแต่ยังไม่ทำตัวเชื่อมที
+app.get('/test/evaluation_score/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select evaluation_score.* , report_for_each_side.* from evaluation_score
+join evaluate on evaluate.curriculum_id = evaluation_score.curriculum_id 
+and evaluate.evaluato_id = evaluation_score.evaluato_id
+join report_for_each_side on report_for_each_side.evaluato_id = evaluation_score.evaluato_id
+where evaluate.curriculum_id = '$1'    
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+
+
+// SELECT evaluator_position , evaluato_id , curriculum_id , status_evaluate
+// 	FROM evaluate 
+
+// getall evaluate ไว้ดูใครหัวหน้า แล้วทำเงื่อนไขกับ getคะแนนการประเมินของฟอร์มนั้นๆ
+app.get('/test/evaluate', async (req, res) => {
+    // const { evaluato_id } = req.params;
+    try {
+        const result = await pool.query(` select * from evaluate `);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+
+
+// select user_info.* , evaluate.curriculum_id , evaluate.evaluator_position from user_info
+// join evaluate on user_info.username = evaluate.evaluato_id 
+// where evaluate.curriculum_id = 'C0005' 
+
+
+// getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง
+app.get('/test/user_info_evaluate/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select user_info.* , evaluate.curriculum_id , evaluate.evaluator_position from user_info
+join evaluate on user_info.username = evaluate.evaluato_id 
+where evaluate.curriculum_id = '$1'   
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+
+// // getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง
+// app.get('/test/evaluate/:evaluato_id', async (req, res) => {
+//     const { evaluato_id } = req.params;
+//     try {
+//         const result = await pool.query(`select * from evaluate 
+// join basic_infos on basic_infos.curriculum_id = evaluate.curriculum_id 
+// join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
+// join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id 
+// where evaluato_id = $1   
+// ` , [evaluato_id]);
+//         res.json(result.rows);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error retrieving section');
+//     }
+// });
+// // 
 
 // select * from evaluate 
 // join basic_infos on basic_infos.curriculum_id = evaluate.curriculum_id 
