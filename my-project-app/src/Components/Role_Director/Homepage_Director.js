@@ -1,7 +1,7 @@
 import React from 'react'
 import Background from '../../img/Background.svg';
 import Navbar from '../Navbar/NavbarDirector';
-import Step01_ShowData_Assingedwork from './State01_AssignedWork/State01_ShowData_Assingedwork';
+import Step01_ShowData_Assingedwork from './State01 AssignedWork/State01_ShowData_Assingedwork';
 
 export default function Homepage_Director() {
 

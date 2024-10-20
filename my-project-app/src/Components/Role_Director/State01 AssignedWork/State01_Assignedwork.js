@@ -88,7 +88,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
       .then(response => {
         // window.location.reload();
         console.log('Data submitted successfully:', response.data);
-        UpdateEvaluateStatus('เสร็จสิ้น', username, selectedForm.curriculum_id)
+        UpdateEvaluateStatus('ประเมินผลเสร็จสิ้น', username, selectedForm.curriculum_id)
         window.location.reload();
       })
       .catch(error => {
