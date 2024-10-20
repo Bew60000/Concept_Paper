@@ -78,15 +78,36 @@ function State01_ShowFormRequestForm() {
             });
     };
 
+
+    const UpdateAccept = (curriculum_id) => {
+        axios.put(`http://localhost:8080/test/update_date_acceptance`, { curriculum_id })
+            .then(response => {
+                console.log('date updated successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+            });
+    };
+
     const UpdateStatus = (curriculum_id, newStatus) => {
         axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
             .then(response => {
                 console.log('Status updated successfully:', response.data);
                 // หลังจากอัปเดตสถานะสำเร็จ ให้เรียกข้อมูลใหม่เพื่ออัปเดต UI
-                setDataForm(prevData => prevData.map(info =>
-                    info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
-                ));
-                window.location.reload();
+                // setDataForm(prevData => prevData.map(info =>
+                //     info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
+                // ));
+
+                if (newStatus === 'กำลังดำเนินการประเมิน') {
+                    UpdateAccept(curriculum_id);
+                    window.location.reload();
+
+                } else if (newStatus === 'ปฏิเสธการตอบรับ') {
+                    window.location.reload();
+                } else {
+                    window.location.reload();
+                }
+
             })
             .catch(error => {
                 console.error('Error updating status:', error);

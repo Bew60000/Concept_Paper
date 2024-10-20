@@ -215,7 +215,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 fluid
                 placeholder="โปรดอธิบายรายละเอียด"
                 name="report01"
-                style={{ minHeight: '200px' }}
+                style={{ minHeight: '150px' }}
                 value={assignData.report01}
                 onChange={handleChange}
               />

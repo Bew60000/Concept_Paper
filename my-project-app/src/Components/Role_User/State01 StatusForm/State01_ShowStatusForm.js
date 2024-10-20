@@ -111,7 +111,7 @@ function State01_ShowStatusForm() {
                 setDataForm(prevData => prevData.map(info =>
                     info.curriculum_id === curriculum_id ? { ...info, status: newStatus } : info
                 ));
-                Updatecancel(curriculum_id)
+                // Updatecancel(curriculum_id)
                 window.location.reload();
             })
             .catch(error => {

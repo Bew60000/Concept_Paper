@@ -879,6 +879,27 @@ app.put('/test/update_date_cancel', async (req, res) => {
     }
 });
 
+app.put('/test/update_date_acceptance', async (req, res) => {
+
+    const { curriculum_id } = req.body;
+    // const id = req.id;
+    // const name = req.name;
+
+    try {
+        await pool.query(`UPDATE basic_infos
+      SET  date_acceptance = Now()
+      WHERE  curriculum_id = $1;`,
+            [curriculum_id]);
+        // res.json(result.rows);
+        res.status(201).send('update successfull');
+        console.log();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
+
 app.put('/test/update_date_reject', async (req, res) => {
 
     const { curriculum_id } = req.body;
@@ -971,7 +992,7 @@ app.get('/test/evaluate', async (req, res) => {
 // where evaluate.curriculum_id = 'C0005' 
 
 
-// getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง
+// getชื่อของผู้ประเมินตามแบบประเมิน
 app.get('/test/user_info_evaluate/:curriculum_id', async (req, res) => {
     const { curriculum_id } = req.params;
     try {
@@ -979,6 +1000,24 @@ app.get('/test/user_info_evaluate/:curriculum_id', async (req, res) => {
 join evaluate on user_info.username = evaluate.evaluato_id 
 where evaluate.curriculum_id = '$1'   
 ` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+// 
+
+
+// SELECT * FROM public.evaluate where evaluato_id = 'D004' and status_evaluate = 'เสร็จสิ้น'
+
+
+// getประเมินที่เสร็จสิ้นแล้วของเฉพาะของคนๆนั้น
+app.get('/test/evaluate', async (req, res) => {
+    const { evaluato_id, status_evaluate } = req.body;
+    try {
+        const result = await pool.query(`SELECT * FROM public.evaluate where evaluato_id = '$1' and status_evaluate = '$2'  
+` , [evaluato_id, status_evaluate]);
         res.json(result.rows);
     } catch (error) {
         console.error(error);
