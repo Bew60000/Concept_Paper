@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Background from '../../../img/Background.svg';
 import Step02_ModalDetailForm from './State02_ModalDetailForm';
-// import State01_Assignedwork from './State01_Assignedwork';
+import State02_ModalDetailResults from './State02_ModalDetailResults';
 import Navbar from '../../Navbar/NavbarDirector';
 import NavbarDirectorFunctions from '../../Navbar/NavbarDirectorFunctions';
 
@@ -18,11 +18,11 @@ const State02_ShowDataCompletedAssignedWork = () => {
     const [studentData, setStudentData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
-    const [selectedFormAssigned, setSelectedFormAssigned] = useState({}); // ข้อมูล Form ที่เลือก
+    const [selectedResults, setSelectedisResults] = useState({}); // ข้อมูล Form ที่เลือก
     const [userInfo, setUserInfo] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setisModalOpen] = useState(false);
-    const [isAssignedWork, setisAssignedWork] = useState(false);
+    const [isResults, setisResults] = useState(false);
     const itemsPerPage = 4;
     const navigate = useNavigate();
 
@@ -76,18 +76,18 @@ const State02_ShowDataCompletedAssignedWork = () => {
             .catch(err => console.error(err));
     };
 
-    const openAssignedword = (form) => {
-        setSelectedFormAssigned(form);
-        setisAssignedWork(true);
+    const openResults = (form) => {
+        setSelectedisResults(form);
+        setisResults(true);
         fetchAdditionalData(form.curriculum_id);
 
         // console.log('Data saved with curriculum_id:', form.curriculum_id);
 
     };
 
-    const closeAssignedword = () => {
-        setisAssignedWork(false);
-        setSelectedFormAssigned(null);
+    const closeResults = () => {
+        setisResults(false);
+        setSelectedisResults(null);
     };
 
     const openModal = (form) => {
@@ -172,12 +172,12 @@ const State02_ShowDataCompletedAssignedWork = () => {
                                                 </div>
                                             </button>
 
-                                            <button onClick={() => openAssignedword(info)} className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                            <button onClick={() => openResults(info)} className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                                                     </svg>
-                                                    ประเมินผล
+                                                    ผลการประเมิน
                                                 </div>
                                             </button>
                                         </div>
@@ -208,6 +208,14 @@ const State02_ShowDataCompletedAssignedWork = () => {
                     isOpen={isModalOpen}
                     closeModal={closeModal}
                     selectedForm={selectedForm}
+                    studentData={studentData}
+                    teacherData={teacherData}
+                />
+
+                <Step02_ModalDetailForm
+                    isOpen={isResults}
+                    closeModal={closeResults}
+                    selectedForm={selectedResults}
                     studentData={studentData}
                     teacherData={teacherData}
                 />
