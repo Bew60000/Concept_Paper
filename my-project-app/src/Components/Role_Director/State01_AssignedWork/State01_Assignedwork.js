@@ -23,9 +23,8 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
     report04: '',    // ตัวแปร 2
     report05: '',    // ตัวแปร 2
   });
-
-
   const [groupedEvaluations, setGroupedEvaluations] = useState({});
+
   useEffect(() => {
     axios.get('http://localhost:8080/evaluate_data')
       .then(response => {
@@ -82,19 +81,6 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
         console.error('Error submitting data:', error);
       });
   };
-
-  // // เพิ่มการปิด modal เมื่อคลิกนอก modal
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //       closeModal();
-  //     }
-  //   };
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, [closeModal]);
 
   if (!isOpen || !selectedForm) return null;
 
@@ -159,7 +145,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 content={groupedEvaluations['Aspect01']?.map(
                   (item) => `ระดับการประเมิน ${item.evaluation_level}: ${item.detailed_evaluation}`
                 ).join('\n')}
-              />
+              />  
             </div>
 
             <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />

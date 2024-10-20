@@ -83,23 +83,22 @@ function State02_ShowDetailCanceledForm() {
             <div className="grid grid-cols-12 p-5 pt-20 content-start">
                 <div className='col-start-2 col-span-8'>
                     <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
-
                         <h2 className='text-start text-gray-700 mb-0'>คำขอที่ยกเลิก</h2>
                         <p className='text-gray-500 mt-0 font-bold'>(ทางผู้ส่งเป็นผู้กดยกเลิก)</p>
 
                         <hr className='mb-5' />
 
-                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
-                            <div className="col-span-2 text-center p-5">
-                                <p className="text-lg font-bold m-1">วันที่ยื่น</p>
+                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-5">
+                            <div className="col-span-2 text-center">
+                                <p className="text-lg font-bold m-1">วันที่ยกเลิก</p>
                             </div>
-                            <div className="col-span-3 text-center p-5">
+                            <div className="col-span-3 text-center">
                                 <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
                             </div>
-                            <div className="col-span-5 text-center p-5">
+                            <div className="col-span-5 text-center">
                                 <p className="text-lg font-bold m-1">หลักสูตร</p>
                             </div>
-                            <div className="col-span-2 gap-2 flex justify-center items-center">
+                            <div className="col-span-2 text-center">
                                 <p className="text-lg font-bold m-1">สถานะ</p>
                             </div>
                         </div>
@@ -135,6 +134,14 @@ function State02_ShowDetailCanceledForm() {
                                         <hr className='border-white m-5 mt-4' />
 
                                         <div className="flex justify-end items-center mt-2">
+                                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                                <div className="flex justify-start items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                                    </svg>
+                                                    ส่งใหม่อีกครั้ง
+                                                </div>
+                                            </button>
                                             <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">

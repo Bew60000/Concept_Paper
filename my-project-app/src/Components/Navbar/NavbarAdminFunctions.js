@@ -166,12 +166,13 @@ const NavbarAdminFunctions = () => {
 
             </div>
 
-            <div className='bg-white m-4 mr-0 rounded-xl p-6 text-gray-700 text-center hover:bg-red-800 hover:text-white' onClick={handleLogout}>
-                <div className="flex justify-center items-center space-x-2">
-                    <p className="font-bold ">ออกจากระบบ</p>
+            <Link to='/'>
+                <div className='bg-white m-4 mr-0 rounded-xl p-6 text-gray-700 text-center hover:bg-red-800 hover:text-white' onClick={handleLogout}>
+                    <div className="flex justify-center items-center space-x-2">
+                        <p className="font-bold ">ออกจากระบบ</p>
+                    </div>
                 </div>
-            </div>
-
+            </Link>
 
 
         </div >

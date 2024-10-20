@@ -84,23 +84,22 @@ function State03_ShowDetailRejectRequest() {
             <div className="grid grid-cols-12 p-5 pt-20 content-start">
                 <div className='col-start-2 col-span-8'>
                     <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
-
                         <h2 className='text-start text-gray-700 mb-0'>คำขอที่โดนปฎิเสธ</h2>
                         <p className='text-gray-500 mt-0 font-bold'>(ไม่ผ่านเกณฑ์)</p>
 
                         <hr className='mb-5' />
 
-                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
-                            <div className="col-span-2 text-center p-5">
-                                <p className="text-lg font-bold m-1">วันที่ยื่น</p>
+                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-5">
+                            <div className="col-span-2 text-center">
+                                <p className="text-lg font-bold m-1">วันที่ปฎิเสธ</p>
                             </div>
-                            <div className="col-span-3 text-center p-5">
+                            <div className="col-span-3 text-center">
                                 <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
                             </div>
-                            <div className="col-span-5 text-center p-5">
+                            <div className="col-span-5 text-center">
                                 <p className="text-lg font-bold m-1">หลักสูตร</p>
                             </div>
-                            <div className="col-span-2 gap-2 flex justify-center items-center">
+                            <div className="col-span-2 text-center">
                                 <p className="text-lg font-bold m-1">สถานะ</p>
                             </div>
                         </div>
@@ -139,10 +138,9 @@ function State03_ShowDetailRejectRequest() {
                                             <button className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                                     </svg>
-                                                    สาเหตุ
+                                                    เหตุผลที่ปฎิเสธ
                                                 </div>
                                             </button>
 

@@ -82,7 +82,7 @@ root.render(
         <Route path='/admin/2/showdetailassign_work' element={<State02_ShowDetailAssign_work />} />
         <Route path='/admin/3/showdetailmake_assessment' element={<State03_ShowDetailMake_assessment />} />
         <Route path='/admin/4/showdetailconclusion' element={<State04_ShowDetailConclusion />} />
-        <Route path='/admin/4/showdetail_assessment_completed' element={<State05_ShowDetailAssessmentCompleted />} />
+        <Route path='/admin/5/showdetail_assessment_completed' element={<State05_ShowDetailAssessmentCompleted />} />
         <Route path='/admin/6/showdetailcanceled_request' element={<State06_ShowDetailCanceled_request />} />
         <Route path='/admin/7/showdetailrejected_request' element={<State07_ShowDeTailRejected_request />} />
 

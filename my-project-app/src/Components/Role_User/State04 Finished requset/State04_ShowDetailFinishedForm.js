@@ -27,7 +27,7 @@ function State04_ShowDetailFinishedForm() {
         const fetchForms = async () => {
             try {
                 // เรียก API เพื่อดึงข้อมูลจาก endpoint ที่คุณระบุ
-                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');                               
+                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
                 const awaitingForms = response.data.filter(form => form.status === 'ประเมินผลเสร็จสิ้น');
                 setDataForm(awaitingForms); // เก็บข้อมูลที่กรองแล้วลงใน state
             } catch (error) {
@@ -74,7 +74,7 @@ function State04_ShowDetailFinishedForm() {
     const findUserByUsername = (username) => {
         return sentByInfo.find(user => user.username === username);
     };
-   
+
     return (
 
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
@@ -89,17 +89,17 @@ function State04_ShowDetailFinishedForm() {
 
                         <hr className='mb-5' />
 
-                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
-                            <div className="col-span-2 text-center p-5">
+                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-5">
+                            <div className="col-span-2 text-center">
                                 <p className="text-lg font-bold m-1">วันที่ยื่น</p>
                             </div>
-                            <div className="col-span-3 text-center p-5">
+                            <div className="col-span-3 text-center">
                                 <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
                             </div>
-                            <div className="col-span-5 text-center p-5">
+                            <div className="col-span-5 text-center">
                                 <p className="text-lg font-bold m-1">หลักสูตร</p>
                             </div>
-                            <div className="col-span-2 gap-2 flex justify-center items-center">
+                            <div className="col-span-2 text-center">
                                 <p className="text-lg font-bold m-1">สถานะ</p>
                             </div>
                         </div>
@@ -135,6 +135,14 @@ function State04_ShowDetailFinishedForm() {
                                         <hr className='border-white m-5 mt-4' />
 
                                         <div className="flex justify-end items-center mt-2">
+                                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                                <div className="flex justify-start items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                                    </svg>
+                                                    รายงานผลการประเมิน
+                                                </div>
+                                            </button>
 
                                             <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                                 <div className="flex justify-start items-center">
@@ -175,7 +183,7 @@ function State04_ShowDetailFinishedForm() {
                     selectedForm={selectedForm}
                     studentData={studentData}
                     teacherData={teacherData}
-                    findUserByUsername={findUserByUsername}                    
+                    findUserByUsername={findUserByUsername}
                 />
 
             </div>

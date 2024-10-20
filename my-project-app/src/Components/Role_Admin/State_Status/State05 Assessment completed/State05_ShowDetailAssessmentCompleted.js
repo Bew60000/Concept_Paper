@@ -115,17 +115,17 @@ function State05_ShowDetailAssessmentCompleted() {
 
                         <hr className='mb-5' />
 
-                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100">
-                            <div className="col-span-2 text-center p-5">
-                                <p className="text-lg font-bold m-1">วันที่ยื่น</p>
+                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-5">
+                            <div className="col-span-2 text-center">
+                                <p className="text-lg font-bold m-1">วันที่แจ้งผล</p>
                             </div>
-                            <div className="col-span-3 text-center p-5">
+                            <div className="col-span-3 text-center">
                                 <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
                             </div>
-                            <div className="col-span-5 text-center p-5">
+                            <div className="col-span-5 text-center">
                                 <p className="text-lg font-bold m-1">หลักสูตร</p>
                             </div>
-                            <div className="col-span-2 gap-2 flex justify-center items-center">
+                            <div className="col-span-2 text-center">
                                 <p className="text-lg font-bold m-1">สถานะ</p>
                             </div>
                         </div>
