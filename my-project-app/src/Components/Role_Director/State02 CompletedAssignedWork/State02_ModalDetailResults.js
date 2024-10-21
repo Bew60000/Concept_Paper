@@ -41,13 +41,36 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
                         <div className='flex justify-between w-5/6 my-6 mx-auto'>
                             <div>
                                 <h2 className="font-bold m-0"> ผลการประเมินหลักสูตร</h2>
-                                <p className='text-gray-500 font-bold m-0 text-lg'>{selectedForm.majorthai}</p>
-                                <p className='text-gray-500 font-bold m-0'>"{selectedForm.majoreng}"</p>
+                                {/* <p className='text-gray-500 font-bold m-0 text-lg'>{selectedForm.majorthai}</p>
+                                <p className='text-gray-500 font-bold m-0'>"{selectedForm.majoreng}"</p> */}
                             </div>
 
                         </div>
 
                         <hr className='border-gray-300 w-3/4 mx-auto' />
+
+                        <div className='mx-auto mt-8 w-3/4'>
+                            <div className="bg-gray-100 p-6 rounded-xl w-full mb-4">
+                                <div className="grid grid-cols-12 gap-4 items-center">
+                                    <div className="col-span-2 text-center">
+                                        <p className="text-gray-700 font-bold m-1">วันที่ยื่นคำขอ</p>
+                                        <p className="text-gray-700">{selectedForm.sent_time ? new Date(selectedForm.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
+                                    </div>
+                                    <div className="col-span-4 text-start">
+                                        <p className="text-blue-800 font-bold m-0">หลักสูตร{selectedForm.majorthai}</p>
+                                        <p className='text-gray-500 m-0'>{selectedForm.majoreng}</p>
+                                    </div>
+                                    <div className="col-span-2 text-start">
+                                        <p className="text-gray-700 font-bold m-1">คณะ{selectedForm.faculty}</p>
+                                        <p className="text-gray-700">วิทยาเขต: {selectedForm.campus}</p>
+                                    </div>
+                                    <div className="col-span-4 text-start">
+                                        <p className="m-1"><strong>ชื่อปริญญา :</strong> {selectedForm.degreename}</p>
+                                        <p className="m-1"><strong>ปีที่เริ่มดำเนินการสอน :</strong> {selectedForm.yearstarted}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className="text-start p-5 pt-2 mt-5">
 

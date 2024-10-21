@@ -81,7 +81,7 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
-      <div className="bg-white p-12 pt-6 rounded-lg w-11/12 rounded-full min-h-[680px] max-h-[680px]  mt-16">
+      <div className="bg-white p-12 pt-6 rounded-lg w-5/6 rounded-full min-h-[680px] mt-16">
         {selectedForm && (
           <div className='text-gray-700 px-12'>
 
@@ -98,16 +98,16 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
                     <p className="text-gray-700 font-bold m-1">วันที่ยื่นคำขอ</p>
                     <p className="text-gray-700">{selectedForm.sent_time ? new Date(selectedForm.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                   </div>
-                  <div className="col-span-3 text-start">
+                  <div className="col-span-4 text-center">
                     <p className="text-blue-800 font-bold m-0">หลักสูตร{selectedForm.majorthai}</p>
                     <p className='text-gray-500 m-0'>{selectedForm.majoreng}</p>
                   </div>
-                  <div className="col-span-3 text-start">
+                  <div className="col-span-3 text-center">
                     <p className="text-gray-700 font-bold m-1">คณะ{selectedForm.faculty}</p>
                     <p className="text-gray-700">วิทยาเขต: {selectedForm.campus}</p>
                   </div>
-                  <div className="col-span-4 text-start">
-                    <p className="m-1"><strong>ชื่อปริญญา :</strong> {selectedForm.degreename}</p>
+                  <div className="col-span-3 text-start">
+                    {/* <p className="m-1"><strong>ชื่อปริญญา :</strong> {selectedForm.degreename}</p> */}
                     <p className="m-1"><strong>ปีที่เริ่มดำเนินการสอน :</strong> {selectedForm.yearstarted}</p>
                   </div>
                 </div>
@@ -191,10 +191,10 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
           <div className="gap-4 flex justify-center items-center mt-5">
             <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
               <div className="flex justify-start items-center">
-                ยืนยันการมอบหมายงาน
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
+                ยืนยันการมอบหมายงาน
               </div>
             </button>
 

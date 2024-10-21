@@ -174,7 +174,6 @@ function State01_ShowStatusForm() {
                                     </div>
 
                                     <div className="col-span-2 text-center">
-                                        <p className="text-gray-700 m-1">สถานะ</p>
                                         <p className="text-blue-600 font-bold">"{info.status}"</p>
                                     </div>
 
@@ -192,15 +191,17 @@ function State01_ShowStatusForm() {
                                         </div>
                                     </button> */}
 
-                                    <button onClick={() => UpdateStatus(info.curriculum_id, 'ยกเลิกคำขอ')}
-                                        className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
-                                        <div className="flex justify-start items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                            </svg>
-                                            ยกเลิกคำขอ
-                                        </div>
-                                    </button>
+                                    {info.status === 'รอการตอบรับ' && (
+                                        <button onClick={() => UpdateStatus(info.curriculum_id, 'ยกเลิกคำขอ')}
+                                            className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                                            <div className="flex justify-start items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                </svg>
+                                                ยกเลิกคำขอ
+                                            </div>
+                                        </button>
+                                    )}
 
                                     {/* <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2" onClick={() => editRequest(info)}>
                                         <div className="flex justify-start items-center">
