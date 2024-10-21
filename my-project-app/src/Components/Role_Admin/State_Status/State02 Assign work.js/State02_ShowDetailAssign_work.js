@@ -52,6 +52,7 @@ function State02_ShowDetailAssign_work() {
             axios.get(`http://localhost:8080/test/student_admissions/${curriculumId}`),
             axios.get(`http://localhost:8080/test/teacher/${curriculumId}`),
             axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
+
         ])
             .then(([studentRes, teacherRes, adminRes]) => {
                 setStudentData(studentRes.data);
@@ -145,7 +146,7 @@ function State02_ShowDetailAssign_work() {
                                     <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4">
                                         <div className="grid grid-cols-12 gap-4 items-center">
                                             <div className="col-span-2 text-center">
-                                                <p className="text-gray-700">{info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
+                                                <p className="text-gray-700">{info.date_acceptance ? new Date(info.date_acceptance).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                                             </div>
                                             <div className="col-span-3 text-center">
                                                 <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>

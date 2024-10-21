@@ -16,6 +16,7 @@ function State03_ShowDetailMake_assessment() {
     const [dataForm, setDataForm] = useState([]);
     const [studentData, setStudentData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
+    const [evaluateresult, setevaluateresult] = useState([]);
     const [sentByInfo, setSentByInfo] = useState([]); //สำหรับดึงข้อมูล username จากตาราง user
     const [isModalOpen, setIsModalOpen] = useState(false); // สถานะของ Modal
     const [selectedForm, setSelectedForm] = useState(null); // ข้อมูล Form ที่เลือก
@@ -48,10 +49,12 @@ function State03_ShowDetailMake_assessment() {
         Promise.all([
             axios.get(`http://localhost:8080/test/student_admissions/${curriculumId}`),
             axios.get(`http://localhost:8080/test/teacher/${curriculumId}`),
-            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
+            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`),
+            axios.get(`http://localhost:8080/get_evaluate_result/${curriculumId}`)
         ])
-            .then(([studentRes, teacherRes, adminRes]) => {
+            .then(([studentRes, teacherRes, adminRes, evaluateresult]) => {
                 setStudentData(studentRes.data);
+                setevaluateresult(evaluateresult);
                 setTeacherData(teacherRes.data);
             })
             .catch(err => console.error(err));
@@ -131,7 +134,7 @@ function State03_ShowDetailMake_assessment() {
                                     <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4">
                                         <div className="grid grid-cols-12 gap-4 items-center">
                                             <div className="col-span-2 text-center">
-                                                <p className="text-gray-700">{info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
+                                                <p className="text-gray-700">{info.date_assign ? new Date(info.date_assign).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                                             </div>
                                             <div className="col-span-3 text-center">
                                                 <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>

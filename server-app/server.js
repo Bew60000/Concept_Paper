@@ -628,7 +628,8 @@ app.get('/test/get_data_info_analysis_teaching', async (req, res) => {
     try {
         const result = await pool.query(`select * from basic_infos
 join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
-join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id   
+join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id 
+join evaluate on basic_infos.curriculum_id = evaluate.curriculum_id   
 `);
         res.json(result.rows);
     } catch (error) {
@@ -1022,15 +1023,15 @@ where evaluate.curriculum_id = $1
 app.post('/evaluation_results', async (req, res) => {
     // const input = req.body;
 
-    const { curriculum_id, total_score, report, evaluato_id, time_finish_evaluate } = req.body;
+    const { curriculum_id, total_score, report1, report2, report3, report4, report5, evaluato_id, time_finish_evaluate } = req.body;
 
 
     try {
-        await pool.query(`INSERT INTO public.evaluation_results(
-	curriculum_id, total_score, report, evaluato_id, time_finish_evaluate)
- 	VALUES ($1, $2, $3, $4, now());`,
+        await pool.query(`INSERT INTO evaluation_results(
+	curriculum_id, total_score, report1,report2,report3,report4,report5, evaluato_id, time_finish_evaluate)
+ 	VALUES ($1, $2, $3, $4,$5,$6,$7,$8 ,now());`,
             [
-                curriculum_id, total_score, report, evaluato_id
+                curriculum_id, total_score, report1, report2, report3, report4, report5, evaluato_id
             ]);
         res.status(201).send('Add successfull');
     } catch (error) {

@@ -7,9 +7,20 @@ import {
     Form,
 } from 'semantic-ui-react';
 
-const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, studentData, teacherData, UpdateStatus }) => {
+const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, studentData, teacherData, }) => {
     const modalRef = useRef(null);
     const [evaluationScores, setEvaluationScores] = useState([]);
+
+    const [formreport, setFormreport] = useState({
+        report1: '',
+        report2: '',
+        report3: '',
+        report4: '',
+        report5: ''
+    });
+
+
+
 
     useEffect(() => {
         if (selectedForm) {
@@ -22,6 +33,41 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                 });
         }
     }, [selectedForm]);
+
+
+
+
+    const UpdateStatus = (curriculum_id, newStatus) => {
+        axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
+            .then(response => {
+                console.log('Status updated successfully:', response.data);
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+            });
+    };
+
+
+    // Check if the user is logged in
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    let username = ''; // Initial empty username
+    if (loggedInUser) {
+        const user = JSON.parse(loggedInUser); // Convert JSON string to object
+        username = user.username; // Get username from the logged-in user
+    }
+
+
+
+
+    const handleChange = (e, { name, value }) => {
+        setFormreport(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+
 
     // เพิ่มการปิด modal เมื่อคลิกนอก modal
     useEffect(() => {
@@ -43,6 +89,31 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
         const calculatedScore = (totalScore * 20) / 5;
         return total + calculatedScore;
     }, 0) / 3);
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Include curriculum_id from selectedForm in the assignData
+        const dataToSubmit = {
+            ...formreport,
+            curriculum_id: selectedForm.curriculum_id,
+            total_score: averageCalculatedScore,
+            evaluato_id: username // Add curriculum_id to the submitted data
+        };
+
+        axios.post('http://localhost:8080/evaluation_results', dataToSubmit)
+            .then(response => {
+                // window.location.reload();
+                console.log('Data submitted successfully:', response.data);
+                UpdateStatus(selectedForm.curriculum_id, 'สรุปผลประเมินเสร็จสิ้น')
+                // UpdateEvaluateStatus('ประเมินผลเสร็จสิ้น', username, selectedForm.curriculum_id)
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error submitting data:', error);
+            });
+    };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -126,10 +197,10 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                                     <FormTextArea className="p-10  pt-2"
                                         fluid
                                         placeholder="โปรดอธิบายรายละเอียด"
-                                        // name="report01"
+                                        name="report1"
                                         style={{ minHeight: '150px' }}
-                                    // value={assignData.report01}
-                                    // onChange={handleChange}
+                                        value={formreport.report1}
+                                        onChange={handleChange}
                                     />
                                 </Form>
                             </div>
@@ -154,10 +225,10 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                                     <FormTextArea className="p-10  pt-2"
                                         fluid
                                         placeholder="โปรดอธิบายรายละเอียด"
-                                        // name="report01"
+                                        name="report2"
                                         style={{ minHeight: '150px' }}
-                                    // value={assignData.report01}
-                                    // onChange={handleChange}
+                                        value={formreport.report2}
+                                        onChange={handleChange}
                                     />
                                 </Form>
                             </div>
@@ -182,10 +253,10 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                                     <FormTextArea className="p-10  pt-2"
                                         fluid
                                         placeholder="โปรดอธิบายรายละเอียด"
-                                        // name="report01"
+                                        name="report3"
                                         style={{ minHeight: '150px' }}
-                                    // value={assignData.report01}
-                                    // onChange={handleChange}
+                                        value={formreport.report3}
+                                        onChange={handleChange}
                                     />
                                 </Form>
                             </div>
@@ -209,10 +280,10 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                                     <FormTextArea className="p-10  pt-2"
                                         fluid
                                         placeholder="โปรดอธิบายรายละเอียด"
-                                        // name="report01"
+                                        name="report4"
                                         style={{ minHeight: '150px' }}
-                                    // value={assignData.report01}
-                                    // onChange={handleChange}
+                                        value={formreport.report4}
+                                        onChange={handleChange}
                                     />
                                 </Form>
                             </div>
@@ -236,10 +307,10 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                                     <FormTextArea className="p-10  pt-2"
                                         fluid
                                         placeholder="โปรดอธิบายรายละเอียด"
-                                        // name="report01"
+                                        name="report5"
                                         style={{ minHeight: '150px' }}
-                                    // value={assignData.report01}
-                                    // onChange={handleChange}
+                                        value={formreport.report5}
+                                        onChange={handleChange}
                                     />
                                 </Form>
                             </div>
@@ -248,8 +319,19 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
 
 
                         {/* Button */}
+
+
                         <div className="gap-4 flex justify-center items-center mt-5">
-                            <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
+                            <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
+                                <div className="flex justify-start items-center">
+                                    ส่งสรุปผลการประเมิน
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2">
                                 <div className="flex justify-start items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

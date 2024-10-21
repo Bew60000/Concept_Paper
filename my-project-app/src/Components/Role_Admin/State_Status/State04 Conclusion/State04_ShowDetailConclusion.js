@@ -5,6 +5,7 @@ import Background from '../../../../img/Background.svg';
 import Navbar from '../../../Navbar/NavbarAdmin';
 import NavbarAdminFunctions from '../../../Navbar/NavbarAdminFunctions';
 import ModalDetailForm from './State04_ModalDetailForm';
+import State04_ModalDetailAssessment from './State04_ModalDetailAssessment';
 
 function State04_ShowDetailConclusion() {
     const BackgroundImage = {
@@ -22,15 +23,17 @@ function State04_ShowDetailConclusion() {
     const [selectedFormAssessment, setSelectedFormAssessment] = useState(null); // ข้อมูล Form ที่เลือก
     const [isAssessment, setisAssessment] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [scoreData, setscoreData] = useState([]);
+
     const itemsPerPage = 4;
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchForms = async () => {
-            try {                
-                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');                           
+            try {
+                const response = await axios.get('http://localhost:8080/test/get_data_info_analysis_teaching');
                 const awaitingForms = response.data.filter(form => form.status === 'สรุปผลประเมินเสร็จสิ้น');
-                setDataForm(awaitingForms); 
+                setDataForm(awaitingForms);
             } catch (error) {
                 console.error('Error fetching forms:', error);
             }
@@ -48,10 +51,13 @@ function State04_ShowDetailConclusion() {
         Promise.all([
             axios.get(`http://localhost:8080/test/student_admissions/${curriculumId}`),
             axios.get(`http://localhost:8080/test/teacher/${curriculumId}`),
-            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
+            axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`),
+            axios.get(`http://localhost:8080/get_evaluate_result/${curriculumId}`)
         ])
-            .then(([studentRes, teacherRes, adminRes]) => {
+
+            .then(([studentRes, teacherRes, adminRes, scoreData]) => {
                 setStudentData(studentRes.data);
+                setscoreData(scoreData.data);
                 setTeacherData(teacherRes.data);
             })
             .catch(err => console.error(err));
@@ -142,7 +148,7 @@ function State04_ShowDetailConclusion() {
                                     <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4">
                                         <div className="grid grid-cols-12 gap-4 items-center">
                                             <div className="col-span-2 text-center">
-                                                <p className="text-gray-700">{info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
+                                                <p className="text-gray-700">{scoreData.time_finish_evaluate ? new Date(scoreData.time_finish_evaluate).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                                             </div>
                                             <div className="col-span-3 text-center">
                                                 <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>
@@ -232,14 +238,15 @@ function State04_ShowDetailConclusion() {
                     findUserByUsername={findUserByUsername}
                 />
 
-                {/* <State02_Assign_work
+                <State04_ModalDetailAssessment
                     isOpen={isAssessment}
                     closeModal={closeAssignedword}
                     selectedForm={selectedFormAssessment}
                     studentData={studentData}
                     teacherData={teacherData}
+                    scoreData={scoreData}
                     UpdateStatus={UpdateStatus}
-                /> */}
+                />
 
             </div>
 
