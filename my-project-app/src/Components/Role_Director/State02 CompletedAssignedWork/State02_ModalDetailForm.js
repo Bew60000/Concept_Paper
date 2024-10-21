@@ -32,7 +32,7 @@ const State02_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
                         </div>
 
                         <hr className='border-gray-300 w-11/12 mx-auto' />
-                                                {/* Form Part I */}
+                        {/* Form Part I */}
                         <div className="text-start p-5 pt-2">
                             <p className="text-xl font-bold text-gray-500">1.ข้อมูลเบื้องต้น</p>
                         </div>
@@ -50,8 +50,12 @@ const State02_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
 
                         <div className="mt-8 pr-5 pl-5">
                             <p className="m-1"><strong>ลักษณของหลักสูตร:</strong>&nbsp;{selectedForm.nature}</p>
-                            <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
-                            <p className="m-1">{selectedForm.additionalinfo}</p>
+                            {selectedForm.nature !== 'เฉพาะสาขาเดียว' && (
+                                <>
+                                    <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
+                                    <p className="m-1">{selectedForm.additionalinfo}</p>
+                                </>
+                            )}
                         </div>
 
                         <div className="mt-8 pr-5 pl-5">

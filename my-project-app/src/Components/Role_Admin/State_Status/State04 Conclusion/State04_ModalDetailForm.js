@@ -57,8 +57,12 @@ const State04_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
 
                         <div className="mt-8 pr-5 pl-5">
                             <p className="m-1"><strong>ลักษณของหลักสูตร:</strong>&nbsp;{selectedForm.nature}</p>
-                            <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
-                            <p className="m-1">{selectedForm.additionalinfo}</p>
+                            {selectedForm.nature !== 'เฉพาะสาขาเดียว' && (
+                                <>
+                                    <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
+                                    <p className="m-1">{selectedForm.additionalinfo}</p>
+                                </>
+                            )}
                         </div>
 
                         <div className="mt-8 pr-5 pl-5">

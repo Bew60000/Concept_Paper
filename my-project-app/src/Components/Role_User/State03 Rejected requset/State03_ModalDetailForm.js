@@ -57,8 +57,12 @@ const State03_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
 
                         <div className="mt-8 pr-5 pl-5">
                             <p className="m-1"><strong>ลักษณของหลักสูตร:</strong>&nbsp;{selectedForm.nature}</p>
-                            <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
-                            <p className="m-1">{selectedForm.additionalinfo}</p>
+                            {selectedForm.nature !== 'เฉพาะสาขาเดียว' && (
+                                <>
+                                    <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
+                                    <p className="m-1">{selectedForm.additionalinfo}</p>
+                                </>
+                            )}
                         </div>
 
                         <div className="mt-8 pr-5 pl-5">
@@ -199,7 +203,7 @@ const State03_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
                         </div>
 
                         {/* Button */}
-                        <div className="gap-4 flex justify-center items-center mt-5">                         
+                        <div className="gap-4 flex justify-center items-center mt-5">
                             <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                 <div className="flex justify-start items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
