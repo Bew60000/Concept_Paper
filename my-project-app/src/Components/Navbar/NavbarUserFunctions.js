@@ -50,24 +50,8 @@ const NavbarUserFunctions = () => {
                 ) : (
                     <p>Loading user info...</p>
                 )}
-
-                {/* <hr className=' w-11/12 mx-auto mt-4' />
-
-                <div className='flex items-center justify-center mt-3'>
-                    <button
-                        onClick={handleLogout}
-                        className="bg-gray-500 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-red-600"
-                    >
-                        Logout
-                    </button>
-                </div> */}
-            </div>
-
-            {/* <Link to="/basic_information">
-                <div className='bg-white hover:bg-blue-700 hover:text-white m-4 mr-0 mt-0 rounded-xl p-6 text-gray-700 text-center'>
-                    <h4>จัดส่งคำขอเปิดหลักสูตร</h4>
-                </div>
-            </Link> */}
+                
+            </div>           
 
             <Link to="">
                 <div className='bg-white m-4 mr-0 mt-0 rounded-xl p-6 text-gray-700 text-center'>
