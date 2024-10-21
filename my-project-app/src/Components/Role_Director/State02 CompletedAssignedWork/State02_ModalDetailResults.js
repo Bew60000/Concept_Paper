@@ -1,7 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import axios from 'axios';
 
 const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentData, teacherData, UpdateStatus }) => {
     const modalRef = useRef(null);
+    const [evaluationScores, setEvaluationScores] = useState([]);
+
+    useEffect(() => {
+        if (selectedForm) {
+            axios.get(`http://localhost:8080/test/evaluation_score_report/${selectedForm.curriculum_id}`)
+                .then(response => {
+                    setEvaluationScores(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching evaluation score data:', error);
+                });
+        }
+    }, [selectedForm]);
 
     // เพิ่มการปิด modal เมื่อคลิกนอก modal
     useEffect(() => {
@@ -20,189 +34,165 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div ref={modalRef} className="bg-white p-6 rounded-lg w-7/12 rounded-full max-h-[650px] overflow-y-auto mt-16">
+            <div ref={modalRef} className="bg-white p-6 rounded-lg w-5/6 rounded-full max-h-[650px] overflow-y-auto mt-16">
                 {selectedForm && (
                     <div className='text-gray-700'>
 
-                        <div className="grid grid-cols-12 gab-1 items-center">
-                            <div className="col-span-12 text-start p-5">
-                                <h2 className="font-bold m-0"> ผลประเมิน{selectedForm.majorthai}</h2>
+                        <div className='flex justify-between w-5/6 my-6 mx-auto'>
+                            <div>
+                                <h2 className="font-bold m-0"> ผลการประเมินหลักสูตร</h2>
+                                <p className='text-gray-500 font-bold m-0 text-lg'>{selectedForm.majorthai}</p>
                                 <p className='text-gray-500 font-bold m-0'>"{selectedForm.majoreng}"</p>
                             </div>
+
                         </div>
 
-                        <hr className='border-gray-300 w-11/12 mx-auto' />
-                                                {/* Form Part I */}
-                        <div className="text-start p-5 pt-2">
-                            <p className="text-xl font-bold text-gray-500">1.ข้อมูลเบื้องต้น</p>
-                        </div>
+                        <hr className='border-gray-300 w-3/4 mx-auto' />
 
-                        <div className="pr-5 pl-5">
-                            <p className="m-1"><strong>คณะ :</strong> {selectedForm.faculty}</p>
-                            <p className="m-1"><strong>วิทยาเขต :</strong>{selectedForm.campus}</p>
-                            <p className="m-1"><strong>สังกัด:</strong>&nbsp;{selectedForm.affiliation}</p>
-                        </div>
+                        <div className="text-start p-5 pt-2 mt-5">
 
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>ชื่อปริญญา :</strong> {selectedForm.degreename}</p>
-                            <p className="m-1"><strong>ปีที่เริ่มดำเนินการสอน :</strong> {selectedForm.yearstarted}</p>
-                        </div>
+                            <p className='text-gray-800 text-xl font-bold mx-auto w-3/4 mt-5'>การให้คะแนนสำหรับการประเมิน</p>
+                            {evaluationScores.map((score, index) => {
 
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>ลักษณของหลักสูตร:</strong>&nbsp;{selectedForm.nature}</p>
-                            <p className="m-1"><strong>รายละเอียดลักษณของหลักสูตรเพิ่มเติม:</strong></p>
-                            <p className="m-1">{selectedForm.additionalinfo}</p>
-                        </div>
+                                const totalScore = (score.aspect_1 + score.aspect_2 + score.aspect_3 + score.aspect_4 + score.aspect_5);
+                                const calculatedScore = (totalScore * 20) / 5;
 
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>ผลลัพธ์การเรียนรู้ระดับหลักสูตร :</strong></p>
-                            <p className="m-1 mt-2">{selectedForm.learningoutcome}</p>
-                        </div>
+                                return (
+                                    <div className='w-3/4 mx-auto' key={index}>
 
-                        <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
-                        {/* Form Part II */}
-                        <div className="text-start p-5 mt-8">
-                            <p className="text-xl font-bold text-gray-500">2.ข้อมูลการวิเคราะห์หลักสูตร</p>
-                        </div>
-
-                        <div className="pr-5 pl-5">
-                            <p className="m-1"><strong>2.1 หลักการและเหตุผลในการขอเปิดหลักสูตร :</strong></p>
-                            <p className="m-1 mt-2">{selectedForm.principle_reasons}</p>
-                        </div>
-
-                        <div className="mt-8 pr-5 pl-5">
-                            <div className='flex'>
-                                <p className="m-1"><strong>2.2 กลุ่มเป้าหมายของหลักสูตร หลักสูตรเปิดรับผู้สำเร็จการศึกษาระดับ :</strong></p>
-                                <p className='text-blue-700 font-bold'>"{selectedForm.required_eq_id}"</p>
-                            </div>
-                            <p className="m-1"><strong>ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว <br />และระบุข้อมูลที่ใช้ในการคาดการณ์จำนวนผู้เรียนในอนาคต :</strong></p>
-                            <p className="m-1 mt-2">{selectedForm.analysis_of_future_target}</p>
-                        </div>
-
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>2.3 ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต </strong> (ในการออกแบบหลักสูตร แหล่งฝึก ส่งคนมาเรียน รับบัณฑิตเข้าทำงานโดยตรง) : </p>
-                            <p className="m-1 mt-2">{selectedForm.cooperation}</p>
-                        </div>
-
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>2.4 หลักสูตรดังกล่าวมีความใกล้เคียงกับหลักสูตรอื่นอย่างไร</strong> กรณีที่มีความคล้ายคลึงกับหลักสูตรอื่น ให้ระบุถึง<strong>"จุดเด่นของหลักสูตร"</strong>และการดำเนินการที่จะ
-                                <strong>"เเข่งขัน"</strong>กับหลักสูตรอื่นที่ใกล้เคียง: </p>
-                            <p className="m-1 mt-2">{selectedForm.high_lights}</p>
-                        </div>
-
-                        <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
-                        {/* Form Part III*/}
-                        <div className="text-start p-5 mt-8">
-                            <p className="text-xl font-bold text-gray-500">3.แผนการรับนักศึกษา</p>
-                            {studentData.length > 0 && Object.entries(studentData.reduce((groupedData, student) => {
-                                // จัดกลุ่มตามปีการศึกษา
-                                if (!groupedData[student.year_opened]) {
-                                    groupedData[student.year_opened] = [];
-                                }
-                                groupedData[student.year_opened].push(student);
-                                return groupedData;
-                            }, {})).map(([yearOpened, students], index) => (
-                                <div key={index} className="mt-5 p-2 mb-5">
-                                    <p className='font-bold mb-1'>• ปีการศึกษา {yearOpened}</p>
-                                    {students.map((student, idx) => (
-                                        <div key={idx}>
-                                            <p>&nbsp;&nbsp;&nbsp;&nbsp;ชั้นปีที่ {student.year} จำนวนนักศึกษาที่เปิดรับ: {student.count_students}</p>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-4 py-3">
+                                            <div className="col-span-6 text-center">
+                                                <p className="text-md font-bold m-1">เกณฑ์การประเมิน</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md font-bold m-1">ระดับการประเมิน</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md font-bold m-1">น้ำหนัก (%)</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md font-bold m-1">คะแนนรวม</p>
+                                            </div>
                                         </div>
-                                    ))}
-                                </div>
-                            ))}
 
-                        </div>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-100 rounded-xl text-gray-700 p-4 py-5">
+                                            <div className="col-span-6 text-start ml-16">
+                                                <p className="text-md m-1">1.กลุ่มผู้เรียนเป้าหมาย</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{score.aspect_1}</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">20</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{4 * score.aspect_1}</p>
+                                            </div>
+                                        </div>
 
-                        <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
-                        {/* Form Part IV*/}
-                        <div className="text-start p-5 mt-8">
-                            <p className="text-xl font-bold text-gray-500">4.รูปแบบการจัดการเรียนการสอนและการบริหารจัดการ</p>
-                        </div>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-100 rounded-xl text-gray-700 p-4 py-5">
+                                            <div className="col-span-6 text-start ml-16">
+                                                <p className="text-md m-1">2.ความเหมาะสมและความทันสมัยของหลักสูตร</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{score.aspect_2}</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">20</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{4 * score.aspect_2}</p>
+                                            </div>
+                                        </div>
 
-                        <div className="pr-5 pl-5">
-                            <p className="m-1"><strong>4.1 รูปแบบของการจัดการเรียนการสอนที่มีการเรียนรู้จากประสบการณ์จริง :</strong></p>
-                            <p className="m-1 mt-2">{selectedForm.teaching}</p>
-                        </div>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-100 rounded-xl text-gray-700 p-4 py-5">
+                                            <div className="col-span-6 text-start ml-16">
+                                                <p className="text-md m-1">3.ความเชื่อมโยงกับหลักสูตรที่มีอยู่เดิมในมหาวิทยาลัย</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{score.aspect_3}</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">20</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{4 * score.aspect_3}</p>
+                                            </div>
+                                        </div>
 
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>4.2 หลักสูตรฯ มีการควบคุมต้นทุนของการจัดการเรียนการสอนของการจัดการศึกษาอย่างไรบ้าง :</strong></p>
-                            <p className="m-1 mt-2">{selectedForm.cost_control}</p>
-                        </div>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-100 rounded-xl text-gray-700 p-4 py-5">
+                                            <div className="col-span-6 text-start ml-16">
+                                                <p className="text-md m-1">4. ความร่วมมือกับองค์กรภาครัฐ/เอกชน และสถาบันศึกษาต่างประเทศ</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{score.aspect_4}</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">20</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{4 * score.aspect_4}</p>
+                                            </div>
+                                        </div>
 
-                        <div className="mt-8 pr-5 pl-5">
-                            <p className="m-1"><strong>4.3 ความพร้อมในการจัดการเรียนการสอน</strong> (ทรัพยากรการเรียนรู้ ศักยภาพของบุคลากร คู่ความร่วมมือ งบประมาณสนับสนุนจากภายนอกมหาวิทยาลัย รวมถึงวามเชื่อมโยงกับสิ่งที่คณะมีอยู่) : </p>
-                            <p className="m-1 mt-2">{selectedForm.readiness}</p>
-                        </div>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-100 rounded-xl text-gray-700 p-4 py-5">
+                                            <div className="col-span-6 text-start ml-16">
+                                                <p className="text-md m-1">5. ประโยชน์ต่อสังคมและประเทศ</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{score.aspect_5}</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">20</p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1">{4 * score.aspect_5}</p>
+                                            </div>
+                                        </div>
 
-                        <hr className='mt-10 border-gray-300 w-11/12 mx-auto' />
-                        {/* Form Part V*/}
-                        <div className="text-start p-5 mt-8">
-                            <p className="text-xl font-bold text-gray-500">5. อาจารย์ผู้รับผิดชอบหลักสูตร และอาจารย์ประจำหลักสูตร</p>
-                        </div>
+                                        <div className="grid grid-cols-12 gap-4 items-center mb-3  text-gray-700 ">
+                                            <div className="col-span-6 text-start ml-16">
+                                                <p className="text-md m-1"></p>
+                                            </div>
+                                            <div className="col-span-2 text-center">
+                                                <p className="text-md m-1"></p>
+                                            </div>
+                                            <div className="col-span-2 text-center font-bold">
+                                                <p className="text-md m-1">คะแนนรวม</p>
+                                            </div>
+                                            <div className={`col-span-2 text-center rounded-xl p-4 py-5 font-bold ${calculatedScore > 70 ? 'bg-blue-700 text-white' : 'bg-red-700 text-white'}`}>
+                                                <p className="text-md m-1">{calculatedScore}</p>
+                                            </div>
+                                        </div>
 
-                        <div className="pr-5 pl-5">
-                            {teacherData.length > 0 && (
-                                <div className="mt-8">
-                                    <p className="m-1 mb-5"><strong>5.1 อาจารย์ผู้รับผิดชอบหลักสูตร</strong></p>
-                                    <div className='pl-5'>
-                                        {teacherData
-                                            .filter(teacher => teacher.teacher_role === 'อาจารย์ผู้รับผิดชอบหลักสูตร')
-                                            .map((teacher, index) => (
-                                                <div key={index}>
-                                                    <p className="m-1 mt-5 text-lg font-bold text-blue-700">
-                                                        {`${index + 1}. ${teacher.teacher_perfix} ${teacher.teacher_fname} ${teacher.teacher_lname}`}
-                                                    </p>
-                                                    <p className="m-1 mt-2"><strong>ตำแหน่งทางวิชาการ :</strong> {teacher.academic_ranks}</p>
-                                                    <p className="m-1 mt-2"><strong>คุณวุฒิ :</strong></p>
-                                                    <p className="m-1 mt-2">{teacher.educational_qualifications}</p>
-                                                    <p className="m-1 mt-2"><strong>ผลงานทางด้านวิชาการย้อนหลัง 3 ปี :</strong></p>
-                                                    <p className="m-1 mt-2 pb-8">{teacher.performance}</p>
-                                                </div>
-                                            ))
-                                        }
+                                        <p className='text-gray-800 text-xl font-bold mt-5'>หลักการพิจารณาด้านเหตุผล</p>
+
+                                        <div className='mt-8'>
+                                            <p className='text-lg font-bold mb-0 text-blue-800'>การประเมินด้านที่ 1 : กลุ่มผู้เรียนเป้าหมาย</p>
+                                            <p className="text-md m-1">{score.report01}</p>
+
+                                            <p className='text-lg font-bold mb-0 text-blue-800 mt-8'>การประเมินด้านที่ 2 : ความเหมาะสมและความทันสมัยของหลักสูตร</p>
+                                            <p className="text-md m-1">{score.report02}</p>
+
+                                            <p className='text-lg font-bold mb-0 text-blue-800 mt-8'>การประเมินด้านที่ 3 : ความเชื่อมโยงกับหลักสูตรที่มีอยู่ในมหาวิทยาลัย</p>
+                                            <p className="text-md m-1">{score.report03}</p>
+
+                                            <p className='text-lg font-bold mb-0 text-blue-800 mt-8'>การประเมินด้านที่ 4 : ความร่วมมือกับองค์กรภาครัฐ เอกชน และสถาบันการศึกษาต่างประเทศ</p>
+                                            <p className="text-md m-1">{score.report04}</p>
+
+                                            <p className='text-lg font-bold mb-0 text-blue-800 mt-8'>การประเมินด้านที่ 5 : ประโยชน์ต่อสังคมและประเทศ</p>
+                                            <p className="text-md m-1">{score.report05}</p>
+                                        </div>
+
                                     </div>
-                                </div>
-                            )}
+                                );
+                            })}
+
                         </div>
 
-                        <div className="pr-5 pl-5">
-                            {teacherData.length > 0 && (
-                                <div className="mt-8">
-                                    <p className="m-1 mb-5"><strong>5.2 อาจารย์ประจำหลักสูตร</strong></p>
-                                    <div className='pl-5'>
-                                        {teacherData
-                                            .filter(teacher => teacher.teacher_role === 'อาจารย์ประจำหลักสูตร')
-                                            .map((teacher, index) => (
-                                                <div key={index}>
-                                                    <p className="text-lg font-bold text-blue-700">
-                                                        {`${index + 1}. ${teacher.teacher_perfix} ${teacher.teacher_fname} ${teacher.teacher_lname}`}
-                                                    </p>
-                                                    <p className="m-1"><strong>ตำแหน่งทางวิชาการ :</strong> {teacher.academic_ranks}</p>
-                                                    <p className="m-1 mt-2"><strong>คุณวุฒิ :</strong></p>
-                                                    <p className="m-1 mt-2">{teacher.educational_qualifications}</p>
-                                                    <p className="m-1 mt-2"><strong>ผลงานทางด้านวิชาการย้อนหลัง 3 ปี :</strong></p>
-                                                    <p className="m-1 mt-2 pb-8">{teacher.performance}</p>
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                </div>
-                            )}
-                        </div>
 
                         {/* Button */}
                         <div className="gap-4 flex justify-center items-center mt-5">
-                            <button onClick={() => UpdateStatus(selectedForm.curriculum_id, 'กำลังดำเนินการประเมิน')}
-                                className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
-                                <div className="flex justify-start items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
-                                    ตอบรับคำขอ
-                                </div>
-                            </button>
-
                             <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                 <div className="flex justify-start items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">

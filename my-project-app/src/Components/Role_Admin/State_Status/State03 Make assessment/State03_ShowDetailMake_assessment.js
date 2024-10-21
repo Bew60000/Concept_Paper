@@ -106,7 +106,7 @@ function State03_ShowDetailMake_assessment() {
 
                         <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-5">
                             <div className="col-span-2 text-center">
-                                <p className="text-lg font-bold m-1">วันที่ยื่น</p>
+                                <p className="text-lg font-bold m-1">วันที่มอบหมาย</p>
                             </div>
                             <div className="col-span-3 text-center">
                                 <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
