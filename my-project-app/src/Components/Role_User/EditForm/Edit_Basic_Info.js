@@ -27,7 +27,7 @@ const Basic_Information = () => {
     const [formData, setFormData] = useState({
         Nature: info.nature,
         AdditionalInfo: info.additionalInfo,
-        Faculty: info.faculty_id,
+        Faculty: info.faculty,
         Campus: info.campus,
         MajorThai: info.majorthai,
         MajorEng: info.majoreng,
@@ -86,7 +86,7 @@ const Basic_Information = () => {
             alert('กรุณากรอกข้อมูลให้ครบถ้วน');
         }
     };
-    
+
 
     return (
         <div className="bg-fixed min-w-screen min-h-screen" style={BackgroundImage}>
