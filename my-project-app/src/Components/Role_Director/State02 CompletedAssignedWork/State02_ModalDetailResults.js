@@ -32,7 +32,7 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
                         </div>
 
                         <hr className='border-gray-300 w-11/12 mx-auto' />
-                                                {/* Form Part I */}
+                        {/* Form Part I */}
                         <div className="text-start p-5 pt-2">
                             <p className="text-xl font-bold text-gray-500">1.ข้อมูลเบื้องต้น</p>
                         </div>

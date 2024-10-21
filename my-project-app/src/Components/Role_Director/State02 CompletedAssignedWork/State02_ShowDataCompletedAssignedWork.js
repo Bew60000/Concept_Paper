@@ -212,7 +212,7 @@ const State02_ShowDataCompletedAssignedWork = () => {
                     teacherData={teacherData}
                 />
 
-                <Step02_ModalDetailForm
+                <State02_ModalDetailResults
                     isOpen={isResults}
                     closeModal={closeResults}
                     selectedForm={selectedResults}
