@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Form, FormGroup, FormRadio } from 'semantic-ui-react';
 
 const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, teacherData }) => {
 
@@ -27,12 +28,15 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
   const currentItems = dataUser.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(dataUser.length / itemsPerPage);
 
-  const handleRoleChange = (userId, role) => {
-    setSelectedRoles(prevRoles => ({
-      ...prevRoles,
-      [userId]: role
-    }));
+  const handleRoleChange = (username, role) => {
+    setSelectedRoles((prevSelectedRoles) => {
+      if (prevSelectedRoles[username] === role) {
+        return { ...prevSelectedRoles, [username]: '' }; // ยกเลิกการเลือกหากกดซ้ำ
+      }
+      return { ...prevSelectedRoles, [username]: role }; // หากกดเลือกใหม่จะตั้งค่าบทบาทใหม่
+    });
   };
+
 
   const UpdateStatus = (curriculum_id, newStatus) => {
     axios.put(`http://localhost:8080/update_Status/${curriculum_id}`, { status: newStatus })
@@ -57,6 +61,17 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Count the number of each role selected
+    const committeeCount = Object.values(selectedRoles).filter(role => role === 'คณะกรรมการ').length;
+    const headCommitteeCount = Object.values(selectedRoles).filter(role => role === 'หัวหน้าคณะกรรมการ').length;
+
+    // Check if the roles are selected correctly
+    if (committeeCount !== 2 || headCommitteeCount !== 1) {
+      alert('กรุณาเลือกคณะกรรมการจำนวน 2 คน และ หัวหน้าคณะกรรมการจำนวน 1 คน');
+      return;
+    }
+
     const requests = Object.entries(selectedRoles).map(([userId, role]) => {
       return axios.post('http://localhost:8080/add_evaluate', {
         curriculum_id: selectedForm.curriculum_id,
@@ -69,13 +84,13 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
     try {
       await Promise.all(requests);
       console.log('All data submitted successfully');
-      UpdateStatus(selectedForm.curriculum_id, 'อยู่ระหว่างการประเมินผล')
-      // UpdateEvaluateStatus('รอการประเมิน', selectedRoles.userId, selectedForm.curriculum_id)
+      UpdateStatus(selectedForm.curriculum_id, 'อยู่ระหว่างการประเมินผล');
       window.location.reload();
     } catch (error) {
       console.error('Error submitting data:', error);
     }
   };
+
 
   if (!isOpen || !selectedForm) return null;
 
@@ -143,27 +158,26 @@ const State02_Assign_work = ({ isOpen, closeModal, selectedForm, studentData, te
                     </div>
 
                     <div className="col-span-4 text-start">
-                      <label>
-                        <input
-                          type="radio"
-                          name={`role-${director.username}`}
-                          value="หัวหน้าคณะกรรมการ"
-                          checked={selectedRoles[director.username] === 'หัวหน้าคณะกรรมการ'}
-                          onChange={() => handleRoleChange(director.username, 'หัวหน้าคณะกรรมการ')}
-                        />
-                        หัวหน้าคณะกรรมการ
-                      </label>
+                      <Form>
+                        <FormGroup>
+                          <FormRadio
+                            label='หัวหน้าคณะกรรมการ'
+                            name={`role-${director.username}`}
+                            value='หัวหน้าคณะกรรมการ'
+                            checked={selectedRoles[director.username] === 'หัวหน้าคณะกรรมการ'}
+                            onClick={() => handleRoleChange(director.username, 'หัวหน้าคณะกรรมการ')}
+                          />
 
-                      <label className="ml-4">
-                        <input
-                          type="radio"
-                          name={`role-${director.username}`}
-                          value="คณะกรรมการ"
-                          checked={selectedRoles[director.username] === 'คณะกรรมการ'}
-                          onChange={() => handleRoleChange(director.username, 'คณะกรรมการ')}
-                        />
-                        คณะกรรมการ
-                      </label>
+                          <FormRadio
+                            label='คณะกรรมการ'
+                            name={`role-${director.username}`}
+                            value='คณะกรรมการ'
+                            checked={selectedRoles[director.username] === 'คณะกรรมการ'}
+                            onClick={() => handleRoleChange(director.username, 'คณะกรรมการ')}
+                            className="ml-4"
+                          />
+                        </FormGroup>
+                      </Form>
                     </div>
 
                   </div>
