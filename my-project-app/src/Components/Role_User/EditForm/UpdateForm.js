@@ -52,10 +52,10 @@ export default function UpdateForm() {
         analysis_of_future_target: info.analysis_of_future_target,
         cooperation: info.cooperation,
         high_lights: info.high_lights,
-        id: 1,
-        year: studentData.year,
-        count_students: studentData.count_students,
-        year_offered: studentData.year_offered,
+        // id: 1,
+        // year: studentData.year,
+        // count_students: studentData.count_students,
+        // year_offered: studentData.year_offered,
     });
 
 
@@ -81,11 +81,25 @@ export default function UpdateForm() {
             };
         });
     };
-    // console.log(studentData);
+    console.log(studentData);
+    console.log('Status updated successfully:', studentData);
+
+
+
+    // Create a separate state for the dynamic student forms
+    const [studentForms, setStudentForms] = useState([
+        {
+            id: 1,
+
+            year: studentData.year,
+            count_students: studentData.count_students,
+            year_offered: studentData.year_offered,
+        }
+    ]);
 
 
     const handleChangestudent = useCallback((id, field, value) => {
-        setFormData(prevForms =>
+        setStudentForms(prevForms =>
             prevForms.map(form =>
                 form.id === id ? { ...form, [field]: value } : form
             )
@@ -93,21 +107,22 @@ export default function UpdateForm() {
     }, []);
 
     const addForm = useCallback(() => {
-        setFormData(prevForms => [
+        setStudentForms(prevForms => [
             ...prevForms,
             {
                 id: prevForms.length + 1,
                 year: '',
                 count_students: '',
-                curriculum_id: info.curriculum_id, // ใส่ค่า curriculum_id ในฟอร์มใหม่
+                curriculum_id: info.curriculum_id, // Use curriculum_id for new form
                 year_offered: ''
             }
         ]);
     }, [info.curriculum_id]);
 
     const removeForm = useCallback((id) => {
-        setFormData(prevForms => prevForms.filter(form => form.id !== id));
+        setStudentForms(prevForms => prevForms.filter(form => form.id !== id));
     }, []);
+
 
 
     const HandleChange = (e, { name, value }) => {
@@ -309,11 +324,10 @@ export default function UpdateForm() {
                             onChange={HandleChange}
                         />
 
-                        {formData.map((form) => (
+                        {/* Student-specific forms */}
+                        {studentForms.map((form) => (
                             <div key={form.id}>
                                 <FormGroup widths='equal'>
-                                    <hr />
-                                    <br />
                                     <FormSelect
                                         fluid
                                         label='ชั้นปี'
@@ -336,7 +350,6 @@ export default function UpdateForm() {
                                         value={form.count_students}
                                         onChange={(e) => handleChangestudent(form.id, 'count_students', e.target.value)}
                                     />
-
                                     <FormButton
                                         className='grid gap-4 content-end'
                                         type='button'
@@ -344,7 +357,6 @@ export default function UpdateForm() {
                                     >
                                         ลบข้อมูล
                                     </FormButton>
-                                    <FormField />
                                 </FormGroup>
                             </div>
                         ))}
@@ -354,6 +366,16 @@ export default function UpdateForm() {
                         <br />
 
                         <div className="flex justify-start gap-4">
+
+                            <button className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" onClick={addForm}>
+                                <div className="flex justify-start items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 mr-2">
+                                        <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+                                    </svg>
+                                    เพิ่มแผนการศึกษา
+                                </div>
+                            </button>
+
 
                             <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
                                 <div className="flex justify-start items-center">
