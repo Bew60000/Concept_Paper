@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    password: '6410210573',
-    // password: '10062545Aong.',
+    // password: '6410210573',
+    password: '10062545Aong.',
     port: 5432
 });
 
@@ -958,7 +958,7 @@ join evaluate on evaluate.curriculum_id = evaluation_score.curriculum_id
 and evaluate.evaluato_id = evaluation_score.evaluato_id
 join report_for_each_side on report_for_each_side.evaluato_id = evaluation_score.evaluato_id
 and report_for_each_side.evaluate_id = evaluation_score.evaluate_id
-where evaluate.curriculum_id = $1    
+where evaluate.curriculum_id = $1
 ` , [curriculum_id]);
         res.json(result.rows);
     } catch (error) {
