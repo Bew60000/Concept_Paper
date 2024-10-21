@@ -132,7 +132,7 @@ const TeachersInformation = () => {
             <Navbar />
             <div className="grid grid-cols-12 auto-rows-auto gap-3 justify-center p-5 pt-20">
                 <div className='bg-white col-span-10 col-start-2 p-20 border-2 rounded-2xl shadow-10'>
-                    <Form onSubmit={handleSubmit}>
+                    <Form>
                         <h1>ส่วนที่ 6 : อาจารย์ประจำหลักสูตร</h1>
                         <hr />
                         <br />
@@ -213,7 +213,7 @@ const TeachersInformation = () => {
                                 </div>
                             </button>
 
-                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
+                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit" onClick={handleSubmit}>
                                 <div className="flex justify-start items-center">
                                     ยืนยันการส่งคำขอ
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">

@@ -118,7 +118,7 @@ const Course_Instructor = () => {
                     <h1>ส่วนที่ 5 : อาจารย์ผู้รับผิดชอบหลักสูตร</h1>
                     <hr />
                     <br />
-                    <Form onSubmit={handleSubmit}>
+                    <Form>
 
                         {forms.map((form) => (
                             <div key={form.id}>
@@ -198,7 +198,7 @@ const Course_Instructor = () => {
                                 </div>
                             </button>
 
-                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
+                            <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit" onClick={handleSubmit}>
                                 <div className="flex justify-start items-center">
                                     ต่อไป
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2">
