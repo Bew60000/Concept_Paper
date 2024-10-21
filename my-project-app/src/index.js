@@ -36,6 +36,7 @@ import State07_ShowDeTailRejected_request from './Components/Role_Admin/State_St
 // Director
 // import State01_Assignedwork from './Components/Role_Director/State01 AssignedWork/State01_Assignedwork'; //State01_Assignedwork
 import State02_ShowDataCompletedAssignedWork from './Components/Role_Director/State02 CompletedAssignedWork/State02_ShowDataCompletedAssignedWork'; //State02_ShowDataCompletedAssignedWork
+import State03_ShowDataSummaryResults from './Components/Role_Director/State03 Summary results/State03_ShowDataSummaryResults'; //State03_ShowDataSummaryResults
 
 //User
 import State02_ShowDetailCanceledForm from './Components/Role_User/State02 Canceled requset/State02_ShowDetailCanceledForm';//State02 ShowDetailCanceledForm
@@ -89,6 +90,7 @@ root.render(
         <Route path='/admin/7/showdetailrejected_request' element={<State07_ShowDeTailRejected_request />} />
 
         <Route path='/director/2/showdatacompletedassignedwork' element={<State02_ShowDataCompletedAssignedWork />} />
+        <Route path='/director/3/showdatadatasummaryresults' element={<State03_ShowDataSummaryResults />} />
 
 
 

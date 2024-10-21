@@ -215,7 +215,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 fluid
                 placeholder="โปรดอธิบายรายละเอียด"
                 name="report01"
-                style={{ minHeight: '150px' }}
+                style={{ minHeight: '120px' }}
                 value={assignData.report01}
                 onChange={handleChange}
               />
@@ -327,7 +327,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 fluid
                 placeholder="โปรดอธิบายรายละเอียด"
                 name="report02"
-                style={{ minHeight: '200px' }}
+                style={{ minHeight: '120px' }}
                 value={assignData.report02}
                 onChange={handleChange}
               />
@@ -434,7 +434,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 fluid
                 placeholder="โปรดอธิบายรายละเอียด"
                 name="report03"
-                style={{ minHeight: '200px' }}
+                style={{ minHeight: '120px' }}
                 value={assignData.report03}
                 onChange={handleChange}
               />
@@ -538,7 +538,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 fluid
                 placeholder="โปรดอธิบายรายละเอียด"
                 name="report04"
-                style={{ minHeight: '200px' }}
+                style={{ minHeight: '120px' }}
                 value={assignData.report04}
                 onChange={handleChange}
               />
@@ -682,7 +682,7 @@ const State01_Assignedwork = ({ isOpen, closeModal, selectedForm, studentData, t
                 fluid
                 placeholder="โปรดอธิบายรายละเอียด"
                 name="report05"
-                style={{ minHeight: '200px' }}
+                style={{ minHeight: '120px' }}
                 value={assignData.report05}
                 onChange={handleChange}
               />
