@@ -37,9 +37,6 @@ function State01_ShowStatusForm() {
             .catch(err => console.error(err));
     };
 
-    const editRequest = (info) => {
-        navigate('/edit_form', { state: { info } });
-    };
 
     useEffect(() => {
         const fetchForms = async () => {
@@ -71,10 +68,16 @@ function State01_ShowStatusForm() {
             axios.get(`http://localhost:8080/test/teaching_and_administration/${curriculumId}`)
         ])
             .then(([studentRes, teacherRes, adminRes]) => {
+                console.log('Student Data:', studentRes.data);
                 setStudentData(studentRes.data);
                 setTeacherData(teacherRes.data);
             })
             .catch(err => console.error(err));
+    };
+
+    const editRequest = (info, studentData) => {
+        fetchAdditionalData(info.curriculum_id); // เรียกข้อมูลก่อน
+        navigate('/edit_form', { state: { info, studentData } });
     };
 
     const openModal = (form) => {
@@ -203,14 +206,14 @@ function State01_ShowStatusForm() {
                                         </button>
                                     )}
 
-                                    {/* <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2" onClick={() => editRequest(info)}>
+                                    <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2" onClick={() => editRequest(info, studentData)}>
                                         <div className="flex justify-start items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                             </svg>
                                             แก้ไขข้อมูล
                                         </div>
-                                    </button> */}
+                                    </button>
 
                                     <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                         <div className="flex justify-start items-center">

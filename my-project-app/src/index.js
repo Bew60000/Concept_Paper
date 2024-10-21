@@ -44,7 +44,8 @@ import State03_ShowDetailRejectRequest from './Components/Role_User/State03 Reje
 import State04_ShowDetailFinishedForm from './Components/Role_User/State04 Finished requset/State04_ShowDetailFinishedForm'; //State04_ShowDetailFinishedForm
 
 import AllForm from './App';
-import UpdateForm from './Components/Role_User/UpdateForm';
+import UpdateForm from './Components/Role_User/EditForm/UpdateForm';
+import Update_cosanalysis from './Components/Role_User/EditForm/Edit_CourseAnalysis';
 
 import {
   BrowserRouter,
@@ -91,7 +92,12 @@ root.render(
         <Route path='/director/2/showdatacompletedassignedwork' element={<State02_ShowDataCompletedAssignedWork />} />
         <Route path='/director/3/showdatadatasummaryresults' element={<State03_ShowDataSummaryResults />} />
 
+
+
+
         <Route path="/edit_form" element={<UpdateForm />} />
+        <Route path="/edit_course_analysis_information" element={<Update_cosanalysis />} />
+
 
         <Route path="/All" element={<AllForm />} />
 

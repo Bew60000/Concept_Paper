@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormInput, FormGroup, FormButton, Form, FormTextArea, FormRadio, FormSelect, } from 'semantic-ui-react';
+import {
+    FormInput, FormGroup, FormButton, Form, FormTextArea, FormRadio, FormSelect, FormCheckbox,
+    FormField
+} from 'semantic-ui-react';
 import axios from 'axios';
 
-import Background from '../../img/Background.svg';
-import Navbar from '../Navbar/NavbarUser';
+import Background from '../../../img/Background.svg';
+import Navbar from '../../Navbar/NavbarUser';
 
 const optionscampus = [
     { key: 'HY', text: 'หาดใหญ่', value: 'หาดใหญ่' },
@@ -14,6 +17,14 @@ const optionscampus = [
     { key: 'SR', text: 'สุราษ', value: 'สุราษ' },
 ];
 
+
+// Dropdown options
+const options = [
+    { key: '1', text: 'ชั้นปีที่ 1', value: '1' },
+    { key: '2', text: 'ชั้นปีที่ 2', value: '2' },
+    { key: '3', text: 'ชั้นปีที่ 3', value: '3' },
+    { key: '4', text: 'ชั้นปีที่ 4', value: '4' },
+];
 export default function UpdateForm() {
     const BackgroundImage = {
         backgroundImage: `url(${Background})`,
@@ -23,7 +34,7 @@ export default function UpdateForm() {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const { info } = location.state;
+    const { info, studentData } = location.state;
     const [formData, setFormData] = useState({
         curriculum_id: info.curriculum_id,
         faculty: info.faculty,
@@ -35,8 +46,69 @@ export default function UpdateForm() {
         yearstarted: info.yearstarted,
         nature: info.nature,
         additionalinfo: info.additionalinfo,
-        learningoutcome: info.learningoutcome
+        learningoutcome: info.learningoutcome,
+        required_eq_id: info.required_eq_id,
+        principle_reasons: info.principle_reasons,
+        analysis_of_future_target: info.analysis_of_future_target,
+        cooperation: info.cooperation,
+        high_lights: info.high_lights,
+        id: 1,
+        year: studentData.year,
+        count_students: studentData.count_students,
+        year_offered: studentData.year_offered,
     });
+
+
+    console.log(info, studentData);
+
+    const handleCheckboxChange = (e, { name, checked }) => {
+        setFormData(prevState => {
+            let newRequiredEqIdString = prevState.required_eq_id;
+            if (checked) {
+                newRequiredEqIdString = newRequiredEqIdString
+                    ? `${newRequiredEqIdString},${name}`
+                    : name;
+            } else {
+                newRequiredEqIdString = newRequiredEqIdString
+                    .split(',')
+                    .filter(item => item !== name)
+                    .join(',');
+            }
+
+            return {
+                ...prevState,
+                required_eq_id: newRequiredEqIdString,
+            };
+        });
+    };
+    // console.log(studentData);
+
+
+    const handleChangestudent = useCallback((id, field, value) => {
+        setFormData(prevForms =>
+            prevForms.map(form =>
+                form.id === id ? { ...form, [field]: value } : form
+            )
+        );
+    }, []);
+
+    const addForm = useCallback(() => {
+        setFormData(prevForms => [
+            ...prevForms,
+            {
+                id: prevForms.length + 1,
+                year: '',
+                count_students: '',
+                curriculum_id: info.curriculum_id, // ใส่ค่า curriculum_id ในฟอร์มใหม่
+                year_offered: ''
+            }
+        ]);
+    }, [info.curriculum_id]);
+
+    const removeForm = useCallback((id) => {
+        setFormData(prevForms => prevForms.filter(form => form.id !== id));
+    }, []);
+
 
     const HandleChange = (e, { name, value }) => {
         setFormData(prevState => ({
@@ -48,30 +120,22 @@ export default function UpdateForm() {
     const HandleSubmit = async (e) => {
         e.preventDefault();
 
-        // const isFormComplete = Object.entries(formData).every(([key, value]) => {
-        //     if (key === 'additionalinfo' && formData.nature === 'เฉพาะสาขาเดียว') {
-        //         return true;
-        //     }
-        //     return value !== '';
-        // });
 
-        // if (isFormComplete) {
         try {
 
             const response = await axios.put(
                 `http://localhost:8080/update_basic_info/${formData.curriculum_id}`, formData);
-
+            await axios.put(`http://localhost:8080/Update_Course_Analysis_Information/${formData.curriculum_id}`, formData);
             console.log(response);
             console.log(formData.curriculum_id);
-            alert('แก้ไขข้อมูลสำเร็จ');
-            navigate('/homepage_user', { replace: true });
+            // alert('แก้ไขข้อมูลสำเร็จ');
+            navigate('/edit_course_analysis_information', { state: { info, studentData } });
+            // navigate('/homepage_user', { replace: true });
         } catch (err) {
             console.error(err);
             alert('ไม่สามารถแก้ไขข้อมูลได้');
         }
-        // } else {
-        //     alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-        // }
+
     };
 
     return (
@@ -197,6 +261,98 @@ export default function UpdateForm() {
                             onChange={HandleChange}
                         />
 
+                        <FormTextArea
+                            label='หลักการและเหตุผลในการขอเปิดหลักสูตร'
+                            placeholder='โปรดอธิบายรายละเอียด'
+                            name="principle_reasons"
+                            style={{ minHeight: '100px' }}
+                            value={formData.principle_reasons}
+                            onChange={HandleChange}
+                        />
+
+                        <FormGroup grouped inline>
+                            <label>กลุ่มเป้าหมายของหลักสูตร</label>
+                            {['มัธยมศึกษา', 'ปริญญาตรี', 'ปริญญาโท', 'ปริญญาเอก', 'other'].map(group => (
+                                <FormCheckbox
+                                    key={group}
+                                    label={group}
+                                    name={group}
+                                    checked={formData.required_eq_id.split(',').includes(group)}
+                                    onChange={handleCheckboxChange}
+                                />
+                            ))}
+                        </FormGroup>
+
+                        <FormTextArea
+                            label='ผลวิเคราะห์ความต้องการของกลุ่มเป้าหมาย'
+                            placeholder='วิเคราะห์ความต้องการของกลุ่มเป้าหมายในการเข้าศึกษาหลักสูตรดังกล่าว'
+                            name="analysis_of_future_target"
+                            style={{ minHeight: '100px' }}
+                            value={formData.analysis_of_future_target}
+                            onChange={HandleChange}
+                        />
+
+                        <FormTextArea
+                            label='ความร่วมมือกับหน่วยงานจากภาคผู้ใช้บัณฑิต'
+                            placeholder='โปรดอธิบายรายละเอียด'
+                            name="cooperation"
+                            style={{ minHeight: '100px' }}
+                            value={formData.cooperation}
+                            onChange={HandleChange}
+                        />
+                        <FormTextArea
+                            label='จุดเด่นของหลักสูตรและการดำเนินการที่จะแข่งขันกับหลักสูตรอื่นที่ใกล้เคียง'
+                            placeholder='โปรดอธิบายรายละเอียด'
+                            name="high_lights"
+                            value={formData.high_lights}
+                            style={{ minHeight: '100px' }}
+                            onChange={HandleChange}
+                        />
+
+                        {formData.map((form) => (
+                            <div key={form.id}>
+                                <FormGroup widths='equal'>
+                                    <hr />
+                                    <br />
+                                    <FormSelect
+                                        fluid
+                                        label='ชั้นปี'
+                                        options={options}
+                                        placeholder='โปรดระบุชั้นปี'
+                                        value={form.year}
+                                        onChange={(e, { value }) => handleChangestudent(form.id, 'year', value)}
+                                    />
+                                    <FormInput
+                                        fluid
+                                        label='ปีที่เปิดสอน'
+                                        placeholder='โปรดระบุปีที่เปิดสอน'
+                                        value={form.year_offered}
+                                        onChange={(e) => handleChangestudent(form.id, 'year_offered', e.target.value)}
+                                    />
+                                    <FormInput
+                                        fluid
+                                        label='จำนวนศึกษาที่เปิดรับ(คน)'
+                                        placeholder='โปรดระบุจำนวน'
+                                        value={form.count_students}
+                                        onChange={(e) => handleChangestudent(form.id, 'count_students', e.target.value)}
+                                    />
+
+                                    <FormButton
+                                        className='grid gap-4 content-end'
+                                        type='button'
+                                        onClick={() => removeForm(form.id)}
+                                    >
+                                        ลบข้อมูล
+                                    </FormButton>
+                                    <FormField />
+                                </FormGroup>
+                            </div>
+                        ))}
+
+                        <br />
+                        <hr />
+                        <br />
+
                         <div className="flex justify-start gap-4">
 
                             <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-5 py-3 rounded-lg ml-2" type="submit">
@@ -221,6 +377,7 @@ export default function UpdateForm() {
 
                     </Form>
                 </div>
+
             </div>
         </div>
     );

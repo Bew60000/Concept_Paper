@@ -205,6 +205,32 @@ app.post('/add_Course_Analysis_Information', async (req, res) => {
     }
 });
 
+
+
+
+app.put('/Update_Course_Analysis_Information/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params; //รับ params id 
+
+    // const input = req.body;
+
+    const { principle_reasons, required_eq_id, analysis_of_future_target, cooperation, high_lights } = req.body;
+
+
+    try {
+        await pool.query(`UPDATE course_analysis_information
+	SET principle_reasons=$1, required_eq_id=$2, analysis_of_future_target=$3, cooperation=$4, high_lights=$5
+	WHERE curriculum_id=$6`,
+            [
+                principle_reasons, required_eq_id, analysis_of_future_target, cooperation, high_lights, curriculum_id
+            ]);
+        res.status(201).send('update successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error update ');
+    }
+});
+
+
 // เพิ่มข้อมูลส่วนที่ 3
 app.post('/student_admissions_plan', async (req, res) => {
     // const input = req.body;
@@ -567,6 +593,21 @@ app.get('/get_faculty', async (req, res) => {
 })
 
 // เรียกดูข้อมูล
+app.get('/test/get_data_info_analysis_teaching/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params
+    try {
+        const result = await pool.query(`select * from basic_infos
+join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
+join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id  
+where basic_infos.curriculum_id = $1   
+`, [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+
 
 // get info
 app.get('/test/get_info', async (req, res) => {
@@ -968,7 +1009,53 @@ where evaluate.curriculum_id = $1
 });
 // 
 
+// INSERT INTO public.evaluation_results(
+// 	curriculum_id, total_score, report, time_finish_evaluate, evaluato_id)
+// 	VALUES (?, ?, ?, ?, ?);
 
+
+
+// 
+// 
+// 
+// 
+app.post('/evaluation_results', async (req, res) => {
+    // const input = req.body;
+
+    const { curriculum_id, total_score, report, evaluato_id, time_finish_evaluate } = req.body;
+
+
+    try {
+        await pool.query(`INSERT INTO public.evaluation_results(
+	curriculum_id, total_score, report, evaluato_id, time_finish_evaluate)
+ 	VALUES ($1, $2, $3, $4, now());`,
+            [
+                curriculum_id, total_score, report, evaluato_id
+            ]);
+        res.status(201).send('Add successfull');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error adding authors');
+    }
+});
+
+
+app.get('/get_evaluate_result/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+
+    try {
+        const result = await pool.query(`select * from evaluation_results where curriculum_id = $1
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+
+});
+// 
+// 
+// 
 
 // SELECT evaluator_position , evaluato_id , curriculum_id , status_evaluate
 // 	FROM evaluate 
@@ -987,7 +1074,7 @@ app.get('/test/user_info_evaluate/:curriculum_id', async (req, res) => {
     try {
         const result = await pool.query(`select user_info.* , evaluate.curriculum_id , evaluate.evaluator_position from user_info
 join evaluate on user_info.username = evaluate.evaluato_id 
-where evaluate.curriculum_id = '$1'   
+where evaluate.curriculum_id = $1   
 ` , [curriculum_id]);
         res.json(result.rows);
     } catch (error) {
@@ -995,6 +1082,10 @@ where evaluate.curriculum_id = '$1'
         res.status(500).send('Error retrieving section');
     }
 });
+
+
+
+
 // 
 
 
