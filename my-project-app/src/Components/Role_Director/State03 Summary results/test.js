@@ -6,28 +6,16 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
     const [evaluationScores, setEvaluationScores] = useState([]);
 
     useEffect(() => {
-        // ดึงข้อมูลผู้ใช้ที่ล็อกอินจาก localStorage
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        let username = '';
-      
-        if (loggedInUser) {
-          const user = JSON.parse(loggedInUser); // แปลงข้อมูล JSON เป็น Object
-          username = user.username; // ดึงค่า username จากข้อมูลผู้ใช้ที่ล็อกอิน
+        if (selectedForm) {
+            axios.get(`http://localhost:8080/test/evaluation_score_report/${selectedForm.curriculum_id}`)
+                .then(response => {
+                    setEvaluationScores(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching evaluation score data:', error);
+                });
         }
-      
-        if (selectedForm && username) {
-          axios.get(`http://localhost:8080/test/evaluation_score_report/${selectedForm.curriculum_id}`)
-            .then(response => {
-              // กรองข้อมูลที่ตรงกับ username ของผู้ใช้ที่ล็อกอิน
-              const filteredData = response.data.filter(item => item.evaluato_id === username);
-              setEvaluationScores(filteredData); // เก็บข้อมูลที่กรองไว้ใน state
-            })
-            .catch(error => {
-              console.error('Error fetching evaluation score data:', error);
-            });
-        }
-      }, [selectedForm]);
-      
+    }, [selectedForm]);
 
     // เพิ่มการปิด modal เมื่อคลิกนอก modal
     useEffect(() => {
@@ -59,9 +47,9 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
 
                         </div>
 
-                        <hr className='border-gray-300 w-5/6 mx-auto' />
+                        <hr className='border-gray-300 w-3/4 mx-auto' />
 
-                        <div className='mx-auto mt-8 w-5/6'>
+                        <div className='mx-auto mt-8 w-3/4'>
                             <div className="bg-gray-100 p-6 rounded-xl w-full mb-4">
                                 <div className="grid grid-cols-12 gap-4 items-center">
                                     <div className="col-span-2 text-center">
@@ -77,7 +65,7 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
                                         <p className="text-gray-700">วิทยาเขต: {selectedForm.campus}</p>
                                     </div>
                                     <div className="col-span-4 text-start">
-                                        <p className="m-1">{selectedForm.degreename}</p>
+                                        <p className="m-1"><strong>ชื่อปริญญา :</strong> {selectedForm.degreename}</p>
                                         <p className="m-1"><strong>ปีที่เริ่มดำเนินการสอน :</strong> {selectedForm.yearstarted}</p>
                                     </div>
                                 </div>
@@ -86,14 +74,14 @@ const State02_ModalDetailResults = ({ isOpen, closeModal, selectedForm, studentD
 
                         <div className="text-start p-5 pt-2 mt-5">
 
-                            <p className='text-gray-800 text-xl font-bold mx-auto w-5/6 mt-5'>การให้คะแนนสำหรับการประเมิน</p>
+                            <p className='text-gray-800 text-xl font-bold mx-auto w-3/4 mt-5'>การให้คะแนนสำหรับการประเมิน</p>
                             {evaluationScores.map((score, index) => {
 
                                 const totalScore = (score.aspect_1 + score.aspect_2 + score.aspect_3 + score.aspect_4 + score.aspect_5);
                                 const calculatedScore = (totalScore * 20) / 5;
 
                                 return (
-                                    <div className='w-5/6 mx-auto' key={index}>
+                                    <div className='w-3/4 mx-auto' key={index}>
 
                                         <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-4 py-3">
                                             <div className="col-span-6 text-center">

@@ -28,18 +28,18 @@ function State01_ShowStatusForm() {
         console.log("loggedInUser: ", loggedInUser);
     }, []);
 
-    // const deleteRequest = (info) => {
-    //     axios.delete(`http://localhost:8080/deletebasic_info/${info.curriculum_id}`)
-    //         .then(() => {
-    //             // ลบข้อมูลจาก state หลังจากลบจากฐานข้อมูลเสร็จแล้ว
-    //             setDataForm(prevData => prevData.filter(user => user.curriculum_id !== info.curriculum_id));
-    //         })
-    //         .catch(err => console.error(err));
-    // };\
+    const deleteRequest = (info) => {
+        axios.delete(`http://localhost:8080/deletebasic_info/${info.curriculum_id}`)
+            .then(() => {
+                // ลบข้อมูลจาก state หลังจากลบจากฐานข้อมูลเสร็จแล้ว
+                setDataForm(prevData => prevData.filter(user => user.curriculum_id !== info.curriculum_id));
+            })
+            .catch(err => console.error(err));
+    };
 
-    // const editRequest = (info) => {
-    //     navigate('/edit_form', { state: { info } });
-    // };
+    const editRequest = (info) => {
+        navigate('/edit_form', { state: { info } });
+    };
 
     useEffect(() => {
         const fetchForms = async () => {
