@@ -24,8 +24,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'servercurr',
-    password: '6410210573',
-    // password: '10062545Aong.',
+    // password: '6410210573',
+    password: '10062545Aong.',
     port: 5432
 });
 
@@ -629,7 +629,7 @@ app.get('/test/get_data_info_analysis_teaching', async (req, res) => {
         const result = await pool.query(`select * from basic_infos
 join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
 join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id 
-   
+ 
 `);
         res.json(result.rows);
     } catch (error) {

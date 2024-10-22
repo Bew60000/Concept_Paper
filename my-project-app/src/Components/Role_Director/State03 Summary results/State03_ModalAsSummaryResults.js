@@ -125,58 +125,47 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
 
                         <div className="text-start p-5 pt-2 mt-5">
 
-                            <div className="grid grid-cols-12 gab-1 items-center px-12">
-                                <div className="col-span-12 text-start p-5">
+                            <div className='flex justify-between px-16 mb-6'>
+                                <div className="">
                                     <h2 className="font-bold m-0"> ผลการประเมินหลักสูตร{selectedForm.majorthai}</h2>
                                     <p className='text-gray-500 font-bold m-0'>"{selectedForm.majoreng}"</p>
                                 </div>
+
+                                <div className='flex justify-center items-center mt-4'>
+                                    <div className="text-center font-bold mr-4">
+                                        <p className="text-md m-1">คะแนนเฉลี่ยรวม</p>
+                                    </div>
+                                    <div className={`text-center rounded-xl p-4 py-5 font-bold ${averageCalculatedScore > 70 ? 'bg-blue-700 text-white px-12' : 'bg-red-700 text-white px-12'}`}>
+                                        <p className="text-md m-1">{averageCalculatedScore}</p>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <hr className='border-gray-300 w-11/12 mx-auto' />
 
-                            {evaluationScores.map((score, index) => {
+                            <div className="grid grid-cols-12 gap-4 items-center mb-3  text-gray-700 w-3/4 mx-auto">
 
-                                const totalScore = (score.aspect_1 + score.aspect_2 + score.aspect_3 + score.aspect_4 + score.aspect_5);
-                                const calculatedScore = (totalScore * 20) / 5;
+                                {evaluationScores.map((score, index) => {
 
-                                return (
-                                    <div className='w-3/4 mx-auto' key={index}>
-                                        <div className="grid grid-cols-12 gap-4 items-center mb-3  text-gray-700 ">
-                                            <div className="col-span-6 text-start ml-16">
-                                                <p className="text-md m-1"></p>
-                                            </div>
-                                            <div className="col-span-2 text-center">
-                                                <p className="text-md m-1"></p>
-                                            </div>
+                                    const totalScore = (score.aspect_1 + score.aspect_2 + score.aspect_3 + score.aspect_4 + score.aspect_5);
+                                    const calculatedScore = (totalScore * 20) / 5;
+
+                                    return (
+                                        <div className='col-span-4 w-3/4 mx-auto' key={index}>
                                             <div className="col-span-2 text-center font-bold">
-                                                <p className="text-md m-1">คะแนนรวม</p>
+                                                <p className="text-md m-1 pb-2 pt-6">กรรมการประเมินคนที่ {index + 1}</p>
                                             </div>
                                             <div className={`col-span-2 text-center rounded-xl p-4 py-5 font-bold ${calculatedScore > 70 ? 'bg-blue-700 text-white' : 'bg-red-700 text-white'}`}>
                                                 <p className="text-md m-1">{calculatedScore}</p>
                                             </div>
                                         </div>
 
-                                    </div>
-                                );
-                            })}
 
-                            <div className='w-3/4 mx-auto'>
-                                <div className="grid grid-cols-12 gap-4 items-center mb-3  text-gray-700 ">
-                                    <div className="col-span-6 text-start ml-16">
-                                        <p className="text-md m-1"></p>
-                                    </div>
-                                    <div className="col-span-2 text-center">
-                                        <p className="text-md m-1"></p>
-                                    </div>
-                                    <div className="col-span-2 text-center font-bold">
-                                        <p className="text-md m-1">คะแนนเฉลี่ยรวม</p>
-                                    </div>
-                                    <div className={`col-span-2 text-center rounded-xl p-4 py-5 font-bold ${averageCalculatedScore > 70 ? 'bg-blue-700 text-white' : 'bg-red-700 text-white'}`}>
-                                        <p className="text-md m-1">{averageCalculatedScore}</p>
-                                    </div>
-                                </div>
+                                    );
+                                })}
+
                             </div>
-
 
                             <div className='w-3/4 mx-auto mt-8'>
                                 <p className='text-gray-800 text-2xl font-bold mt-5'>สรุปผลหลักการพิจารณาด้านเหตุผล</p>
