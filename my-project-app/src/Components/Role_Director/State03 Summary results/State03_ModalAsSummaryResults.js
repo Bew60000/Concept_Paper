@@ -69,6 +69,18 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
 
 
 
+    const UpdateEvaluateStatus = (status_evaluate, evaluato_id, curriculum_id) => {
+        axios.put('http://localhost:8080/test/update_evaluate_status', { status_evaluate, evaluato_id, curriculum_id })
+            .then(response => {
+                console.log('Evaluate status updated successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating evaluate status:', error);
+            });
+    };
+
+
+
     // เพิ่มการปิด modal เมื่อคลิกนอก modal
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -107,7 +119,7 @@ const State03_ModalAsSummaryResults = ({ isOpen, closeModal, selectedForm, stude
                 // window.location.reload();
                 console.log('Data submitted successfully:', response.data);
                 UpdateStatus(selectedForm.curriculum_id, 'สรุปผลประเมินเสร็จสิ้น')
-                // UpdateEvaluateStatus('ประเมินผลเสร็จสิ้น', username, selectedForm.curriculum_id)
+                UpdateEvaluateStatus('สรุปผลประเมินเสร็จสิ้น', username, selectedForm.curriculum_id)
                 window.location.reload();
             })
             .catch(error => {
