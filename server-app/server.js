@@ -629,7 +629,7 @@ app.get('/test/get_data_info_analysis_teaching', async (req, res) => {
         const result = await pool.query(`select * from basic_infos
 join course_analysis_information on basic_infos.curriculum_id = course_analysis_information.curriculum_id 
 join teaching_and_administration on basic_infos.curriculum_id = teaching_and_administration.curriculum_id 
-join evaluate on basic_infos.curriculum_id = evaluate.curriculum_id   
+   
 `);
         res.json(result.rows);
     } catch (error) {
@@ -878,6 +878,24 @@ where evaluato_id = $1
     }
 });
 // 
+
+
+// getฟอร์มที่ต้องประเมิน กรอง username แสดงข้อมูลฟอร์มที่คนๆนั่นต้องประเมิน เฉพาะของตัวเอง
+app.get('/test/evaluate/:curriculum_id', async (req, res) => {
+    const { curriculum_id } = req.params;
+    try {
+        const result = await pool.query(`select * from evaluate 
+where curriculum_id = $1   
+` , [curriculum_id]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving section');
+    }
+});
+//
+
+
 
 
 app.put('/test/update_evaluate_status', async (req, res) => {
