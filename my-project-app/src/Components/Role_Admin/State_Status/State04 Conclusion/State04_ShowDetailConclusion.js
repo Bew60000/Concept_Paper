@@ -148,7 +148,7 @@ function State04_ShowDetailConclusion() {
                                     <div key={index} className="bg-gray-200 hover:bg-gray-100 p-6 rounded-xl w-full mb-4">
                                         <div className="grid grid-cols-12 gap-4 items-center">
                                             <div className="col-span-2 text-center">
-                                                <p className="text-gray-700">{scoreData.time_finish_evaluate ? new Date(scoreData.time_finish_evaluate).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
+                                                <p className="text-gray-700">{info.sent_time ? new Date(info.sent_time).toLocaleDateString() : 'ไม่พบข้อมูล'}</p>
                                             </div>
                                             <div className="col-span-3 text-center">
                                                 <p className="text-gray-700 font-bold m-1">คณะ{info.faculty}</p>

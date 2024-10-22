@@ -205,7 +205,7 @@ function State01_ShowStatusForm() {
                                             </div>
                                         </button>
                                     )}
-
+{/* 
                                     <button className="bg-blue-500 hover:bg-blue-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2" onClick={() => editRequest(info, studentData)}>
                                         <div className="flex justify-start items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
@@ -213,7 +213,7 @@ function State01_ShowStatusForm() {
                                             </svg>
                                             แก้ไขข้อมูล
                                         </div>
-                                    </button>
+                                    </button> */}
 
                                     <button onClick={() => openModal(info)} className="bg-gray-500 hover:bg-gray-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2">
                                         <div className="flex justify-start items-center">

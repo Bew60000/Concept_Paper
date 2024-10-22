@@ -94,7 +94,7 @@ const NavbarDirectorFunctions = () => {
 
                 <hr className=' w-10/12 mx-auto border-gray-300' />
 
-                <Link to="">
+                <Link to="/director/4/showdatadatashowdatacompletedsummar">
                     <div className='bg-white hover:bg-blue-700 hover:text-white hover:font-bold mb-0 mr-0 mt-0 p-6 rounded-xl text-gray-700 text-center'>
                         <div className="flex justify-start ml-4 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const State04_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData, teacherData, UpdateStatus }) => {
+const State04_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData, teacherData, findUserByUsername, UpdateStatus }) => {
     const modalRef = useRef(null);
 
     // เพิ่มการปิด modal เมื่อคลิกนอก modal
@@ -21,7 +21,7 @@ const State04_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div ref={modalRef} className="bg-white p-6 rounded-lg w-5/6 rounded-full max-h-[650px] overflow-y-auto mt-16">
-            {selectedForm && (
+                {selectedForm && (
                     <div className='text-gray-700 w-5/6 mx-auto '>
 
                         <div className="grid grid-cols-12 gab-1 items-center">
@@ -31,9 +31,16 @@ const State04_ModalDetailForm = ({ isOpen, closeModal, selectedForm, studentData
                             </div>
                         </div>
 
-                        <hr className='border-gray-300 w-11/12 mx-auto' />                        
+                        <hr className='border-gray-300 w-11/12 mx-auto' />
+                        {/* Sent by */}
+                        <p className=" text-start p-5 pb-0">
+                            <strong>ผู้ยื่นคำขอ:</strong>&nbsp;
+                            {findUserByUsername(selectedForm.sent_by)?.name || 'ไม่พบข้อมูลผู้ยื่น'}&nbsp;
+                            {findUserByUsername(selectedForm.sent_by)?.lastname || 'ไม่พบข้อมูลผู้ยื่น'}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
                         {/* Form Part I */}
-                        <div className="text-start p-5 pt-2 mt-6">
+                        <div className="text-start p-5 pt-2">
                             <p className="text-xl font-bold text-gray-100 bg-gray-800 p-2 px-4 rounded-xl">1.ข้อมูลเบื้องต้น</p>
                         </div>
 
