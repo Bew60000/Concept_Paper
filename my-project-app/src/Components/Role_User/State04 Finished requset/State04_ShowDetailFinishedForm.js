@@ -60,6 +60,15 @@ function State04_ShowDetailFinishedForm() {
             .catch(err => console.error(err));
     };
 
+    const deleteRequest = (info) => {
+        axios.delete(`http://localhost:8080/deletebasic_info/${info.curriculum_id}`)
+            .then(() => {
+                // ลบข้อมูลจาก state หลังจากลบจากฐานข้อมูลเสร็จแล้ว
+                setDataForm(prevData => prevData.filter(user => user.curriculum_id !== info.curriculum_id));
+            })
+            .catch(err => console.error(err));
+    };
+
     const openModal = (form) => {
         setSelectedForm(form);
         setIsModalOpen(true);
@@ -106,7 +115,7 @@ function State04_ShowDetailFinishedForm() {
 
                         <div className="grid grid-cols-12 gap-4 items-center mb-3 bg-gray-700 rounded-xl text-gray-100 p-6 py-5">
                             <div className="col-span-2 text-center">
-                                <p className="text-lg font-bold m-1">วันที่ยื่น</p>
+                                <p className="text-lg font-bold m-1">วันที่แจ้งผล</p>
                             </div>
                             <div className="col-span-3 text-center">
                                 <p className="text-lg font-bold m-1">คณะที่ยื่น</p>
@@ -147,6 +156,15 @@ function State04_ShowDetailFinishedForm() {
                                         </div>
 
                                         <hr className='border-white m-5 mt-4' />
+
+                                         {/* <button className="bg-red-500 hover:bg-red-700 hover:font-bold text-white px-4 py-2 rounded-lg ml-2" onClick={() => deleteRequest(info)}>
+                                        <div className="flex justify-start items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            ยกเลิกคำขอ
+                                        </div>
+                                    </button> */}
 
                                         <div className="flex justify-end items-center mt-2">
                                             <button onClick={() => openAssessment(info)}

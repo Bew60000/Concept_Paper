@@ -128,7 +128,7 @@ function State01_ShowStatusForm() {
     const currentData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
-        <div className="grid grid-cols-12 p-5 pt-0 content-start w-9/10 mx-auto">
+        <div className="grid grid-cols-12 p-5 pt-0 content-start w-9/10 mx-auto pt-20">
             <div className="col-start-2 col-span-8">
                 <div className="bg-white border-2 rounded-2xl p-10" style={{ minHeight: '930px' }}>
                     <h2 className='text-start text-gray-700 mb-0'>คำขอที่กำลังดำเนินการ</h2>

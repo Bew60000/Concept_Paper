@@ -1,0 +1,22 @@
+{
+  "name": "concept_paper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bew60000/Concept_Paper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bew60000/Concept_Paper/issues"
+  },
+  "homepage": "https://github.com/Bew60000/Concept_Paper#readme",
+  "description": "",
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  }
+}
